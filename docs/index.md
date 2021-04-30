@@ -39,6 +39,6 @@ __Appstore is coming soon.__
 
 ## Screenshots:
 
-![Helplines Screenshot](case_3.png)
 ![Helplines Screenshot](case_1.png)
 ![Helplines Screenshot](case_2.png)
+![Helplines Screenshot](case_3.png)
