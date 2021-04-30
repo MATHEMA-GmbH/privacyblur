@@ -42,3 +42,12 @@ __Appstore is coming soon.__
 ![Helplines Screenshot](case_1.png)
 ![Helplines Screenshot](case_2.png)
 ![Helplines Screenshot](case_3.png)
+
+<br/>
+
+---
+
+Made with ❤️ by [MATHEMA GmbH](https://www.mathema.de/)
+
+![MATHEMA Logo](mat-standard-rgb.png)
+
