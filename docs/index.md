@@ -23,7 +23,7 @@ No in-app purchases. No ads. No watermark. No hassle. Free forever because priva
 
 The App is available on Google Playstore and the the Apple Appstore now! 
 
-<a href='https://play.google.com/store/apps/details?id=de.mathema.privacyblur&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
+<a href='https://play.google.com/store/apps/details?id=de.mathema.privacyblur&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img width="150px" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
 
 ## Features:
 
