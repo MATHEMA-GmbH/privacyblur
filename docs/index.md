@@ -27,9 +27,6 @@ The App is available on Google Playstore  and the the Appstore now!
 <a href="https://apps.apple.com/us/app/privacyblur/id1536274106?itsct=apps_box_badge&amp;itscg=30200" style="width: 120px;margin-bottom: 10px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1241395200&h=e93a702d61d46decc4c4f5140aad4aa6" alt="Download on the App Store" margin="0 0 10px 0" style="width: 120px;margin-bottom: 10px;"></a>
 </p>
 
-
-
-
 ## Features:
 
 - Blur / Pixelate effect
