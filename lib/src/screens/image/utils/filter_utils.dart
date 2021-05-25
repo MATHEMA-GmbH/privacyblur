@@ -20,7 +20,8 @@ class FilterUtils {
         return 1;
       }
     });
-    return arr.indexWhere((element) => identical(element, position));
+    currentIndex=arr.indexWhere((element) => identical(element, position));
+    return currentIndex;
   }
 
   bool _checkCross(FilterPosition oneFilter, FilterPosition anotherFilter) {
