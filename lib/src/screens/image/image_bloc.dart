@@ -14,6 +14,7 @@ import 'helpers/image_classes_helper.dart';
 import 'helpers/image_events.dart';
 import 'helpers/image_states.dart';
 import 'image_repo.dart';
+import 'utils/filter_utils.dart';
 import 'utils/image_tools.dart';
 
 // may be move to image_events, but it became visible in project, not only inside BLoC
@@ -64,28 +65,24 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
   var imageFilter = ImageAppFilter();
 
   void _filterInArea() {
-    var position = _blocState.getSelectedPosition();
-    if (position != null) {
-      var radius = position.getVisibleRadius();
-      if (position.isRounded) {
-        imageFilter.apply2CircleArea(position.posX, position.posY, radius);
-      } else {
-        imageFilter.apply2SquareArea(position.posX, position.posY, radius);
-      }
-      position.canceled = false;
-      position.forceRedraw = false;
-    }
-  }
-
-  void _setMatrix() {
-    var position = _blocState.getSelectedPosition();
-    if (position != null) {
-      if (position.isPixelate) {
-        imageFilter.setFilter(MatrixAppPixelate(
-            (_blocState.maxPower * position.granularityRatio).toInt()));
-      } else {
-        imageFilter.setFilter(MatrixAppBlur(
-            (_blocState.maxPower * position.granularityRatio).toInt()));
+    for (int i = 0; i < _blocState.positions.length; i++) {
+      var position = _blocState.positions[i];
+      if (position.canceled || position.forceRedraw) {
+        if (position.isPixelate) {
+          imageFilter.setFilter(MatrixAppPixelate(
+              (_blocState.maxPower * position.granularityRatio).toInt()));
+        } else {
+          imageFilter.setFilter(MatrixAppBlur(
+              (_blocState.maxPower * position.granularityRatio).toInt()));
+        }
+        var radius = position.getVisibleRadius();
+        if (position.isRounded) {
+          imageFilter.apply2CircleArea(position.posX, position.posY, radius);
+        } else {
+          imageFilter.apply2SquareArea(position.posX, position.posY, radius);
+        }
+        position.canceled = false;
+        position.forceRedraw = false;
       }
     }
   }
@@ -93,7 +90,6 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
   void _applyCurrentFilter() {
     _deferedFuture?.cancel();
     _deferedFuture = Timer(_defered, () async {
-      _setMatrix();
       _filterInArea();
       _blocState.image = await imageFilter.getImage();
       _deferedFuture?.cancel();
@@ -110,6 +106,8 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
       imageFilter.cancelSquare(
           position.posX, position.posY, position.getVisibleRadius());
     }
+    _blocState.selectedFilterPosition = FilterUtils().markCrossedAreas(
+        _blocState.positions, _blocState.selectedFilterPosition);
     position.canceled = true;
   }
 
