@@ -74,6 +74,14 @@ class ImageAppFilter {
     _cancelArea(imgChannels.getChangedRange());
   }
 
+  void cancelArea(int centerX, int centerY, int radius, isRounded) {
+    if (isRounded) {
+      cancelCircle(centerX, centerY, radius);
+    } else {
+      cancelSquare(centerX, centerY, radius);
+    }
+  }
+
   void cancelSquare(int centerX, int centerY, int radius) {
     if (!imgChannels.transactionActive) return;
     if (_allCanceled) return;
@@ -84,9 +92,6 @@ class ImageAppFilter {
   void _cancelSquare(int cx1, int cy1, int cx2, int cy2) {
     if (!imgChannels.transactionActive) return;
     if (_allCanceled) return;
-    RangeHelper range = RangeHelper.square(
-        cx1, cy1, cx2, cy2, imgChannels.imageWidth, imgChannels.imageHeight, 0);
-    _cancelArea(range);
   }
 
   void cancelCircle(int cx1, int cy1, int radius) {
@@ -95,6 +100,14 @@ class ImageAppFilter {
     RangeHelper range = RangeHelper.rounded(
         cx1, cy1, radius, imgChannels.imageWidth, imgChannels.imageHeight, 0);
     _cancelArea(range);
+  }
+
+  void apply2Area(int centerX, int centerY, int radius, bool isRounded) {
+    if (isRounded) {
+      apply2CircleArea(centerX, centerY, radius);
+    } else {
+      apply2SquareArea(centerX, centerY, radius);
+    }
   }
 
   void apply2SquareArea(int centerX, int centerY, int radius) {
