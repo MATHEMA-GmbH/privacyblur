@@ -73,6 +73,7 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
         imageFilter.apply2SquareArea(position.posX, position.posY, radius);
       }
       position.canceled = false;
+      position.forceRedraw = false;
     }
   }
 
@@ -195,7 +196,7 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
 
   Stream<ImageStateScreen> addFilter(ImageEventNewFilter event) async* {
     imageFilter.transactionStart();
-    _blocState.positions.add(FilterPosition()
+    _blocState.positions.add(FilterPosition(_blocState.maxRadius)
       ..posX = event.x.toInt()
       ..posY = event.y.toInt());
     _blocState.selectedFilterPosition = _blocState.positions.length - 1;
