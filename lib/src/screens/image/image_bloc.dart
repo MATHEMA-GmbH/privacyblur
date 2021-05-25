@@ -66,7 +66,7 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
   void _filterInArea() {
     var position = _blocState.getSelectedPosition();
     if (position != null) {
-      var radius = (position.radiusRatio * _blocState.maxRadius).toInt();
+      var radius = position.getVisibleRadius();
       if (position.isRounded) {
         imageFilter.apply2CircleArea(position.posX, position.posY, radius);
       } else {
@@ -104,11 +104,11 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
   void _cancelCurrentFilter(FilterPosition position) {
     if (position.canceled) return;
     if (position.isRounded) {
-      imageFilter.cancelCircle(position.posX, position.posY,
-          (position.radiusRatio * _blocState.maxRadius).toInt());
+      imageFilter.cancelCircle(
+          position.posX, position.posY, position.getVisibleRadius());
     } else {
-      imageFilter.cancelSquare(position.posX, position.posY,
-          (position.radiusRatio * _blocState.maxRadius).toInt());
+      imageFilter.cancelSquare(
+          position.posX, position.posY, position.getVisibleRadius());
     }
     position.canceled = true;
   }
