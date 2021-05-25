@@ -149,19 +149,17 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
   }
 
   Stream<ImageStateBase> saveImage(ImageEventSave2Disk event) async* {
-    String message = Keys.Messages_Errors_Undefined;
-    MessageBarType messageType = MessageBarType.Failure;
     _blocState.isImageSaved = await ImgTools().save2Gallery(
         imageFilter.imgChannels.imageWidth,
         imageFilter.imgChannels.imageHeight,
         imageFilter.imgChannels.tempImgArr);
     if (_blocState.isImageSaved) {
-      message = Keys.Messages_Infos_Success_Saved;
-      messageType = MessageBarType.Information;
+      yield ImageStateFeedback(Keys.Messages_Infos_Success_Saved,
+          messageType: MessageBarType.Information);
     } else {
-      message = Keys.Messages_Errors_Target_Directory;
+      yield ImageStateFeedback(Keys.Messages_Errors_File_System,
+          messageType: MessageBarType.Failure);
     }
-    yield ImageStateFeedback(message, messageType: messageType);
     yield _blocState.clone();
   }
 

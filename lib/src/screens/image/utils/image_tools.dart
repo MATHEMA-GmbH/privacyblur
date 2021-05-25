@@ -61,7 +61,10 @@ class ImgTools {
           img_external.Image.fromBytes(width, height, raw),
           quality: ImgConst.imgQuality));
       await ImageGallerySaver.saveFile(tmpFile);
-      file.delete();
+      saved = true;
+      try {
+        file.delete();
+      } catch (_) {}
     } catch (e) {
       saved = false;
     }
