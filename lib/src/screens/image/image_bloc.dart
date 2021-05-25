@@ -1,13 +1,8 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:math';
 import 'dart:ui' as img_tools;
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
-import 'package:image/image.dart' as img_external;
-import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:privacyblur/resources/localization/keys.dart';
 import 'package:privacyblur/src/screens/image/helpers/constants.dart';
 import 'package:privacyblur/src/utils/image_filter/helpers/matrix_blur.dart';
@@ -19,7 +14,7 @@ import 'helpers/image_classes_helper.dart';
 import 'helpers/image_events.dart';
 import 'helpers/image_states.dart';
 import 'image_repo.dart';
-import 'utils/image_scaling.dart';
+import 'utils/image_tools.dart';
 
 // may be move to image_events, but it became visible in project, not only inside BLoC
 class _yield_state_internally extends ImageEventBase {}
@@ -156,33 +151,15 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
   Stream<ImageStateBase> saveImage(ImageEventSave2Disk event) async* {
     String message = Keys.Messages_Errors_Undefined;
     MessageBarType messageType = MessageBarType.Failure;
-    try {
-      Directory directory = await getTemporaryDirectory();
-      String newPath = directory.path;
-      directory = Directory(newPath);
-      try {
-        directory.create(recursive: true);
-      } catch (e) {}
-      if (await directory.exists()) {
-        var randomNumber = Random().nextInt(10000).toString();
-        String tmpFile = directory.path + '/pix' + randomNumber + '.jpg';
-        var file = File(tmpFile);
-        file.writeAsBytesSync(img_external.encodeJpg(
-            img_external.Image.fromBytes(
-                imageFilter.imgChannels.imageWidth,
-                imageFilter.imgChannels.imageHeight,
-                imageFilter.imgChannels.tempImgArr),
-            quality: ImgConst.imgQuality));
-        await ImageGallerySaver.saveFile(tmpFile);
-        _blocState.isImageSaved = true;
-        file.delete();
-        message = Keys.Messages_Infos_Success_Saved;
-        messageType = MessageBarType.Information;
-      } else {
-        message = Keys.Messages_Errors_Target_Directory;
-      }
-    } catch (e) {
-      message = Keys.Messages_Errors_File_System;
+    _blocState.isImageSaved = await ImgTools().save2Gallery(
+        imageFilter.imgChannels.imageWidth,
+        imageFilter.imgChannels.imageHeight,
+        imageFilter.imgChannels.tempImgArr);
+    if (_blocState.isImageSaved) {
+      message = Keys.Messages_Infos_Success_Saved;
+      messageType = MessageBarType.Information;
+    } else {
+      message = Keys.Messages_Errors_Target_Directory;
     }
     yield ImageStateFeedback(message, messageType: messageType);
     yield _blocState.clone();
@@ -276,24 +253,10 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
     }
     _blocState.filename = event.filename;
     _blocState.isImageSaved = true;
-    File file;
-    // BUG: this may be simplified later on big fix for library
-    try {
-      file = await FlutterExifRotation.rotateImage(path: _blocState.filename)
-          .timeout(Duration(seconds: 2));
-    } catch (err) {
-      try {
-        file = await FlutterExifRotation.rotateImage(path: _blocState.filename)
-            .timeout(Duration(seconds: 10));
-      } catch (e) {
-        yield* _yieldCriticalException(Keys.Messages_Errors_Problem_Img_Read);
-        return;
-      }
-    }
     img_tools.Image? tmpImage;
     var imgTools = ImgTools();
     try {
-      tmpImage = await imgTools.scaleFile(file, _maxImageSize);
+      tmpImage = await imgTools.scaleFile(_blocState.filename, _maxImageSize);
       if (imgTools.scaled) {
         String origRes =
             imgTools.srcWidth.toString() + 'x' + imgTools.srcHeight.toString();
