@@ -11,7 +11,7 @@ class FilterUtils {
   }
 
   int _speedUpAreasDraw(List<FilterPosition> arr, int currentIndex) {
-    var position = currentIndex;
+    var position = arr[currentIndex];
     arr.sort((FilterPosition a, FilterPosition b) {
       if (a.isPixelate == b.isPixelate) {
         return ((a.radiusRatio - b.radiusRatio) * 1000).toInt();
@@ -53,11 +53,11 @@ class FilterUtils {
       if (i == currentIndex) continue;
       var anotherFilter = arr[i];
       if (_checkCross(currentFilter, anotherFilter)) {
-        currentFilter.forceRedraw = true;
+        anotherFilter.forceRedraw = true;
         continue;
       }
       if (_checkCross(anotherFilter, currentFilter)) {
-        currentFilter.forceRedraw = true;
+        anotherFilter.forceRedraw = true;
         continue;
       }
     }

@@ -137,6 +137,8 @@ class MatrixAppBlur extends ImageAppMatrix {
       indexhelper = -1;
       for (int x = range.x1; x <= range.x2; x++) {
         indexhelper++;
+        pointWriteIndex = ((y) * channels.imageWidth) + (x);
+        if(channels.processed[pointWriteIndex]) continue;
         if (!range.checkPointInRange(x, y)) continue;
         pointIndex = ((y - _stepBack) * channels.imageWidth) + (x - _stepBack);
         writeValue = 0xff000000;
@@ -154,7 +156,7 @@ class MatrixAppBlur extends ImageAppMatrix {
             (_calculateArea(pointIndex, channels.sourceBlue,
                     channels.imageWidth, 2, indexhelper, rowHelper) &
                 0xff);
-        pointWriteIndex = ((y) * channels.imageWidth) + (x);
+
         channels.tempImgArr[pointWriteIndex] = writeValue;
         channels.processed[pointWriteIndex] = true;
       }
