@@ -15,8 +15,8 @@ class InternalLayout extends LayoutConfig {
   double get view2LandScapeSize {
     double additionalTabletSpacer = isTablet || isNeedSafeArea ? 30 : 10;
     return AppTheme.isIOS
-        ? getScaledSize(172 + additionalTabletSpacer)
-        : getScaledSize(170 + additionalTabletSpacer);
+        ? getScaledSize(180 + additionalTabletSpacer)
+        : getScaledSize(175 + additionalTabletSpacer);
   }
 
   double get offsetBottom {

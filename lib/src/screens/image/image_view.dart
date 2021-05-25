@@ -84,12 +84,19 @@ class ImageScreen extends StatelessWidget with AppMessages {
                     (state is ImageStateScreen && !state.isImageSaved);
 
                 return ScaffoldWithAppBar.build(
-                    onBackPressed: () => _onBack(context, state),
-                    leading: _getLeadingIcon(context, isEditState),
-                    context: context,
-                    title: translate(Keys.App_Name),
-                    actions: _actionsIcon(context, isEditState, imgNotSaved),
-                    body: _buildHomeBody(context, state));
+                  onBackPressed: () => _onBack(context, state),
+                  leading: _getLeadingIcon(context, isEditState),
+                  context: context,
+                  title: translate(Keys.App_Name),
+                  actions: _actionsIcon(context, isEditState, imgNotSaved),
+                  body: SafeArea(
+                    child: _buildHomeBody(context, state),
+                    top: internalLayout.landscapeMode,
+                    bottom: internalLayout.landscapeMode,
+                    left: !internalLayout.landscapeMode,
+                    right: !internalLayout.landscapeMode,
+                  ),
+                );
               })),
     );
   }
@@ -109,28 +116,33 @@ class ImageScreen extends StatelessWidget with AppMessages {
 
   Widget _buildHomeBody(BuildContext context, ImageStateBase? state) {
     if (state is ImageStateScreen) {
-      return ScreenRotation(
-        view1: (context, w, h, landscape) {
-          if (_transformationController == null) {
-            _transformationController = TransformationController(
-                _calculateInitialScaleAndOffset(
-                    context, state.image.mainImage, w, h));
-          }
-          return ImageViewer(
-              state.image,
-              state,
-              w,
-              h,
-              _transformationController!,
-              (posX, posY) => _bloc.add(ImageEventPositionChanged(posX, posY)),
-              (posX, posY) => _bloc.add(ImageEventNewFilter(posX, posY)),
-              (index) => _bloc.add(ImageEventExistingFilterSelected(index)));
-        },
-        view2: (context, w, h, landscape) =>
-            drawImageToolbar(context, state, w, h, landscape),
-        view2Portrait: view2PortraitSize,
-        view2Landscape: view2LandScapeSize,
-      );
+      return LayoutBuilder(builder: (context, constraints) {
+        return ScreenRotation(
+          baseHeight: constraints.maxHeight,
+          baseWidth: constraints.maxWidth,
+          view1: (context, w, h, landscape) {
+            if (_transformationController == null) {
+              _transformationController = TransformationController(
+                  _calculateInitialScaleAndOffset(
+                      context, state.image.mainImage, w, h));
+            }
+            return ImageViewer(
+                state.image,
+                state,
+                w,
+                h,
+                _transformationController!,
+                (posX, posY) =>
+                    _bloc.add(ImageEventPositionChanged(posX, posY)),
+                (posX, posY) => _bloc.add(ImageEventNewFilter(posX, posY)),
+                (index) => _bloc.add(ImageEventExistingFilterSelected(index)));
+          },
+          view2: (context, w, h, landscape) =>
+              drawImageToolbar(context, state, w, h, landscape),
+          view2Portrait: view2PortraitSize,
+          view2Landscape: view2LandScapeSize,
+        );
+      });
     } else {
       return Center(child: CircularProgressIndicator.adaptive());
     }
@@ -175,7 +187,7 @@ class ImageScreen extends StatelessWidget with AppMessages {
       decoration: BoxDecoration(color: AppTheme.barColor(context)),
       //AppTheme.barColor(context)
       child: (position == null)
-          ? HelpWidget(height)
+          ? HelpWidget(height, width)
           : RotatedBox(
               quarterTurns: isLandscape ? 3 : 0,
               child: ImageToolsWidget(

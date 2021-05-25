@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:privacyblur/src/utils/layout_config.dart';
-import 'package:privacyblur/src/widgets/theme/theme_provider.dart';
 
 class ScreenRotation extends StatelessWidget {
   final Widget Function(
@@ -11,26 +10,24 @@ class ScreenRotation extends StatelessWidget {
       BuildContext context, double width, double height, bool landscape) view2;
   final double view2Portrait;
   final double view2Landscape;
+  final double baseHeight;
+  final double baseWidth;
 
   ScreenRotation(
       {required this.view1,
       required this.view2,
       required this.view2Portrait,
-      required this.view2Landscape});
+      required this.view2Landscape,
+      required this.baseHeight,
+      required this.baseWidth});
 
   @override
   Widget build(BuildContext context) {
     var config = LayoutConfig(context);
-    var toolbarSize = AppTheme.isIOS
-        ? (kMinInteractiveDimensionCupertino + (50 /*statusbar height*/))
-        : (Scaffold.of(context).appBarMaxHeight ?? kToolbarHeight);
-    var baseWidth = MediaQuery.of(context).size.width;
-    var baseHeight = MediaQuery.of(context).size.height - toolbarSize;
 
     if (config.landscapeMode) {
       double view2Width = view2Landscape;
       double view1Width = baseWidth - view2Landscape;
-
       return Row(
         children: [
           SizedBox(
