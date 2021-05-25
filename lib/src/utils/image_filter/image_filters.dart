@@ -92,6 +92,9 @@ class ImageAppFilter {
   void _cancelSquare(int cx1, int cy1, int cx2, int cy2) {
     if (!imgChannels.transactionActive) return;
     if (_allCanceled) return;
+    RangeHelper range = RangeHelper.square(
+        cx1, cy1, cx2, cy2, imgChannels.imageWidth, imgChannels.imageHeight, 0);
+    _cancelArea(range);
   }
 
   void cancelCircle(int cx1, int cy1, int radius) {
