@@ -64,8 +64,7 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
   var imageFilter = ImageAppFilter();
 
   void _filterInArea() {
-    for (int i = 0; i < _blocState.positions.length; i++) {
-      var position = _blocState.positions[i];
+    _blocState.positions.forEach((position) {
       if (position.canceled || position.forceRedraw) {
         if (position.isPixelate) {
           imageFilter.setFilter(MatrixAppPixelate(
@@ -80,7 +79,7 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
         position.canceled = false;
         position.forceRedraw = false;
       }
-    }
+    });
   }
 
   void _applyCurrentFilter() {
