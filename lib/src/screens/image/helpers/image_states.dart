@@ -35,6 +35,8 @@ class ImageStateScreen extends ImageStateBase {
         positions[selectedFilterPosition].posY > ImgConst.undefinedPosValue;
   }
 
+  bool get isImageSelected => selectedFilterPosition < 0;
+
   bool isImageSaved = false;
   EditTool activeTool = EditTool.EditSize;
   int maxRadius = 300; //will be changed once on image set

@@ -69,7 +69,7 @@ class ImageViewer extends StatelessWidget {
                 willChange: true,
                 painter: ImgPainter(image),
                 foregroundPainter: ShapePainter(state.positions,
-                    state.maxRadius, state.selectedFilterPosition),
+                    state.maxRadius, state.selectedFilterPosition, state.isImageSelected),
               ))),
     );
   }

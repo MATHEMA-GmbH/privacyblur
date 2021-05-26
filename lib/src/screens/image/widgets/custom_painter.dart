@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:privacyblur/src/utils/image_filter/helpers/filter_result.dart';
+import 'package:privacyblur/src/widgets/theme/theme_provider.dart';
 
 class ImgPainter extends CustomPainter {
   final ImageFilterResult _image;
