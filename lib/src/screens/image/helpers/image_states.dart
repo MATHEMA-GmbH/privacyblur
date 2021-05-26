@@ -29,13 +29,10 @@ class ImageStateScreen extends ImageStateBase {
 
   // maybe remove from bloc in next version. ...Why?
   bool get hasSelection {
-    return selectedFilterPosition >= 0 &&
-        selectedFilterPosition < positions.length &&
-        positions[selectedFilterPosition].posX > ImgConst.undefinedPosValue &&
-        positions[selectedFilterPosition].posY > ImgConst.undefinedPosValue;
+    return positions.length > 0;
   }
 
-  bool get isImageSelected => selectedFilterPosition < 0;
+  bool get isImageSelected => getSelectedPosition() == null;
 
   bool isImageSaved = false;
   EditTool activeTool = EditTool.EditSize;
@@ -44,11 +41,15 @@ class ImageStateScreen extends ImageStateBase {
 
   void resetSelection() {
     positions.clear();
-    selectedFilterPosition=-1;
+    selectedFilterPosition = -1;
   }
 
-  FilterPosition? getSelectedPosition(){
-    if(!hasSelection) return null;
+  FilterPosition? getSelectedPosition() {
+    var canGetPosition = selectedFilterPosition >= 0 &&
+        selectedFilterPosition < positions.length &&
+        positions[selectedFilterPosition].posX > ImgConst.undefinedPosValue &&
+        positions[selectedFilterPosition].posY > ImgConst.undefinedPosValue;
+    if (!canGetPosition) return null;
     return positions[selectedFilterPosition];
   }
 
