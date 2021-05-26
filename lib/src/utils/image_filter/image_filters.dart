@@ -74,69 +74,18 @@ class ImageAppFilter {
     _cancelArea(imgChannels.getChangedRange());
   }
 
-  void cancelArea(int centerX, int centerY, int radius, isRounded) {
-    if (isRounded) {
-      cancelCircle(centerX, centerY, radius);
-    } else {
-      cancelSquare(centerX, centerY, radius);
-    }
-  }
-
-  void cancelSquare(int centerX, int centerY, int radius) {
+  void cancelArea(int centerX, int centerY, int radius, isCircle) {
     if (!imgChannels.transactionActive) return;
     if (_allCanceled) return;
-    RangeHelper range = RangeHelper.square(
-        centerX - radius,
-        centerY - radius,
-        centerX + radius,
-        centerY + radius,
-        imgChannels.imageWidth,
-        imgChannels.imageHeight,
-        0);
+    RangeHelper range = RangeHelper(centerX, centerY, radius, isCircle,
+        imgChannels.imageWidth, imgChannels.imageHeight, 0);
     _cancelArea(range);
   }
 
-  void cancelCircle(int cx1, int cy1, int radius) {
+  void apply2Area(int centerX, int centerY, int radius, bool isCircle) {
     if (!imgChannels.transactionActive) return;
-    if (_allCanceled) return;
-    RangeHelper range = RangeHelper.rounded(
-        cx1, cy1, radius, imgChannels.imageWidth, imgChannels.imageHeight, 0);
-    _cancelArea(range);
-  }
-
-  void apply2Area(int centerX, int centerY, int radius, bool isRounded) {
-    if (isRounded) {
-      apply2CircleArea(centerX, centerY, radius);
-    } else {
-      apply2SquareArea(centerX, centerY, radius);
-    }
-  }
-
-  void apply2SquareArea(int centerX, int centerY, int radius) {
-    if (!imgChannels.transactionActive) return;
-    RangeHelper range = RangeHelper.square(
-        centerX - radius,
-        centerY - radius,
-        centerX + radius,
-        centerY + radius,
-        imgChannels.imageWidth,
-        imgChannels.imageHeight,
-        _activeMatrix.emptyBorder());
-    _activeMatrix.calculateInRange(range, imgChannels);
-    _allCanceled = false;
-    imgChannels.collectRange(range);
-    needRebuild = true;
-  }
-
-  void apply2CircleArea(int centerX, int centerY, int radius) {
-    if (!imgChannels.transactionActive) return;
-    RangeHelper range = RangeHelper.rounded(
-        centerX,
-        centerY,
-        radius.toInt(),
-        imgChannels.imageWidth,
-        imgChannels.imageHeight,
-        _activeMatrix.emptyBorder());
+    RangeHelper range = RangeHelper(centerX, centerY, radius, isCircle,
+        imgChannels.imageWidth, imgChannels.imageHeight, 0);
     _activeMatrix.calculateInRange(range, imgChannels);
     _allCanceled = false;
     imgChannels.collectRange(range);

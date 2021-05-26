@@ -13,15 +13,24 @@ class RangeHelper {
   int y1 = 0;
   int x2 = 0;
   int y2 = 0;
-  final isRound;
+  final isCircle;
   late bool fail;
 
-  RangeHelper.rounded(this.centerX, this.centerY, this.radius, this.imgWidth,
-      this.imgHeight, this.img_border)
-      : isRound = true {
+  RangeHelper(this.centerX, this.centerY, this.radius, this.isCircle,
+      this.imgWidth, this.imgHeight, this.img_border) {
     fail = ((img_border + 1) > imgWidth ~/ 2) ||
         ((img_border + 1) > imgHeight ~/ 2);
-    _calculateRadiusArea();
+
+    if (isCircle) {
+      _calculateRadiusArea();
+    } else {
+      x1 = centerX - radius;
+      y1 = centerY - radius;
+      x2 = centerX + radius;
+      y2 = centerY + radius;
+      _calculateArea();
+    }
+
     if (fail) {
       x1 = 1;
       x2 = 0;
@@ -37,11 +46,13 @@ class RangeHelper {
       this.imgHeight, this.img_border)
       : centerX = 0,
         centerY = 0,
-        radius = 0,
-        isRound = false {
+        isCircle = false,
+        radius = 0 {
     fail = ((img_border + 1) > imgWidth ~/ 2) ||
         ((img_border + 1) > imgHeight ~/ 2);
+
     _calculateArea();
+
     if (fail) {
       x1 = 1;
       x2 = 0;
@@ -55,7 +66,7 @@ class RangeHelper {
 
   bool checkPointInRange(int x, int y) {
     //if(fail) return false;
-    if (!isRound) return true;
+    if (!isCircle) return true;
     int diffX = (centerX - x).abs();
     int diffY = (centerY - y).abs();
     if (diffY + diffX < radius) return true;
