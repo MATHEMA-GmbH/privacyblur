@@ -10,14 +10,20 @@ class PositionsUtils {
   static int changeAreasDrawOrder(List<FilterPosition> arr, int currentIndex) {
     if (currentIndex < 0 || currentIndex >= arr.length) return -1;
     var position = arr[currentIndex];
-    arr.sort((FilterPosition a, FilterPosition b) {
-      if (a.isPixelate == b.isPixelate) {
+    arr.sort((FilterPosition first, FilterPosition second) {
+      if (first.isPixelate == second.isPixelate) {
         /// more powerful filter is more important, so we draw on the top
-        return ((b.granularityRatio - a.granularityRatio) * 100).toInt();
+        return ((second.granularityRatio - first.granularityRatio) * 100)
+            .toInt();
       } else {
         /// we can add some rules about cross areas if filters are different
-        if (a.isPixelate) return -1;
-        return 1;
+        if (first.isPixelate) {
+          return ((second.granularityRatio - first.granularityRatio * 2) * 100)
+              .toInt();
+        } else {
+          return ((second.granularityRatio * 2 - first.granularityRatio) * 100)
+              .toInt();
+        }
       }
     });
     currentIndex = arr.indexWhere((element) => identical(element, position));
