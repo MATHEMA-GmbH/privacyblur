@@ -14,8 +14,8 @@ import 'helpers/image_classes_helper.dart';
 import 'helpers/image_events.dart';
 import 'helpers/image_states.dart';
 import 'image_repo.dart';
-import 'utils/filter_utils.dart';
 import 'utils/image_tools.dart';
+import 'utils/positions_utils.dart';
 
 // may be move to image_events, but it became visible in project, not only inside BLoC
 class _yield_state_internally extends ImageEventBase {}
@@ -85,7 +85,7 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
   void _applyCurrentFilter() {
     _deferedFuture?.cancel();
     _deferedFuture = Timer(_defered, () async {
-      _blocState.selectedFilterPosition = FilterUtils.changeAreasDrawOrder(
+      _blocState.selectedFilterPosition = PositionsUtils.changeAreasDrawOrder(
           _blocState.positions, _blocState.selectedFilterPosition);
       _filterInArea();
       _blocState.image = await imageFilter.getImage();
@@ -103,13 +103,13 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
   void _cancelCurrentFilters(FilterPosition position) {
     if (position.canceled) return;
     _cancelPosition(position);
-    FilterUtils.markCrossedAreas(
+    PositionsUtils.markCrossedAreas(
         _blocState.positions, _blocState.selectedFilterPosition);
-    for (int i = 0; i < _blocState.positions.length; i++) {
-      if (_blocState.positions[i].forceRedraw) {
-        _cancelPosition(_blocState.positions[i]);
+    _blocState.positions.forEach((position) {
+      if (position.forceRedraw) {
+        _cancelPosition(position);
       }
-    }
+    });
   }
 
   ImageStateFeedback _showFilterState() {

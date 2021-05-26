@@ -66,7 +66,7 @@ class ImageAppFilter {
 
   bool _allCanceled = true;
 
-  void cancelCurrent() {
+  void cancelAll() {
     if (!imgChannels.transactionActive) return;
     if (_allCanceled) return;
     _allCanceled = true;
@@ -85,15 +85,14 @@ class ImageAppFilter {
   void cancelSquare(int centerX, int centerY, int radius) {
     if (!imgChannels.transactionActive) return;
     if (_allCanceled) return;
-    _cancelSquare((centerX - radius).toInt(), (centerY - radius).toInt(),
-        (centerX + radius).toInt(), (centerY + radius).toInt());
-  }
-
-  void _cancelSquare(int cx1, int cy1, int cx2, int cy2) {
-    if (!imgChannels.transactionActive) return;
-    if (_allCanceled) return;
     RangeHelper range = RangeHelper.square(
-        cx1, cy1, cx2, cy2, imgChannels.imageWidth, imgChannels.imageHeight, 0);
+        centerX - radius,
+        centerY - radius,
+        centerX + radius,
+        centerY + radius,
+        imgChannels.imageWidth,
+        imgChannels.imageHeight,
+        0);
     _cancelArea(range);
   }
 
@@ -114,17 +113,12 @@ class ImageAppFilter {
   }
 
   void apply2SquareArea(int centerX, int centerY, int radius) {
-    _apply2SquareArea((centerX - radius).toInt(), (centerY - radius).toInt(),
-        (centerX + radius).toInt(), (centerY + radius).toInt());
-  }
-
-  void _apply2SquareArea(int x1, int y1, int x2, int y2) {
     if (!imgChannels.transactionActive) return;
     RangeHelper range = RangeHelper.square(
-        x1,
-        y1,
-        x2,
-        y2,
+        centerX - radius,
+        centerY - radius,
+        centerX + radius,
+        centerY + radius,
         imgChannels.imageWidth,
         imgChannels.imageHeight,
         _activeMatrix.emptyBorder());
@@ -158,7 +152,7 @@ class ImageAppFilter {
 
   void transactionCancel() {
     if (!imgChannels.transactionActive) return;
-    cancelCurrent();
+    cancelAll();
     imgChannels.processed.fillRange(0, imgChannels.processed.length, false);
     imgChannels.transactionActive = false;
     _allCanceled = true;

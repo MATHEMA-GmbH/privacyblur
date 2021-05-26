@@ -1,6 +1,6 @@
 import 'package:privacyblur/src/screens/image/helpers/image_classes_helper.dart';
 
-class FilterUtils {
+class PositionsUtils {
   /// suppose to return new selected-index after resorting array
   static void markCrossedAreas(List<FilterPosition> arr, int currentIndex) {
     if (currentIndex < 0 || currentIndex >= arr.length) return;
