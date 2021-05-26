@@ -18,10 +18,10 @@ class PositionsUtils {
       } else {
         /// we can add some rules about cross areas if filters are different
         if (first.isPixelate) {
-          return ((second.granularityRatio - first.granularityRatio * 2) * 100)
+          return ((second.granularityRatio - first.granularityRatio * 1.5) * 100)
               .toInt();
         } else {
-          return ((second.granularityRatio * 2 - first.granularityRatio) * 100)
+          return ((second.granularityRatio * 1.5 - first.granularityRatio) * 100)
               .toInt();
         }
       }
