@@ -45,8 +45,6 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
       yield* selectFilterIndex(event);
     } else if (event is ImageEventExistingFilterDelete) {
       yield* deleteFilterIndex(event);
-    } else if (event is ImageEventApply) {
-      yield* applyFilterChanged(event);
     } else if (event is ImageEventCancel) {
       yield* cancelTransaction();
     } else if (event is ImageEventSave2Disk) {
@@ -138,6 +136,9 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
   }
 
   Stream<ImageStateBase> saveImage(ImageEventSave2Disk event) async* {
+    imageFilter.transactionCommit();
+    _blocState.resetSelection();
+    _blocState.image = await imageFilter.getImage();
     _blocState.isImageSaved = await ImgTools().save2Gallery(
         imageFilter.imgChannels.imageWidth,
         imageFilter.imgChannels.imageHeight,
@@ -150,14 +151,6 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
           messageType: MessageBarType.Failure);
     }
     yield _blocState.clone();
-  }
-
-  Stream<ImageStateScreen> applyFilterChanged(ImageEventApply event) async* {
-    imageFilter.transactionCommit();
-    _blocState.resetSelection();
-    _blocState.image = await imageFilter.getImage();
-    _blocState.isImageSaved = false;
-    yield _blocState.clone(); //needed
   }
 
   Stream<ImageStateScreen> cancelTransaction() async* {

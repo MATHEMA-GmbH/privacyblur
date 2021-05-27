@@ -170,7 +170,6 @@ class ImageScreen extends StatelessWidget with AppMessages {
                     _bloc.add(ImageEventShapeSize(radius)),
                 onPowerChanged: (double filterPower) =>
                     _bloc.add(ImageEventFilterGranularity(filterPower)),
-                onApply: () => _bloc.add(ImageEventApply()),
                 onCancel: () => _bloc.add(ImageEventCancel()),
                 onPreview: () => _onPreview(context, state.image),
                 onBlurSelected: () =>

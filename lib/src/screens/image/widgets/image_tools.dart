@@ -17,7 +17,6 @@ class ImageToolsWidget extends StatelessWidget {
   final Function(double filterPower) onPowerChanged;
   final Function(EditTool tool) onEditToolSelected;
   final Function() onCancel;
-  final Function() onApply;
   final Function() onPreview;
   final bool isLandscape;
   final double curRadius;
@@ -34,7 +33,6 @@ class ImageToolsWidget extends StatelessWidget {
   ImageToolsWidget({
     required this.onRadiusChanged,
     required this.onPowerChanged,
-    required this.onApply,
     required this.onCancel,
     required this.onPreview,
     required this.isLandscape,
@@ -87,10 +85,10 @@ class ImageToolsWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: TextButtonBuilder.build(
-                  color: AppTheme.fontColor(context),
-                  text: translate(Keys.Buttons_Preview),
-                  onPressed: this.onPreview,
-                  rotateIconQuarter: isLandscape ? 1 : 0),
+                    color: AppTheme.fontColor(context),
+                    text: translate(Keys.Buttons_Preview),
+                    onPressed: this.onPreview,
+                    rotateIconQuarter: isLandscape ? 1 : 0),
               ),
             ],
           ),

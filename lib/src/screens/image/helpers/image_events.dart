@@ -73,9 +73,6 @@ class ImageEventPositionChanged extends ImageEventBase {
 }
 
 /// filter apply clicked
-class ImageEventApply extends ImageEventBase {}
-
-/// filter apply clicked
 class ImageEventCancel extends ImageEventBase {}
 
 /// save image on disk clicked
