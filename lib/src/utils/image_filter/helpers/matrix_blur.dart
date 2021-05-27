@@ -51,26 +51,28 @@ class MatrixAppBlur extends ImageAppMatrix {
       List.filled(ImageAppFilter.maxWidth, -10, growable: false);
 
   int _calculateArea(int colorStartIndex, List<int> arr, int width, int ch,
-      int indexHelper, int rowIndexHelper) {
+      int columnIndexHelper, int rowIndexHelper, int lastRowIndexHelper) {
     int result = 0;
     int diff = 0;
     var prevRowIndex =
         (ch == 0) ? prevRowIndexB : (ch == 1 ? prevRowIndexG : prevRowIndexR);
     var prevRow = (ch == 0) ? prevRowB : (ch == 1 ? prevRowG : prevRowR);
     //check prev value form line
+    var overJumpDiff = 0;
+    var arrSize = arr.length;
 
     /// get prev value in line
-    if (rowIndexHelper - prevRowIndex[indexHelper] == 1) {
+    if (rowIndexHelper - prevRowIndex[columnIndexHelper] == 1) {
       // Caching Row --- works faster then Caching Column
       // take info from first item in array with indexHelper index
       // check prev row value
       /// cached values in prev row - add very much performance
       if (colorStartIndex < width) {
-        result = prevRow[indexHelper];
+        result = prevRow[columnIndexHelper];
       } else {
         int addIndex = colorStartIndex + (width * (_size - 1));
-        if (addIndex + _size > arr.length) {
-          result = prevRow[indexHelper];
+        if (addIndex + _size > lastRowIndexHelper) {
+          result = prevRow[columnIndexHelper];
         } else {
           int removeIndex = colorStartIndex - width;
           for (int m = 0; m < _size; m++) {
@@ -78,17 +80,13 @@ class MatrixAppBlur extends ImageAppMatrix {
             removeIndex++;
             addIndex++;
           }
-          result = prevRow[indexHelper] + diff;
+          result = prevRow[columnIndexHelper] + diff;
         }
       }
-    } else if (indexHelper - cachedColorIndex[ch] == 1) {
+    } else if (columnIndexHelper - cachedColorIndex[ch] == 1) {
       // Caching Column --- Works slowly then Caching Row
       // cache value in line by first item
       /// this will add speed on very big matrix filter sizes more than 100
-      if (colorStartIndex < 0) {
-        colorStartIndex =
-            colorStartIndex - ((colorStartIndex ~/ width) - 1) * width;
-      }
       colorStartIndex--;
       int stepIndex = colorStartIndex + _size;
       for (int m = 0; m < _size; m++) {
@@ -99,10 +97,6 @@ class MatrixAppBlur extends ImageAppMatrix {
       result = cachedColorResult[ch] + diff;
     } else {
       /// extremely slow work, but its necessary once
-      if (colorStartIndex < 0) {
-        colorStartIndex =
-            colorStartIndex - ((colorStartIndex ~/ width) - 1) * width;
-      }
       result = 0;
       for (int m = 0; m < _size; m++) {
         for (int k = 0; k < _size; k++) {
@@ -111,10 +105,10 @@ class MatrixAppBlur extends ImageAppMatrix {
         colorStartIndex += width;
       }
     }
-    cachedColorIndex[ch] = indexHelper;
+    cachedColorIndex[ch] = columnIndexHelper;
     cachedColorResult[ch] = result;
-    prevRow[indexHelper] = result;
-    prevRowIndex[indexHelper] = rowIndexHelper;
+    prevRow[columnIndexHelper] = result;
+    prevRowIndex[columnIndexHelper] = rowIndexHelper;
     return result ~/ divider;
   }
 
@@ -125,8 +119,13 @@ class MatrixAppBlur extends ImageAppMatrix {
     int pointWriteIndex = 0;
     int writeValue = 0xff000000;
 
-    int indexhelper = 0;
+    /// variables for speed optimization
+    int columnHelper = 0;
     int rowHelper = -1;
+    int overJumpDiff = 0;
+    int lastRowHelper=channels.size-channels.imageWidth;
+    /// variables for speed optimization
+
     prevRowIndexR.fillRange(0, prevRowIndexR.length, -10);
     prevRowIndexG.fillRange(0, prevRowIndexG.length, -10);
     prevRowIndexB.fillRange(0, prevRowIndexB.length, -10);
@@ -134,27 +133,41 @@ class MatrixAppBlur extends ImageAppMatrix {
     for (int y = range.y1; y <= range.y2; y++) {
       rowHelper++;
       cachedColorIndex.fillRange(0, 3, -10);
-      indexhelper = -1;
+      columnHelper = -1;
       for (int x = range.x1; x <= range.x2; x++) {
-        indexhelper++;
+        columnHelper++;
         pointWriteIndex = ((y) * channels.imageWidth) + (x);
-        if(channels.processed[pointWriteIndex]) continue;
+        if (channels.processed[pointWriteIndex]) continue;
         if (!range.checkPointInRange(x, y)) continue;
         pointIndex = ((y - _stepBack) * channels.imageWidth) + (x - _stepBack);
+
+        if (pointIndex < 0) {
+          pointIndex = pointIndex -
+              ((pointIndex ~/ channels.imageWidth) - 1) * channels.imageWidth;
+        } else {
+          overJumpDiff = pointIndex + channels.imageWidth * (_size - 1) + _size;
+          if (overJumpDiff >= channels.size) {
+            overJumpDiff = (overJumpDiff - channels.size);
+            pointIndex = pointIndex -
+                ((overJumpDiff ~/ channels.imageWidth) + 1) *
+                    channels.imageWidth;
+          }
+        }
+
         writeValue = 0xff000000;
         writeValue = writeValue |
             ((_calculateArea(pointIndex, channels.sourceRed,
-                        channels.imageWidth, 0, indexhelper, rowHelper) <<
+                        channels.imageWidth, 0, columnHelper, rowHelper,lastRowHelper) <<
                     16) &
                 0xff0000);
         writeValue = writeValue |
             ((_calculateArea(pointIndex, channels.sourceGreen,
-                        channels.imageWidth, 1, indexhelper, rowHelper) <<
+                        channels.imageWidth, 1, columnHelper, rowHelper,lastRowHelper) <<
                     8) &
                 0xff00);
         writeValue = writeValue |
             (_calculateArea(pointIndex, channels.sourceBlue,
-                    channels.imageWidth, 2, indexhelper, rowHelper) &
+                    channels.imageWidth, 2, columnHelper, rowHelper,lastRowHelper) &
                 0xff);
 
         channels.tempImgArr[pointWriteIndex] = writeValue;
