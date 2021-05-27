@@ -162,7 +162,7 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
 
   Stream<ImageStateScreen> selectFilterIndex(
       ImageEventExistingFilterSelected event) async* {
-    _blocState.selectedFilterPosition = event.index;
+    _blocState.selectedFilterIndex = event.index;
     yield _blocState.clone(); //needed
   }
 
@@ -176,9 +176,9 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
     if (position != null) {
       _cancelCurrentFilters(position);
       _blocState.positions.removeAt(event.index);
-      _blocState.selectedFilterPosition = event.index - 1;
-      if (_blocState.selectedFilterPosition < 0)
-        _blocState.selectedFilterPosition = _blocState.positions.length - 1;
+      _blocState.selectedFilterIndex = event.index - 1;
+      if (_blocState.selectedFilterIndex < 0)
+        _blocState.selectedFilterIndex = _blocState.positions.length - 1;
       _applyCurrentFilter(); //yield _blocState.clone(); - not needed here
     }
   }
@@ -188,7 +188,7 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
     _blocState.positions.add(FilterPosition(_blocState.maxRadius)
       ..posX = event.x.toInt()
       ..posY = event.y.toInt());
-    _blocState.selectedFilterPosition = _blocState.positions.length - 1;
+    _blocState.selectedFilterIndex = _blocState.positions.length - 1;
     _applyCurrentFilter();
     yield _blocState.clone(); //needed
   }

@@ -26,7 +26,7 @@ class ImageStateScreen extends ImageStateBase {
   String filename = "";
   late ImageFilterResult image;
   List<FilterPosition> positions = List.empty(growable: true);
-  int selectedFilterPosition = -1;
+  int selectedFilterIndex = -1;
 
   // maybe remove from bloc in next version. ...Why?
   bool get hasSelection {
@@ -42,25 +42,25 @@ class ImageStateScreen extends ImageStateBase {
 
   void resetSelection() {
     positions.clear();
-    selectedFilterPosition = -1;
+    selectedFilterIndex = -1;
   }
 
   void positionsUpdateOrder() {
-    selectedFilterPosition =
-        PositionsUtils.changeAreasDrawOrder(positions, selectedFilterPosition);
+    selectedFilterIndex =
+        PositionsUtils.changeAreasDrawOrder(positions, selectedFilterIndex);
   }
 
   void positionsMark2Redraw() {
-    PositionsUtils.markCrossedAreas(positions, selectedFilterPosition);
+    PositionsUtils.markCrossedAreas(positions, selectedFilterIndex);
   }
 
   FilterPosition? getSelectedPosition() {
-    var canGetPosition = selectedFilterPosition >= 0 &&
-        selectedFilterPosition < positions.length &&
-        positions[selectedFilterPosition].posX > ImgConst.undefinedPosValue &&
-        positions[selectedFilterPosition].posY > ImgConst.undefinedPosValue;
+    var canGetPosition = selectedFilterIndex >= 0 &&
+        selectedFilterIndex < positions.length &&
+        positions[selectedFilterIndex].posX > ImgConst.undefinedPosValue &&
+        positions[selectedFilterIndex].posY > ImgConst.undefinedPosValue;
     if (!canGetPosition) return null;
-    return positions[selectedFilterPosition];
+    return positions[selectedFilterIndex];
   }
 
   ImageStateScreen clone() {
@@ -70,7 +70,7 @@ class ImageStateScreen extends ImageStateBase {
       ..isImageSaved = this.isImageSaved
       ..activeTool = this.activeTool
       ..maxPower = this.maxPower
-      ..selectedFilterPosition = this.selectedFilterPosition
+      ..selectedFilterIndex = this.selectedFilterIndex
       ..positions = this.positions
       ..maxRadius = this.maxRadius;
     return newImageStateScreen;
