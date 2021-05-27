@@ -44,7 +44,6 @@ class ImageEventFilterGranularity extends ImageEventBase {
   ImageEventFilterGranularity(this.power);
 }
 
-
 /// filter index selected
 class ImageEventExistingFilterSelected extends ImageEventBase {
   final int index;
@@ -57,7 +56,6 @@ class ImageEventExistingFilterDelete extends ImageEventBase {
   ImageEventExistingFilterDelete(this.index);
 }
 
-
 /// image click (tap) new filter adding
 class ImageEventNewFilter extends ImageEventBase {
   final double x;
@@ -65,7 +63,6 @@ class ImageEventNewFilter extends ImageEventBase {
 
   ImageEventNewFilter(this.x, this.y);
 }
-
 
 /// image move filter
 class ImageEventPositionChanged extends ImageEventBase {

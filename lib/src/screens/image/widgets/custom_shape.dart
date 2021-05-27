@@ -8,9 +8,10 @@ class ShapePainter extends CustomPainter {
   int _hash = 0;
   final int selectedPosition;
   final List<FilterPosition> positions;
-  final bool isImageSelected;
+  bool isImageSelected = true;
 
-  ShapePainter(this.positions, this.selectedPosition, this.isImageSelected) {
+  ShapePainter(this.positions, this.selectedPosition) {
+    this.isImageSelected = selectedPosition <0 || selectedPosition >=positions.length;
     // with prime numbers to reduce collisions... may be. Not very important
     // from https://primes.utm.edu/lists/small/10000.txt
     positions.forEach((p) {
@@ -36,7 +37,6 @@ class ShapePainter extends CustomPainter {
       ..color = AppTheme.primaryColor
       ..strokeWidth = 4
       ..style = PaintingStyle.stroke;
-    if (isImageSelected)
       canvas.drawRect(
           Offset(0, 0) & Size(size.width - 2, size.height - 2), paint1);
   }
@@ -68,10 +68,12 @@ class ShapePainter extends CustomPainter {
         return;
       }
       var radius = position.getVisibleRadius();
-      var colorBorder =
-          index == selectedPosition ? AppTheme.primaryColor : Colors.black;
-      var colorBorderInner =
-          index == selectedPosition ? AppTheme.primaryColor : Colors.grey;
+      var colorBorder = index == selectedPosition
+          ? AppTheme.primaryColor
+          : Colors.black;
+      var colorBorderInner = index == selectedPosition
+          ? AppTheme.primaryColor
+          : Colors.grey;
       if (position.isRounded) {
         _drawCircle(canvas, position.posX, position.posY, radius, colorBorder);
         _drawCircle(

@@ -25,6 +25,8 @@ class Keys {
 
   static const String Buttons_Accept = 'buttons.accept';
 
+  static const String Buttons_Preview = 'buttons.preview';
+
   static const String Buttons_Settings = 'buttons.settings';
 
   static const String Buttons_Ok = 'buttons.ok';

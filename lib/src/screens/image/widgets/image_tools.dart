@@ -18,6 +18,7 @@ class ImageToolsWidget extends StatelessWidget {
   final Function(EditTool tool) onEditToolSelected;
   final Function() onCancel;
   final Function() onApply;
+  final Function() onPreview;
   final bool isLandscape;
   final double curRadius;
   final double curPower;
@@ -35,6 +36,7 @@ class ImageToolsWidget extends StatelessWidget {
     required this.onPowerChanged,
     required this.onApply,
     required this.onCancel,
+    required this.onPreview,
     required this.isLandscape,
     required this.curRadius,
     required this.curPower,
@@ -84,17 +86,12 @@ class ImageToolsWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Expanded(
-                  child: TextButtonBuilder.build(
-                      color: AppTheme.fontColor(context),
-                      text: translate(Keys.Buttons_Cancel),
-                      onPressed: onCancel,
-                      rotateIconQuarter: isLandscape ? 1 : 0)),
-              Expanded(
-                  child: TextButtonBuilder.build(
-                      color: AppTheme.fontColor(context),
-                      text: translate(Keys.Buttons_Apply),
-                      onPressed: onApply,
-                      rotateIconQuarter: isLandscape ? 1 : 0)),
+                child: TextButtonBuilder.build(
+                  color: AppTheme.fontColor(context),
+                  text: translate(Keys.Buttons_Preview),
+                  onPressed: this.onPreview,
+                  rotateIconQuarter: isLandscape ? 1 : 0),
+              ),
             ],
           ),
         (_internalLayout.isNeedSafeArea || isLandscape)

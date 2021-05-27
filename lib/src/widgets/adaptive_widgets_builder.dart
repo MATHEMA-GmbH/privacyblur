@@ -40,7 +40,7 @@ class IconButtonBuilder {
               : _buildRotatableIcon(rotateIconQuarter, icon, color, iconSize),
           onPressed: onPressed);
     } else {
-      return MaterialButton(
+      return TextButton(
         child: text != null
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.center,
