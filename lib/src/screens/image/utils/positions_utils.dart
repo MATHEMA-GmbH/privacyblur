@@ -8,7 +8,7 @@ class PositionsUtils {
   }
 
   static int changeAreasDrawOrder(List<FilterPosition> arr, int currentIndex) {
-    if (currentIndex < 0 || currentIndex >= arr.length) return -1;
+    if (currentIndex < 0 || currentIndex >= arr.length) return currentIndex;
     var position = arr[currentIndex];
     arr.sort((FilterPosition first, FilterPosition second) {
       if (first.isPixelate == second.isPixelate) {

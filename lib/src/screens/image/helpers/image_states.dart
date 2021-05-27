@@ -1,3 +1,4 @@
+import 'package:privacyblur/src/screens/image/utils/positions_utils.dart';
 import 'package:privacyblur/src/utils/image_filter/helpers/filter_result.dart';
 import 'package:privacyblur/src/widgets/message_bar.dart';
 
@@ -42,6 +43,15 @@ class ImageStateScreen extends ImageStateBase {
   void resetSelection() {
     positions.clear();
     selectedFilterPosition = -1;
+  }
+
+  void positionsUpdateOrder() {
+    selectedFilterPosition =
+        PositionsUtils.changeAreasDrawOrder(positions, selectedFilterPosition);
+  }
+
+  void positionsMark2Redraw() {
+    PositionsUtils.markCrossedAreas(positions, selectedFilterPosition);
   }
 
   FilterPosition? getSelectedPosition() {
