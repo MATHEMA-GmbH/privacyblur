@@ -31,6 +31,7 @@ class ImageRGB {
       _instance.sourceRed[index] = (pixel >> 16) & 0xff;
       _instance.sourceGreen[index] = (pixel >> 8) & 0xff;
       _instance.sourceBlue[index] = pixel & 0xff;
+      _instance.processed[index] = false;
     }
     return Future.value();
   }
