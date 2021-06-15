@@ -28,24 +28,25 @@ class ImageToolsWidget extends StatelessWidget {
   final Function() onCircleSelected;
   final Function() onSquareSelected;
   final Function() onFilterDelete;
+  final Function() onDetectFace;
 
-  ImageToolsWidget({
-    required this.onRadiusChanged,
-    required this.onPowerChanged,
-    required this.onPreview,
-    required this.isLandscape,
-    required this.curRadius,
-    required this.curPower,
-    required this.onBlurSelected,
-    required this.onPixelateSelected,
-    required this.onCircleSelected,
-    required this.onSquareSelected,
-    required this.isPixelate,
-    required this.isRounded,
-    required this.onEditToolSelected,
-    required this.activeTool,
-    required this.onFilterDelete,
-  });
+  ImageToolsWidget(
+      {required this.onRadiusChanged,
+      required this.onPowerChanged,
+      required this.onPreview,
+      required this.isLandscape,
+      required this.curRadius,
+      required this.curPower,
+      required this.onBlurSelected,
+      required this.onPixelateSelected,
+      required this.onCircleSelected,
+      required this.onSquareSelected,
+      required this.isPixelate,
+      required this.isRounded,
+      required this.onEditToolSelected,
+      required this.activeTool,
+      required this.onFilterDelete,
+      required this.onDetectFace});
 
   late Map<int, Widget> shapes;
   late Map<int, Widget> types;
@@ -189,7 +190,14 @@ class ImageToolsWidget extends StatelessWidget {
             ),
             IconButtonBuilder.build(
               rotateIconQuarter: isLandscape ? 1 : 0,
-              icon: Icons.delete_outlined,
+              icon: AppIcons.face,
+              color: AppTheme.fontColor(context),
+              onPressed: onDetectFace,
+              iconSize: _internalLayout.iconSize,
+            ),
+            IconButtonBuilder.build(
+              rotateIconQuarter: isLandscape ? 1 : 0,
+              icon: AppIcons.delete,
               color: AppTheme.fontColor(context),
               onPressed: onFilterDelete,
               iconSize: _internalLayout.iconSize,

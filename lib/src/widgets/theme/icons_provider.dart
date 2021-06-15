@@ -39,4 +39,13 @@ class AppIcons {
   static IconData get shape {
     return PrivacyBlurIcons.shape;
   }
+
+  static IconData get face {
+    if (AppTheme.isIOS) return CupertinoIcons.smiley;
+    return Icons.tag_faces_outlined;
+  }
+
+  static IconData get delete {
+    return Icons.delete_outlined;
+  }
 }

@@ -55,6 +55,8 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
       yield* filterTypeChanged(event);
     } else if (event is ImageEventShapeRounded) {
       yield* filterShapeChanged(event);
+    } else if (event is ImageEventDetectFaces) {
+      yield* detectFaces();
     } else if (event is _yield_state_internally) {
       yield _blocState.clone();
     }
@@ -269,19 +271,18 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
 
     /// VERY IMPORTANT TO USE AWAIT HERE!!!
     _blocState.image = await imageFilter.setImage(tmpImage);
+    yield _blocState.clone();
+    await _repo.removeLastPath();
+  }
 
-    /// ------ face detection part -------
+  Stream<ImageStateScreen> detectFaces() async* {
     var detectionResult = await faceDetection.detectFaces(
         imageFilter.getImageNV21(),
         imageFilter.imageWidth(),
         imageFilter.imageHeight());
     if (_blocState.addFaces(detectionResult)) _blocState.isImageSaved = false;
     _applyCurrentFilter();
-
-    /// ------ face detection part -------
-
     yield _blocState.clone();
-    await _repo.removeLastPath();
   }
 
   Stream<ImageStateFeedback> _yieldCriticalException(String title) async* {

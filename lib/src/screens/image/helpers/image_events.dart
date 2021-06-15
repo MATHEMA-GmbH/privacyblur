@@ -51,9 +51,9 @@ class ImageEventExistingFilterSelected extends ImageEventBase {
   ImageEventExistingFilterSelected(this.index);
 }
 
-class ImageEventCurrentFilterDelete extends ImageEventBase {
+class ImageEventCurrentFilterDelete extends ImageEventBase {}
 
-}
+class ImageEventDetectFaces extends ImageEventBase {}
 
 /// image click (tap) new filter adding
 class ImageEventNewFilter extends ImageEventBase {

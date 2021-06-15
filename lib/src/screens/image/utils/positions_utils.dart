@@ -35,11 +35,11 @@ class PositionsUtils {
     for(int i=0;i<arr.length;i++){
       var pos=arr[i];
       var radiusRatio=face.radius/pos.getVisibleRadius();
-      if(radiusRatio>0.9&&radiusRatio<1.1) {
+      if(radiusRatio>0.85&&radiusRatio<1.15) {
         if(pos.isInnerPoint(face.x,face.y)){
           var diffX=(face.x-pos.posX).abs();
           var diffY=(face.y-pos.posY).abs();
-          if((diffX+diffY)<(face.radius~/2)){
+          if((diffX+diffY)<(face.radius*0.5)){
             return false;
           }
         }
