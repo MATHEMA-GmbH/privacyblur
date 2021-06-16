@@ -75,6 +75,7 @@ class ImageScreen extends StatelessWidget with AppMessages {
               },
               builder: (BuildContext context, ImageStateBase? state) {
                 _bloc = BlocProvider.of<ImageBloc>(context);
+
                 if (state == null) {
                   _bloc.add(ImageEventSelected(filename));
                 }
@@ -84,6 +85,7 @@ class ImageScreen extends StatelessWidget with AppMessages {
                     (state is ImageStateScreen && state.savedOnce);
                 bool noSelectedPosition = (state is ImageStateScreen &&
                     state.getSelectedPosition() == null);
+                final offsetBottom = internalLayout.offsetBottom;
                 return ScaffoldWithAppBar.build(
                     onBackPressed: () => _onBack(context, state),
                     context: context,
@@ -93,13 +95,17 @@ class ImageScreen extends StatelessWidget with AppMessages {
                       child: _buildHomeBody(context, state),
                     ),
                     floatingActionButton: noSelectedPosition
-                        ? FloatingActionButton(
-                            onPressed: () => _bloc.add(ImageEventDetectFaces()),
-                            child: Icon(
-                              AppIcons.face,
-                              size: 35,
+                        ? Padding(
+                            padding: EdgeInsets.fromLTRB(0, 0, 0, offsetBottom),
+                            child: FloatingActionButton(
+                              onPressed: () =>
+                                  _bloc.add(ImageEventDetectFaces()),
+                              child: Icon(
+                                AppIcons.face,
+                                size: 35,
+                              ),
+                              backgroundColor: AppTheme.primaryColor,
                             ),
-                            backgroundColor: AppTheme.primaryColor,
                           )
                         : null);
               })),

@@ -121,7 +121,7 @@ class ScaffoldWithAppBar {
       required String title,
       List<Widget>? actions,
       Future<bool> Function()? onBackPressed,
-      FloatingActionButton? floatingActionButton,
+      Widget? floatingActionButton,
       required Widget body}) {
     return WillPopScope(
       onWillPop: () async {
