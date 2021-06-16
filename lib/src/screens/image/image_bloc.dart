@@ -283,6 +283,7 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
         imageFilter.imageWidth(),
         imageFilter.imageHeight());
     if (_blocState.addFaces(detectionResult)) _blocState.isImageSaved = false;
+    _blocState.selectedFilterIndex = _blocState.positions.length - 1;
     _applyCurrentFilter();
     yield _blocState.clone();
   }
