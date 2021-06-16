@@ -4,6 +4,23 @@
 
 A cross-platform application to obfuscate sensitive data from images, targeting iOS and Android devices. Mainly written in [dart](https://dart.dev/) with the [Flutter](https://flutter.dev/) SDK.
 
+The App is available on Google Playstore  and the the Appstore now!
+
+<table style="border: none;">
+  <tr>
+    <td style="border: none;">
+      <a href='https://play.google.com/store/apps/details?id=de.mathema.privacyblur'><img width="140px" height="auto" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
+    </td>
+    <td style="border: none;">
+      <a href="https://apps.apple.com/us/app/privacyblur/id1536274106">
+        <object data="docs/assets/black.png" type="image/png">
+          <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1619827200&h=9d23d850d1506bbe56180b2aa8ee51f7" alt="PrivacyBlur">
+        </object>
+      </a>
+    </td>
+  </tr>
+</table>
+
 ## Table of contents
 
 - [Privacy Blur](#privacyblur)

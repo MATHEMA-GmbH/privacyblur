@@ -63,13 +63,13 @@ import MLKitVision
 
         weak var weakSelf = self
         faceDetector.process(visionImage) { faces, error in
-          guard let strongSelf = weakSelf else {
+          guard let strongSelf = weakSelf, let faces = faces else {
               return
           }
-            var arr: Array<UInt32> = Array.init(repeating: 0, count: Int(faces!.count) * 4)
+            var arr: Array<UInt32> = Array.init(repeating: 0, count: Int(faces.count) * 4)
             var arrIndex: Int = 0
 
-        for face in faces! {
+        for face in faces {
             arr[arrIndex] = UInt32(face.frame.minX)
             arrIndex += 1
             arr[arrIndex] = UInt32(face.frame.minY)
