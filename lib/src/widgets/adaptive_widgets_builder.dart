@@ -134,7 +134,7 @@ class ScaffoldWithAppBar {
               context: context,
               leading: leading,
               title: title,
-              actions: actions) as ObstructingPreferredSizeWidget,
+              actions: actions), //as ObstructingPreferredSizeWidget,
           body: body,
           floatingActionButton: floatingActionButton,
         ),
