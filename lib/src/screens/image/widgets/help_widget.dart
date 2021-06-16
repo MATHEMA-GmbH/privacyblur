@@ -6,7 +6,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:privacyblur/resources/localization/keys.dart';
 import 'package:privacyblur/src/screens/image/utils/internal_layout.dart';
-import 'package:privacyblur/src/widgets/adaptive_widgets_builder.dart';
 import 'package:privacyblur/src/widgets/theme/icons_provider.dart';
 import 'package:privacyblur/src/widgets/theme/theme_provider.dart';
 
@@ -21,7 +20,6 @@ class HelpWidget extends StatelessWidget {
   static late InternalLayout _internalLayout;
   final double height;
   final double width;
-  final Function() onDetectFace;
 
   final List<HelpLine> helpLines = [
     HelpLine(AppIcons.click, Keys.Help_Lines_Help0),
@@ -30,21 +28,15 @@ class HelpWidget extends StatelessWidget {
     HelpLine(AppIcons.save, Keys.Help_Lines_Help3)
   ];
 
-  HelpWidget(this.height, this.width, this.onDetectFace);
+  HelpWidget(this.height, this.width);
 
   @override
   Widget build(BuildContext context) {
     _internalLayout = InternalLayout(context);
-    return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      IconButtonBuilder.build(
-        rotateIconQuarter: _internalLayout.landscapeMode ? 1 : 0,
-        icon: AppIcons.face,
-        color: AppTheme.fontColor(context),
-        onPressed: onDetectFace,
-        iconSize: _internalLayout.iconSize,
-      ),
-      ...helpLines.map((help) => _helpTemplate(context, help)).toList()
-    ]);
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children:
+            helpLines.map((help) => _helpTemplate(context, help)).toList());
   }
 
   Widget _helpTemplate(BuildContext context, HelpLine line) {

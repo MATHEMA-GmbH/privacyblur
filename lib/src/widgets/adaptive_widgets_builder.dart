@@ -121,41 +121,25 @@ class ScaffoldWithAppBar {
       required String title,
       List<Widget>? actions,
       Future<bool> Function()? onBackPressed,
+      FloatingActionButton? floatingActionButton,
       required Widget body}) {
-    if (_isIOS) {
-      return WillPopScope(
-        onWillPop: () async {
-          if (onBackPressed == null) return true;
-          return await onBackPressed();
-        },
-        child: ScaledWrapper(
-          child: CupertinoPageScaffold(
-            navigationBar: _AppBarBuilder.build(
-                context: context,
-                leading: leading,
-                title: title,
-                actions: actions) as ObstructingPreferredSizeWidget,
-            child: body,
-          ),
+    return WillPopScope(
+      onWillPop: () async {
+        if (onBackPressed == null) return true;
+        return await onBackPressed();
+      },
+      child: ScaledWrapper(
+        child: Scaffold(
+          appBar: _AppBarBuilder.build(
+              context: context,
+              leading: leading,
+              title: title,
+              actions: actions) as ObstructingPreferredSizeWidget,
+          body: body,
+          floatingActionButton: floatingActionButton,
         ),
-      );
-    } else {
-      return WillPopScope(
-          onWillPop: () async {
-            if (onBackPressed == null) return true;
-            return await onBackPressed();
-          },
-          child: ScaledWrapper(
-            child: Scaffold(
-              appBar: _AppBarBuilder.build(
-                  context: context,
-                  leading: leading,
-                  title: title,
-                  actions: actions),
-              body: body,
-            ),
-          ));
-    }
+      ),
+    );
   }
 }
 

@@ -15,6 +15,7 @@ import 'package:privacyblur/src/screens/image/widgets/image_viewer.dart';
 import 'package:privacyblur/src/utils/image_filter/helpers/filter_result.dart';
 import 'package:privacyblur/src/widgets/adaptive_widgets_builder.dart';
 import 'package:privacyblur/src/widgets/message_bar.dart';
+import 'package:privacyblur/src/widgets/theme/icons_provider.dart';
 import 'package:privacyblur/src/widgets/theme/theme_provider.dart';
 
 import 'image_bloc.dart';
@@ -81,15 +82,26 @@ class ImageScreen extends StatelessWidget with AppMessages {
                     (state is ImageStateScreen && (!state.isImageSaved));
                 bool imgSavedOnce =
                     (state is ImageStateScreen && state.savedOnce);
+                bool noSelectedPosition = (state is ImageStateScreen &&
+                    state.getSelectedPosition() == null);
                 return ScaffoldWithAppBar.build(
-                  onBackPressed: () => _onBack(context, state),
-                  context: context,
-                  title: translate(Keys.App_Name),
-                  actions: _actionsIcon(context, imgNotSaved, imgSavedOnce),
-                  body: SafeArea(
-                    child: _buildHomeBody(context, state),
-                  ),
-                );
+                    onBackPressed: () => _onBack(context, state),
+                    context: context,
+                    title: translate(Keys.App_Name),
+                    actions: _actionsIcon(context, imgNotSaved, imgSavedOnce),
+                    body: SafeArea(
+                      child: _buildHomeBody(context, state),
+                    ),
+                    floatingActionButton: noSelectedPosition
+                        ? FloatingActionButton(
+                            onPressed: () => _bloc.add(ImageEventDetectFaces()),
+                            child: Icon(
+                              AppIcons.face,
+                              size: 35,
+                            ),
+                            backgroundColor: AppTheme.primaryColor,
+                          )
+                        : null);
               })),
     );
   }
@@ -172,7 +184,7 @@ class ImageScreen extends StatelessWidget with AppMessages {
       decoration: BoxDecoration(color: AppTheme.barColor(context)),
       //AppTheme.barColor(context)
       child: (position == null)
-          ? HelpWidget(height, width, () => _bloc.add(ImageEventDetectFaces()))
+          ? HelpWidget(height, width)
           : RotatedBox(
               quarterTurns: isLandscape ? 3 : 0,
               child: ImageToolsWidget(
