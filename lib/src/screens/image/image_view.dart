@@ -79,13 +79,17 @@ class ImageScreen extends StatelessWidget with AppMessages {
                 if (state == null) {
                   _bloc.add(ImageEventSelected(filename));
                 }
-                bool imgNotSaved =
+                final imgNotSaved =
                     (state is ImageStateScreen && (!state.isImageSaved));
-                bool imgSavedOnce =
+                final imgSavedOnce =
                     (state is ImageStateScreen && state.savedOnce);
-                bool noSelectedPosition = (state is ImageStateScreen &&
+                final noSelectedPosition = (state is ImageStateScreen &&
                     state.getSelectedPosition() == null);
-                final offsetBottom = internalLayout.offsetBottom;
+                final fabBottom = internalLayout.landscapeMode
+                    ? 0.0
+                    : internalLayout.offsetBottom;
+                final fabRight =
+                    internalLayout.landscapeMode ? view2LandScapeSize : 0.0;
                 return ScaffoldWithAppBar.build(
                     onBackPressed: () => _onBack(context, state),
                     context: context,
@@ -96,7 +100,8 @@ class ImageScreen extends StatelessWidget with AppMessages {
                     ),
                     floatingActionButton: noSelectedPosition
                         ? Padding(
-                            padding: EdgeInsets.fromLTRB(0, 0, 0, offsetBottom),
+                            padding:
+                                EdgeInsets.fromLTRB(0, 0, fabRight, fabBottom),
                             child: FloatingActionButton(
                               onPressed: () =>
                                   _bloc.add(ImageEventDetectFaces()),
