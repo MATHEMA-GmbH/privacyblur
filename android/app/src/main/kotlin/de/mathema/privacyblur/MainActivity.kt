@@ -56,9 +56,9 @@ class MainActivity : FlutterActivity() {
                             for (i in 0 until faces.size) {
                                 val face = faces[i];
                                 arr[arrIndex++] = face.boundingBox.left //x1
-                                arr[arrIndex++] = face.boundingBox.top //x1
-                                arr[arrIndex++] = face.boundingBox.right //x1
-                                arr[arrIndex++] = face.boundingBox.bottom //x1
+                                arr[arrIndex++] = face.boundingBox.top //y1
+                                arr[arrIndex++] = face.boundingBox.right //x2
+                                arr[arrIndex++] = face.boundingBox.bottom //y2
                             }
                             result.success(arr)
                         }
