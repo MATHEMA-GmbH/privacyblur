@@ -27,7 +27,6 @@ dependencies:
   image_size_getter: ^1.0.0
   flutter_exif_rotation: ^0.4.1
   url_launcher: ^6.0.3
-  package_info: ^2.0.0
   image_picker: ^0.7.5+2
   image: ^3.0.2
   image_gallery_saver: ^1.6.9
