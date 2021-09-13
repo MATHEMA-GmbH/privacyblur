@@ -43,6 +43,7 @@ dependencies:
   cupertino_icons: ^1.0.3
   flutter_translate_gen: ^2.0.0
   build_runner: ^2.0.3
+  desktop_window: ^0.4.0
 
 dev_dependencies:
   flutter_test:
