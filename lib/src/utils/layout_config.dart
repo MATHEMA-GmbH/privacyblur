@@ -1,6 +1,15 @@
 import 'dart:math';
 
+import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/widgets.dart';
+
+enum DESKTOP_LAYOUT_TYPES { SMALL, LARGE, REGULAR }
+
+Map<DESKTOP_LAYOUT_TYPES, Size> desktopSizes = {
+  DESKTOP_LAYOUT_TYPES.SMALL: Size(375, 667),
+  DESKTOP_LAYOUT_TYPES.LARGE: Size(1920, 1080),
+  DESKTOP_LAYOUT_TYPES.REGULAR: Size(1366, 768)
+};
 
 class LayoutConfig {
   final double minScale = 0.8;
@@ -58,5 +67,22 @@ class LayoutConfig {
 
   double getScaledSize(double size) {
     return size * viewScaleRatio;
+  }
+
+  static setupDesktopSizes() async{
+    return await Future.wait([
+      DesktopWindow.setMinWindowSize(desktopSizes[DESKTOP_LAYOUT_TYPES.SMALL]!),
+      DesktopWindow.setMaxWindowSize(desktopSizes[DESKTOP_LAYOUT_TYPES.LARGE]!),
+    ]);
+  }
+
+  // TODO: later implementation of windows size tab
+  Future setWindowSize(
+      {DESKTOP_LAYOUT_TYPES size = DESKTOP_LAYOUT_TYPES.REGULAR}) async {
+    return DesktopWindow.setWindowSize(desktopSizes[size]!);
+  }
+
+  Future toggleFullScreen() async {
+    return await DesktopWindow.toggleFullScreen();
   }
 }

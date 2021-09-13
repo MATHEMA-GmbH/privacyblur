@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static final bool isIOS = Platform.isIOS; // || true;
+  static final bool isDesktop = Platform.isMacOS || Platform.isLinux || Platform.isWindows;
 
   static Color get primaryColor {
     if (isIOS) return iosTheme.primaryColor;
