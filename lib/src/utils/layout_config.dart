@@ -69,14 +69,14 @@ class LayoutConfig {
     return size * viewScaleRatio;
   }
 
-  static setupDesktopSizes() async{
+  static setupDesktopScreenBoundaries() async{
     return await Future.wait([
       DesktopWindow.setMinWindowSize(desktopSizes[DESKTOP_LAYOUT_TYPES.SMALL]!),
       DesktopWindow.setMaxWindowSize(desktopSizes[DESKTOP_LAYOUT_TYPES.LARGE]!),
     ]);
   }
 
-  // TODO: later implementation of windows size tab
+  // TODO: later implementation of desktop navigation tabs
   Future setWindowSize(
       {DESKTOP_LAYOUT_TYPES size = DESKTOP_LAYOUT_TYPES.REGULAR}) async {
     return DesktopWindow.setWindowSize(desktopSizes[size]!);

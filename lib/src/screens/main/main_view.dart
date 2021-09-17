@@ -12,7 +12,6 @@ import 'package:privacyblur/src/data/services/local_storage.dart';
 import 'package:privacyblur/src/di.dart';
 import 'package:privacyblur/src/router.dart';
 import 'package:privacyblur/src/screens/main/widgets/version_number.dart';
-import 'package:privacyblur/src/utils/layout_config.dart';
 import 'package:privacyblur/src/widgets/adaptive_widgets_builder.dart';
 import 'package:privacyblur/src/widgets/message_bar.dart';
 import 'package:privacyblur/src/widgets/section.dart';
@@ -32,11 +31,10 @@ class MainScreen extends StatefulWidget with AppMessages {
 
 class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   final _picker = ImagePicker();
-  late LayoutConfig _layoutConfig;
   late Color primaryColor;
   final String websiteURL = 'https://mathema-apps.de/';
-  bool havePermission = true;
-  bool userAlreadyClickButton = false;
+  bool permissionsGranted = true;
+  bool settingsHasBeenVisited = false;
 
   void initState() {
     super.initState();
@@ -52,7 +50,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
+    if (state == AppLifecycleState.resumed && !AppTheme.isDesktop) {
       _updatePermissionState();
     }
   }
@@ -60,7 +58,6 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     primaryColor = AppTheme.primaryColor;
-    _layoutConfig = LayoutConfig(context);
     return ScaffoldWithAppBar.build(
         context: context,
         title: translate(Keys.App_Name),
@@ -105,7 +102,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                           padding: EdgeInsets.symmetric(
                               vertical: 10, horizontal: 20),
                           color: Colors.white),
-                      if (!havePermission) _showPermissionWarning(),
+                      if (!permissionsGranted) _showPermissionWarning(),
                     ],
                   ),
                   sectionHeight: screenInnerHeight * 0.2),
@@ -154,35 +151,6 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
     );
   }
 
-  Future<bool> _requestPermission(Permission permission) async {
-    if (await permission.isGranted || await permission.isLimited) {
-      return true;
-    } else {
-      return ((await permission.request()) == PermissionStatus.granted ||
-          (await permission.request()) == PermissionStatus.limited);
-    }
-  }
-
-  void _updatePermissionState() async {
-    if (AppTheme.isDesktop) {
-      // TODO:
-    } else {
-      if (!userAlreadyClickButton) return;
-      bool resultPermission = false;
-      if (Platform.isIOS) {
-        resultPermission = (await Permission.photos.isGranted ||
-            await Permission.photos.isLimited);
-      } else {
-        resultPermission = (await Permission.storage.isGranted);
-      }
-      if (havePermission != resultPermission) {
-        setState(() {
-          havePermission = resultPermission;
-        });
-      }
-    }
-  }
-
   void _showLastImageDialog(BuildContext context) async {
     var path = await widget.localStorage.getLastPath();
     if (path.length > 0) {
@@ -199,56 +167,84 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   }
 
   void openImageAction(BuildContext context, ImageSource type) async {
-    if (AppTheme.isDesktop) {
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['jpg', 'png', 'jpeg', 'webp', 'gif'],
-      );
-      if (result != null) {
-        File file = File(result.files.single.path!);
-        if (await file.exists()) {
-          widget.router.openImageRoute(context, file.path);
-        } else {
-          widget.showMessage(
-              context: context,
-              message: translate(Keys.Messages_Errors_No_Image));
-        }
-      }
-    } else {
-      PickedFile? pickedFile;
-      bool status = Platform.isIOS
-          ? await _requestPermission(Permission.photos)
-          : await _requestPermission(Permission.storage);
-      if (status) {
-        try {
-          pickedFile = await _picker.getImage(source: type);
-        } catch (e) {
-          widget.showMessage(
-              context: context,
-              message: translate(Keys.Messages_Errors_Image_Library),
-              type: MessageBarType.Failure);
-          return;
-        }
-        if (pickedFile != null && await File(pickedFile.path).exists()) {
+    if (await requestLibraryPermissionStatus()) {
+      try {
+        File? pickedFile = await _pickFile(type);
+        if (pickedFile != null && await pickedFile.exists()) {
           widget.router.openImageRoute(context, pickedFile.path);
         } else {
           widget.showMessage(
               context: context,
               message: translate(Keys.Messages_Errors_No_Image));
         }
+      } catch (err) {
+        widget.showMessage(
+            context: context,
+            message: translate(Keys.Messages_Errors_Image_Library),
+            type: MessageBarType.Failure);
+        return;
+      }
+    } else {
+      var goSettings = await AppConfirmationBuilder.build(context,
+          message: translate(Keys.Messages_Errors_Photo_Permissions),
+          acceptTitle: translate(Keys.Buttons_Settings),
+          rejectTitle: translate(Keys.Buttons_Cancel));
+      settingsHasBeenVisited = true;
+      if (goSettings) {
+        await openAppSettings();
       } else {
-        var goSettings = await AppConfirmationBuilder.build(context,
-            message: translate(Keys.Messages_Errors_Photo_Permissions),
-            acceptTitle: translate(Keys.Buttons_Settings),
-            rejectTitle: translate(Keys.Buttons_Cancel));
-        userAlreadyClickButton = true;
-        if (goSettings) {
-          await openAppSettings();
-        } else {
-          _updatePermissionState();
-        }
+        _updatePermissionState();
       }
     }
+  }
+
+  Future<bool> requestLibraryPermissionStatus() async {
+    return AppTheme.isDesktop
+        ? true
+        : (Platform.isIOS
+            ? await _requestPermission(Permission.photos)
+            : await _requestPermission(Permission.storage));
+  }
+
+  Future<bool> _requestPermission(Permission permission) async {
+    if (await permission.isGranted || await permission.isLimited) {
+      return true;
+    } else {
+      return ((await permission.request()) == PermissionStatus.granted ||
+          (await permission.request()) == PermissionStatus.limited);
+    }
+  }
+
+  void _updatePermissionState() async {
+    if (!settingsHasBeenVisited) return;
+    bool resultPermission = false;
+    if (Platform.isIOS) {
+      resultPermission = (await Permission.photos.isGranted ||
+          await Permission.photos.isLimited);
+    } else {
+      resultPermission = (await Permission.storage.isGranted);
+    }
+    if (permissionsGranted != resultPermission) {
+      setState(() {
+        permissionsGranted = resultPermission;
+      });
+    }
+  }
+
+  Future<File?> _pickFile(ImageSource type) async {
+    File? resultFile;
+    if (AppTheme.isDesktop) {
+      FilePickerResult? pickResult = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['jpg', 'png', 'jpeg', 'webp', 'gif'],
+      );
+      if (pickResult != null) resultFile = File(pickResult.files.single.path!);
+    } else {
+      PickedFile? pickResult;
+      pickResult = await _picker.getImage(source: type);
+      if (pickResult != null) resultFile = File(pickResult.path);
+    }
+    return resultFile;
   }
 
   void launchLink(String url) async {

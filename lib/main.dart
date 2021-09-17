@@ -10,9 +10,7 @@ import 'package:privacyblur/src/widgets/theme/theme_provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  if(AppTheme.isDesktop) {
-    LayoutConfig.setupDesktopSizes();
-  }
+  if(AppTheme.isDesktop) LayoutConfig.setupDesktopScreenBoundaries();
 
   var delegate = await LocalizationDelegate.create(
       basePath: 'lib/resources/i18n/',
