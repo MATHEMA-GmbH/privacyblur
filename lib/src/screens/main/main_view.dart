@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -78,8 +79,8 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
           return Column(
             children: [
               Section(
-                  child:
-                      Image.asset('lib/resources/images/launch_image.png', height: min(screenInnerHeight * 0.3, 360)),
+                  child: Image.asset('lib/resources/images/launch_image.png',
+                      height: min(screenInnerHeight * 0.3, 360)),
                   sectionHeight: screenInnerHeight * 0.4),
               Section(
                   child: Text(
@@ -163,18 +164,22 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   }
 
   void _updatePermissionState() async {
-    if (!userAlreadyClickButton) return;
-    bool resultPermission = false;
-    if (Platform.isIOS) {
-      resultPermission = (await Permission.photos.isGranted ||
-          await Permission.photos.isLimited);
+    if (AppTheme.isDesktop) {
+      // TODO:
     } else {
-      resultPermission = (await Permission.storage.isGranted);
-    }
-    if (havePermission != resultPermission) {
-      setState(() {
-        havePermission = resultPermission;
-      });
+      if (!userAlreadyClickButton) return;
+      bool resultPermission = false;
+      if (Platform.isIOS) {
+        resultPermission = (await Permission.photos.isGranted ||
+            await Permission.photos.isLimited);
+      } else {
+        resultPermission = (await Permission.storage.isGranted);
+      }
+      if (havePermission != resultPermission) {
+        setState(() {
+          havePermission = resultPermission;
+        });
+      }
     }
   }
 
@@ -194,37 +199,54 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   }
 
   void openImageAction(BuildContext context, ImageSource type) async {
-    PickedFile? pickedFile;
-    bool status = Platform.isIOS
-        ? await _requestPermission(Permission.photos)
-        : await _requestPermission(Permission.storage);
-    if (status) {
-      try {
-        pickedFile = await _picker.getImage(source: type);
-      } catch (e) {
-        widget.showMessage(
-            context: context,
-            message: translate(Keys.Messages_Errors_Image_Library),
-            type: MessageBarType.Failure);
-        return;
-      }
-      if (pickedFile != null && await File(pickedFile.path).exists()) {
-        widget.router.openImageRoute(context, pickedFile.path);
-      } else {
-        widget.showMessage(
-            context: context,
-            message: translate(Keys.Messages_Errors_No_Image));
+    if (AppTheme.isDesktop) {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['jpg', 'png', 'jpeg'],
+      );
+      if (result != null) {
+        File file = File(result.files.single.path!);
+        if (await file.exists()) {
+          widget.router.openImageRoute(context, file.path);
+        } else {
+          widget.showMessage(
+              context: context,
+              message: translate(Keys.Messages_Errors_No_Image));
+        }
       }
     } else {
-      var goSettings = await AppConfirmationBuilder.build(context,
-          message: translate(Keys.Messages_Errors_Photo_Permissions),
-          acceptTitle: translate(Keys.Buttons_Settings),
-          rejectTitle: translate(Keys.Buttons_Cancel));
-      userAlreadyClickButton = true;
-      if (goSettings) {
-        await openAppSettings();
+      PickedFile? pickedFile;
+      bool status = Platform.isIOS
+          ? await _requestPermission(Permission.photos)
+          : await _requestPermission(Permission.storage);
+      if (status) {
+        try {
+          pickedFile = await _picker.getImage(source: type);
+        } catch (e) {
+          widget.showMessage(
+              context: context,
+              message: translate(Keys.Messages_Errors_Image_Library),
+              type: MessageBarType.Failure);
+          return;
+        }
+        if (pickedFile != null && await File(pickedFile.path).exists()) {
+          widget.router.openImageRoute(context, pickedFile.path);
+        } else {
+          widget.showMessage(
+              context: context,
+              message: translate(Keys.Messages_Errors_No_Image));
+        }
       } else {
-        _updatePermissionState();
+        var goSettings = await AppConfirmationBuilder.build(context,
+            message: translate(Keys.Messages_Errors_Photo_Permissions),
+            acceptTitle: translate(Keys.Buttons_Settings),
+            rejectTitle: translate(Keys.Buttons_Cancel));
+        userAlreadyClickButton = true;
+        if (goSettings) {
+          await openAppSettings();
+        } else {
+          _updatePermissionState();
+        }
       }
     }
   }
