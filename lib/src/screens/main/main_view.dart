@@ -202,7 +202,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
     if (AppTheme.isDesktop) {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
-        allowedExtensions: ['jpg', 'png', 'jpeg'],
+        allowedExtensions: ['jpg', 'png', 'jpeg', 'webp', 'gif'],
       );
       if (result != null) {
         File file = File(result.files.single.path!);

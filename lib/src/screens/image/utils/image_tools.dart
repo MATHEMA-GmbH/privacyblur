@@ -11,6 +11,7 @@ import 'package:image_size_getter/file_input.dart';
 import 'package:image_size_getter/image_size_getter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:privacyblur/src/screens/image/helpers/constants.dart';
+import 'package:privacyblur/src/widgets/theme/theme_provider.dart';
 
 class ImgTools {
   int srcWidth = 0;
@@ -20,7 +21,13 @@ class ImgTools {
       'blur' + DateTime.now().millisecondsSinceEpoch.toString(); //no extention!
 
   Future<img_tools.Image> scaleFile(String filePath, int maxSize) async {
-    File file = await _fixRotationBug(filePath);
+    File file;
+    if(AppTheme.isDesktop) {
+      file = File(filePath);
+    } else {
+      file = await _fixRotationBug(filePath);
+    }
+
     scaled = false;
     if (maxSize <= 0) return _readFile(file);
     maxSize = (maxSize ~/ 16) * 16;
