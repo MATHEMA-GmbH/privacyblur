@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -11,6 +10,7 @@ import 'package:privacyblur/resources/localization/keys.dart';
 import 'package:privacyblur/src/data/services/local_storage.dart';
 import 'package:privacyblur/src/di.dart';
 import 'package:privacyblur/src/router.dart';
+import 'package:privacyblur/src/screens/main/utils/image_picking.dart';
 import 'package:privacyblur/src/screens/main/widgets/version_number.dart';
 import 'package:privacyblur/src/widgets/adaptive_widgets_builder.dart';
 import 'package:privacyblur/src/widgets/message_bar.dart';
@@ -30,11 +30,9 @@ class MainScreen extends StatefulWidget with AppMessages {
 }
 
 class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
-  final _picker = ImagePicker();
+  final _picker = ImagePicking();
   late Color primaryColor;
   final String websiteURL = 'https://mathema-apps.de/';
-  bool permissionsGranted = true;
-  bool settingsHasBeenVisited = false;
 
   void initState() {
     super.initState();
@@ -51,7 +49,9 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed && !AppTheme.isDesktop) {
-      _updatePermissionState();
+      setState(() {
+        _picker.updatePermissionState();
+      });
     }
   }
 
@@ -84,7 +84,11 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                     translate(Keys.Main_Screen_Content),
                     style: TextStyle(
                         fontSize:
-                            Theme.of(context).textTheme.headline6!.fontSize,
+                        Theme
+                            .of(context)
+                            .textTheme
+                            .headline6!
+                            .fontSize,
                         fontWeight: FontWeight.bold,
                         color: textColor),
                     textAlign: TextAlign.center,
@@ -102,7 +106,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                           padding: EdgeInsets.symmetric(
                               vertical: 10, horizontal: 20),
                           color: Colors.white),
-                      if (!permissionsGranted) _showPermissionWarning(),
+                      if (!_picker.permissionsGranted) _showPermissionWarning(),
                     ],
                   ),
                   sectionHeight: screenInnerHeight * 0.2),
@@ -167,9 +171,9 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   }
 
   void openImageAction(BuildContext context, ImageSource type) async {
-    if (await requestLibraryPermissionStatus()) {
+    if (await _picker.requestLibraryPermissionStatus()) {
       try {
-        File? pickedFile = await _pickFile(type);
+        File? pickedFile = await _picker.pickFile(type);
         if (pickedFile != null && await pickedFile.exists()) {
           widget.router.openImageRoute(context, pickedFile.path);
         } else {
@@ -189,62 +193,15 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
           message: translate(Keys.Messages_Errors_Photo_Permissions),
           acceptTitle: translate(Keys.Buttons_Settings),
           rejectTitle: translate(Keys.Buttons_Cancel));
-      settingsHasBeenVisited = true;
+      _picker.settingsHasBeenVisited = true;
       if (goSettings) {
         await openAppSettings();
       } else {
-        _updatePermissionState();
+        setState(() {
+          _picker.updatePermissionState();
+        });
       }
     }
-  }
-
-  Future<bool> requestLibraryPermissionStatus() async {
-    return AppTheme.isDesktop
-        ? true
-        : (Platform.isIOS
-            ? await _requestPermission(Permission.photos)
-            : await _requestPermission(Permission.storage));
-  }
-
-  Future<bool> _requestPermission(Permission permission) async {
-    if (await permission.isGranted || await permission.isLimited) {
-      return true;
-    } else {
-      return ((await permission.request()) == PermissionStatus.granted ||
-          (await permission.request()) == PermissionStatus.limited);
-    }
-  }
-
-  void _updatePermissionState() async {
-    if (!settingsHasBeenVisited) return;
-    bool resultPermission = false;
-    if (Platform.isIOS) {
-      resultPermission = (await Permission.photos.isGranted ||
-          await Permission.photos.isLimited);
-    } else {
-      resultPermission = (await Permission.storage.isGranted);
-    }
-    if (permissionsGranted != resultPermission) {
-      setState(() {
-        permissionsGranted = resultPermission;
-      });
-    }
-  }
-
-  Future<File?> _pickFile(ImageSource type) async {
-    File? resultFile;
-    if (AppTheme.isDesktop) {
-      FilePickerResult? pickResult = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['jpg', 'png', 'jpeg', 'webp', 'gif'],
-      );
-      if (pickResult != null) resultFile = File(pickResult.files.single.path!);
-    } else {
-      PickedFile? pickResult;
-      pickResult = await _picker.getImage(source: type);
-      if (pickResult != null) resultFile = File(pickResult.path);
-    }
-    return resultFile;
   }
 
   void launchLink(String url) async {
