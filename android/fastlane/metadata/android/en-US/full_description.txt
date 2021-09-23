@@ -1,0 +1,12 @@
+PrivacyBlur does one thing only and does it well: blur or pixelate areas of your images with a few finger taps. Hide kids, faces, documents, numbers, names, etc., from your pictures in mere seconds. With PrivacyBlur at your side, you can share your pictures online without second thoughts.
+
+Faces can be detected automatically. This happens on your phone, the image is not sent to any server.
+
+No in-app purchases. No ads. No watermark. No hassle. Free forever because privacy shouldn't cost anything.
+
+Features:
+   - Blur / Pixelate effect
+   - Faces can be detected automatically
+   - Fine / coarse grain effect
+   - Round / Square area
+   - Export to your camera roll

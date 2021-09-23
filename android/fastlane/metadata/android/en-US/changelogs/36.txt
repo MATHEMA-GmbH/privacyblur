@@ -1,0 +1,1 @@
+Face detection added (image is not sent to a server or backend)

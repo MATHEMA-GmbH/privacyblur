@@ -1,0 +1,12 @@
+PrivacyBlur hat genau eine Aufgabe, und die erfüllt unsere App sehr gut: Bereiche von Bildern schnell und unkompliziert verpixeln oder verschwimmen lassen; Kinder, Gesichter, Dokumente, Nummern, Namen usw. Mit PrivacyBlur an Deiner Seite kannst Deine Bilder teilen, ohne Dir Sorgen um sensible Bereiche machen zu müssen.
+
+Die App kann automatisch Gesichter erkennen. Das geschieht auf deinem Gerät, die Bilder werden auf keinen Server hochgeladen.
+
+Keine In-App-Käufe. Keine Werbung. Kein Wasserzeichen. Keine Umstände. Für immer kostenlos, weil Privatsphäre nichts kosten sollte.
+
+Funktionen:
+   - Verpixeln und verschwimmen lassen
+   - Gesichter können automatisch erkannt werden
+   - Stärke des Effekts fein einstellbar
+   - Runde und eckige Bereiche
+   - Die Bilder werden in deiner Sammlung abgelegt
