@@ -64,17 +64,17 @@ class ImgTools {
       File image;
       String? selectedDirectory;
       try {
-        image = await _imageToFile(
-            bytes: Uint8List.fromList(img_external
-                .encodeJpg(img_external.Image.fromBytes(width, height, raw))));
         selectedDirectory = await FilePicker.platform.getDirectoryPath();
       } catch (err) {
         print(err.toString());
         return Future.value(false);
       }
-      if (selectedDirectory is String && image is File) {
+      if (selectedDirectory is String) {
         fileName = _createFileName(needOverride);
         try {
+          image = await _imageToFile(
+              bytes: Uint8List.fromList(img_external.encodeJpg(
+                  img_external.Image.fromBytes(width, height, raw))));
           await image.copy('$selectedDirectory/$fileName.jpg');
           saved = true;
         } catch (err) {
@@ -101,7 +101,7 @@ class ImgTools {
         saved = true;
         _saveCount++;
       } catch (e) {
-       print(e.toString());
+        print(e.toString());
       }
     }
     return Future.value(saved);
