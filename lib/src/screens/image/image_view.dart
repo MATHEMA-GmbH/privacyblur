@@ -98,7 +98,7 @@ class ImageScreen extends StatelessWidget with AppMessages {
                     body: SafeArea(
                       child: _buildHomeBody(context, state),
                     ),
-                    floatingActionButton: noSelectedPosition
+                    floatingActionButton: !AppTheme.isDesktop && noSelectedPosition
                         ? Padding(
                             padding:
                                 EdgeInsets.fromLTRB(0, 0, fabRight, fabBottom),
