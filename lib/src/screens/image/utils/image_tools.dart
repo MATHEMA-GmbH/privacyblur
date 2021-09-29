@@ -4,6 +4,7 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as img_tools;
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
 import 'package:image/image.dart' as img_external;
 import 'package:image_gallery_saver/image_gallery_saver.dart';
@@ -19,10 +20,11 @@ class ImgTools {
   bool scaled = false;
   final String saveFileName =
       'blur' + DateTime.now().millisecondsSinceEpoch.toString(); //no extention!
+  int _saveCount = 0;
 
   Future<img_tools.Image> scaleFile(String filePath, int maxSize) async {
     File file;
-    if(AppTheme.isDesktop) {
+    if (AppTheme.isDesktop) {
       file = File(filePath);
     } else {
       file = await _fixRotationBug(filePath);
@@ -53,37 +55,75 @@ class ImgTools {
     }
   }
 
-  int _saveCount = 0;
-
   Future<bool> save2Gallery(
       int width, int height, Uint32List raw, bool needOverride) async {
-    Directory directory = await getTemporaryDirectory();
-    String newPath = directory.path;
-    directory = Directory(newPath);
-    var fileName = saveFileName;
+    bool saved = false;
+    String fileName;
+
+    if (AppTheme.isDesktop) {
+      File image;
+      String? selectedDirectory;
+      try {
+        image = await _imageToFile(
+            bytes: Uint8List.fromList(img_external
+                .encodeJpg(img_external.Image.fromBytes(width, height, raw))));
+        selectedDirectory = await FilePicker.platform.getDirectoryPath();
+      } catch (err) {
+        print(err.toString());
+        return Future.value(false);
+      }
+      if (selectedDirectory is String && image is File) {
+        fileName = _createFileName(needOverride);
+        try {
+          await image.copy('$selectedDirectory/$fileName.jpg');
+          saved = true;
+        } catch (err) {
+          print(err.toString());
+        }
+      }
+    } else {
+      Directory directory = await getTemporaryDirectory();
+      String newPath = directory.path;
+      directory = Directory(newPath);
+      fileName = _createFileName(needOverride);
+
+      try {
+        directory.create(recursive: true);
+      } catch (e) {}
+
+      try {
+        await ImageGallerySaver.saveImage(
+            Uint8List.fromList(img_external
+                .encodeJpg(img_external.Image.fromBytes(width, height, raw))),
+            quality: ImgConst.imgQuality,
+            name: fileName);
+
+        saved = true;
+        _saveCount++;
+      } catch (e) {
+       print(e.toString());
+      }
+    }
+    return Future.value(saved);
+  }
+
+  String _createFileName(bool needOverride) {
+    String fileName = saveFileName;
     if (!needOverride) {
       fileName = 'blur' +
           _saveCount.toString() +
           DateTime.now().millisecondsSinceEpoch.toString();
     }
-    var saved = false;
-    try {
-      directory.create(recursive: true);
-    } catch (e) {}
+    return fileName;
+  }
 
-    try {
-      await ImageGallerySaver.saveImage(
-          Uint8List.fromList(img_external
-              .encodeJpg(img_external.Image.fromBytes(width, height, raw))),
-          quality: ImgConst.imgQuality,
-          name: fileName);
-
-      saved = true;
-      _saveCount++;
-    } catch (e) {
-      saved = false;
-    }
-    return Future.value(saved);
+  Future<File> _imageToFile(
+      {required Uint8List bytes, String ext = "jpg"}) async {
+    String tempPath = (await getTemporaryDirectory()).path;
+    File file = File('$tempPath/blur.$ext');
+    await file.writeAsBytes(
+        bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
+    return file;
   }
 
   Future<img_tools.Image> _readFile(File file) async {

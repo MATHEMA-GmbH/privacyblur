@@ -44,7 +44,7 @@ dependencies:
   flutter_translate_gen: ^2.0.0
   build_runner: ^2.0.3
   desktop_window: ^0.4.0
-  file_picker: ^4.0.3
+  file_picker: ^4.1.2
 
 dev_dependencies:
   flutter_test:
