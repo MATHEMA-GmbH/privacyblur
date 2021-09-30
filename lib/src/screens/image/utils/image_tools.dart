@@ -19,7 +19,10 @@ class ImgTools {
   int srcHeight = 0;
   bool scaled = false;
   final String saveFileName =
-      'blur' + DateTime.now().millisecondsSinceEpoch.toString(); //no extention!
+      'blur' + DateTime
+          .now()
+          .millisecondsSinceEpoch
+          .toString(); //no extention!
   int _saveCount = 0;
 
   Future<img_tools.Image> scaleFile(String filePath, int maxSize) async {
@@ -55,56 +58,29 @@ class ImgTools {
     }
   }
 
-  Future<bool> save2Gallery(
-      int width, int height, Uint32List raw, bool needOverride) async {
+  Future<bool> save2Gallery(int width, int height, Uint32List raw,
+      bool needOverride) async {
     bool saved = false;
     String fileName;
 
-    if (AppTheme.isDesktop) {
-      File image;
-      String? selectedDirectory;
-      try {
-        image = await _imageToFile(
-            bytes: Uint8List.fromList(img_external
-                .encodeJpg(img_external.Image.fromBytes(width, height, raw))));
+    try {
+      String? selectedDirectory; // desktop only
+      if (AppTheme.isDesktop)
         selectedDirectory = await FilePicker.platform.getDirectoryPath();
-      } catch (err) {
-        print(err.toString());
-        return Future.value(false);
-      }
-      if (selectedDirectory is String && image is File) {
-        fileName = _createFileName(needOverride);
-        try {
-          await image.copy('$selectedDirectory/$fileName.jpg');
-          saved = true;
-        } catch (err) {
-          print(err.toString());
-        }
-      }
-    } else {
-      Directory directory = await getTemporaryDirectory();
-      String newPath = directory.path;
-      directory = Directory(newPath);
+      String? temporaryDirectoryPath = (await getTemporaryDirectory()).path;
       fileName = _createFileName(needOverride);
-
-      try {
-        directory.create(recursive: true);
-      } catch (e) {}
-
-      try {
-        await ImageGallerySaver.saveImage(
-            Uint8List.fromList(img_external
-                .encodeJpg(img_external.Image.fromBytes(width, height, raw))),
-            quality: ImgConst.imgQuality,
-            name: fileName);
-
-        saved = true;
-        _saveCount++;
-      } catch (e) {
-       print(e.toString());
-      }
+      Uint8List imageBytes = Uint8List.fromList(img_external.encodeJpg(
+          img_external.Image.fromBytes(width, height, raw)));
+      saved = await _writeFile(bytes: imageBytes,
+          tempDir: temporaryDirectoryPath,
+          newPath: selectedDirectory,
+          fileName: fileName);
+      _saveCount++;
+    } catch (err) {
+      print(err.toString());
     }
-    return Future.value(saved);
+
+    return saved;
   }
 
   String _createFileName(bool needOverride) {
@@ -112,15 +88,46 @@ class ImgTools {
     if (!needOverride) {
       fileName = 'blur' +
           _saveCount.toString() +
-          DateTime.now().millisecondsSinceEpoch.toString();
+          DateTime
+              .now()
+              .millisecondsSinceEpoch
+              .toString();
     }
     return fileName;
   }
 
+  Future<bool> _writeFile({
+    required Uint8List bytes,
+    required String tempDir,
+    required String? newPath,
+    required String fileName
+  }) async {
+    bool saved = false;
+
+    if (AppTheme.isDesktop) {
+      File image = await _imageToFile(bytes: bytes, directoryPath: tempDir);
+      await image.copy('$newPath/$fileName.jpg');
+      saved = true;
+    } else {
+      Directory directory = Directory(tempDir);
+      try {
+        directory.create(recursive: true);
+        await ImageGallerySaver.saveImage(
+            bytes,
+            quality: ImgConst.imgQuality,
+            name: fileName);
+        saved = true;
+      } catch (e) {
+        print(e.toString());
+      }
+    }
+
+    return saved;
+  }
+
   Future<File> _imageToFile(
-      {required Uint8List bytes, String ext = "jpg"}) async {
-    String tempPath = (await getTemporaryDirectory()).path;
-    File file = File('$tempPath/blur.$ext');
+      {required Uint8List bytes, required String directoryPath, String ext = "jpg"}) async {
+    File file = File('$directoryPath/blur.$ext');
     await file.writeAsBytes(
         bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
     return file;
