@@ -8,8 +8,6 @@ import 'package:privacyblur/src/widgets/scaled_wrapper.dart';
 
 import 'theme/theme_provider.dart';
 
-final bool _isIOS = AppTheme.isIOS || AppTheme.isMacOS;
-
 class IconButtonBuilder {
   static Widget build(
       {Color? color,
@@ -18,7 +16,7 @@ class IconButtonBuilder {
       required Function() onPressed,
       int rotateIconQuarter = 0,
       double iconSize = 30}) {
-    if (_isIOS) {
+    if (AppTheme.isCupertino) {
       return CupertinoButton(
           child: text != null
               ? Row(
@@ -88,7 +86,7 @@ class TextButtonBuilder {
   }) {
     double? borderRadius = rounded ? 6 : 0;
     EdgeInsets? _padding = padding != null ? padding : EdgeInsets.all(0);
-    if (_isIOS) {
+    if (AppTheme.isCupertino) {
       return CupertinoButton(
         padding: _padding,
         color: backgroundColor,
@@ -154,7 +152,7 @@ class AppBuilder {
     required Locale locale,
     required Iterable<LocalizationsDelegate<dynamic>> localizationsDelegates,
   }) {
-    if (_isIOS) {
+    if (AppTheme.isCupertino) {
       return MaterialApp(
         title: title,
         theme: AppTheme.light,
@@ -197,7 +195,7 @@ class _AppBarBuilder {
       Widget? leading,
       required String title,
       List<Widget>? actions}) {
-    if (_isIOS) {
+    if (AppTheme.isCupertino) {
       return CupertinoNavigationBar(
           //backgroundColor: Theme.of(context).bottomAppBarColor,
           leading: leading,
@@ -243,7 +241,7 @@ class AppConfirmationBuilder {
     required String acceptTitle,
     required String rejectTitle,
   }) async {
-    if (_isIOS) {
+    if (AppTheme.isCupertino) {
       return (await showCupertinoDialog<bool>(
           context: context,
           barrierDismissible: true,
@@ -278,7 +276,7 @@ class AppConfirmationBuilder {
 
   static Widget _buildAdaptiveAlertButton(
       String text, void Function()? onPressed) {
-    if (_isIOS) {
+    if (AppTheme.isCupertino) {
       return CupertinoDialogAction(
         onPressed: onPressed,
         child: Text(text),

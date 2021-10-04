@@ -5,21 +5,21 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static final bool isIOS = Platform.isIOS; // || true;
-  static final bool isMacOS = Platform.isMacOS;
-  static final bool isDesktop = isMacOS || Platform.isLinux || Platform.isWindows;
+  static final bool isCupertino = Platform.isMacOS || isIOS;
+  static final bool isDesktop = Platform.isMacOS || Platform.isLinux || Platform.isWindows;
 
   static Color get primaryColor {
-    if (isIOS || isMacOS) return iosTheme.primaryColor;
+    if (isCupertino) return iosTheme.primaryColor;
     return light.primaryColor;
   }
 
   static Color get buttonColor {
-    if (isIOS || isMacOS) return iosTheme.primaryColor;
+    if (isCupertino) return iosTheme.primaryColor;
     return light.primaryColor;
   }
 
   static Color scaffoldColor(context) {
-    if (isIOS || isMacOS) {
+    if (isCupertino) {
       if (Theme.of(context).brightness == Brightness.dark) {
         return CupertinoColors.darkBackgroundGray;
       } else
@@ -29,20 +29,20 @@ class AppTheme {
   }
 
   static Color appBarToolColor(context) {
-    if (isIOS || isMacOS) {
+    if (isCupertino) {
       return fontColor(context);
     }
     return Colors.white;
   }
 
   static Color fontColor(BuildContext context) {
-    return (AppTheme.isIOS || isMacOS
+    return (isCupertino
         ? CupertinoTheme.of(context).textTheme.textStyle.color
         : Theme.of(context).textTheme.headline1!.color)!;
   }
 
   static Color fontColorAccent(BuildContext context) {
-    return (AppTheme.isIOS || isMacOS
+    return (isCupertino
         ? const CupertinoDynamicColor.withBrightness(
             color: CupertinoColors.systemGrey,
             darkColor: CupertinoColors.systemGrey3,
@@ -51,7 +51,7 @@ class AppTheme {
   }
 
   static Color barColor(BuildContext context) {
-    return isIOS || isMacOS
+    return isCupertino
         ? CupertinoTheme.of(context).barBackgroundColor
         : Theme.of(context).scaffoldBackgroundColor;
   }

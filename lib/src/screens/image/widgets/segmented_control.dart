@@ -31,7 +31,7 @@ class _SegmentedControlState extends State<SegmentedControl> {
 
   @override
   Widget build(BuildContext context) {
-    if (AppTheme.isIOS || AppTheme.isMacOS) {
+    if (AppTheme.isCupertino) {
       return CupertinoSlidingSegmentedControl(
         groupValue: this.groupValue,
         children: this.widget.tabs,

@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:privacyblur/resources/fonts/privacy_blur_icons.dart';
 import 'package:privacyblur/src/widgets/theme/theme_provider.dart';
 
+
 class AppIcons {
   static IconData get save {
-    if (AppTheme.isIOS) return CupertinoIcons.square_arrow_down;
+    if (AppTheme.isCupertino) return CupertinoIcons.square_arrow_down;
     return Icons.save_alt_outlined;
   }
 
@@ -14,17 +15,17 @@ class AppIcons {
   }
 
   static IconData get click {
-    if (AppTheme.isIOS) return CupertinoIcons.hand_point_right;
+    if (AppTheme.isCupertino) return CupertinoIcons.hand_point_right;
     return Icons.arrow_forward_outlined;
   }
 
   static IconData get drag {
-    if (AppTheme.isIOS) return CupertinoIcons.move;
+    if (AppTheme.isCupertino) return CupertinoIcons.move;
     return Icons.touch_app_outlined;
   }
 
   static IconData get done {
-    if (AppTheme.isIOS) return CupertinoIcons.check_mark;
+    if (AppTheme.isCupertino) return CupertinoIcons.check_mark;
     return Icons.done_outlined;
   }
 
@@ -41,7 +42,7 @@ class AppIcons {
   }
 
   static IconData get face {
-    if (AppTheme.isIOS) return CupertinoIcons.smiley;
+    if (AppTheme.isCupertino) return CupertinoIcons.smiley;
     return Icons.tag_faces_outlined;
   }
 
