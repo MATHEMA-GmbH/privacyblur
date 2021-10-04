@@ -53,4 +53,6 @@ ios/Podfile.lock
 android/key.properties
 android/key.jks
 android/json-secret.json
-android/fastlane/report.xml
+
+# fastlane
+fastlane/report.xml

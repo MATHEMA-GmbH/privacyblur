@@ -32,7 +32,7 @@ platform :android do
 
   desc "Deploy a new version to the Google Play"
   lane :deploy do
-    gradle(task: "clean assembleRelease")
+    gradle(task: "clean assembleRelease", project_dir: 'android/')
     upload_to_play_store(
       skip_upload_changelogs: true
     )
