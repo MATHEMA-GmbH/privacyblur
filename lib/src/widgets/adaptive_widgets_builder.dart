@@ -8,7 +8,7 @@ import 'package:privacyblur/src/widgets/scaled_wrapper.dart';
 
 import 'theme/theme_provider.dart';
 
-final bool _isIOS = AppTheme.isIOS;
+final bool _isIOS = AppTheme.isIOS || AppTheme.isMacOS;
 
 class IconButtonBuilder {
   static Widget build(

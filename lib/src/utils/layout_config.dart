@@ -76,13 +76,16 @@ class LayoutConfig {
     ]);
   }
 
-  // TODO: later implementation of desktop navigation tabs
-  Future setWindowSize(
-      {DESKTOP_LAYOUT_TYPES size = DESKTOP_LAYOUT_TYPES.REGULAR}) async {
-    return DesktopWindow.setWindowSize(desktopSizes[size]!);
+  /// for Screenshot purposes
+  static Future setWindowSize(
+      {DESKTOP_LAYOUT_TYPES size = DESKTOP_LAYOUT_TYPES.REGULAR, Size? customSize}) async {
+    Size sizeToSet = desktopSizes[size]!;
+    if(customSize != null) sizeToSet = customSize;
+    return DesktopWindow.setWindowSize(sizeToSet);
   }
 
-  Future toggleFullScreen() async {
+  // TODO: later implementation of desktop navigation tabs
+  static Future toggleFullScreen() async {
     return await DesktopWindow.toggleFullScreen();
   }
 }
