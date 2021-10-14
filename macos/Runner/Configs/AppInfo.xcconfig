@@ -8,7 +8,7 @@
 PRODUCT_NAME = privacyblur
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = de.mathema.pixelmonster
+PRODUCT_BUNDLE_IDENTIFIER = de.mathema.privacyblur
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2021 de.mathema. All rights reserved.

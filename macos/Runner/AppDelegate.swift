@@ -8,12 +8,12 @@ import CoreGraphics
 @NSApplicationMain
 class AppDelegate: FlutterAppDelegate {
     private var HEAP_SIZE_CHANNEL: String = "de.mathema.privacyblur/memory";
-    private var FACE_DETECTION_CHANNEL: String = "de.mathema.privacyblur/face_detection";
+    // private var FACE_DETECTION_CHANNEL: String = "de.mathema.privacyblur/face_detection";
     
     override func applicationDidFinishLaunching(_ notification: Notification) {
         let controller : FlutterViewController = mainFlutterWindow?.contentViewController as! FlutterViewController
         let heapSizeChannel = FlutterMethodChannel.init(name: HEAP_SIZE_CHANNEL, binaryMessenger:  controller.engine.binaryMessenger)
-        let faceDetectionChannel = FlutterMethodChannel.init(name: FACE_DETECTION_CHANNEL, binaryMessenger:  controller.engine.binaryMessenger)
+        // let faceDetectionChannel = FlutterMethodChannel.init(name: FACE_DETECTION_CHANNEL, binaryMessenger:  controller.engine.binaryMessenger)
         
         heapSizeChannel.setMethodCallHandler({
             [weak self] (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
@@ -24,6 +24,7 @@ class AppDelegate: FlutterAppDelegate {
             self?.getHeapSize(result: result)
         })
 
+        /*
          faceDetectionChannel.setMethodCallHandler({
             [weak self] (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
             guard call.method == "detectFaces" else {
@@ -32,6 +33,7 @@ class AppDelegate: FlutterAppDelegate {
             }
             self?.detectFaces(call: call, result: result)
         })
+        */
     }
     
     override func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
@@ -63,6 +65,7 @@ class AppDelegate: FlutterAppDelegate {
       }
     }
     
+    /*
     private func detectFaces(call: FlutterMethodCall, result: @escaping FlutterResult) {
         if let args = call.arguments as? Dictionary<String, Any>,
         let srcImage : FlutterStandardTypedData = args["nv21"] as? FlutterStandardTypedData,
@@ -75,16 +78,11 @@ class AppDelegate: FlutterAppDelegate {
             let imageBoundaries = CGRect(x: 0, y: 0, width: image.width, height: image.height)
 
             let sequenceHandler = VNImageRequestHandler(cgImage:image, orientation: CGImagePropertyOrientation.leftMirrored)
-
-//            let detectFaceRequest = VNDetectFaceRectanglesRequest{ request, error in
-//                self.detectedFaces(request: request, error: error, result: result, boundaries: imageBoundaries)
-//            }
             
             let rectangleDetectionRequest: VNDetectRectanglesRequest = {
                 let rectDetectRequest = VNDetectRectanglesRequest{ request, error in
                     self.detectedFaces(request: request, error: error, result: result, boundaries: imageBoundaries)
                 }
-                // Customize & configure the request to detect only certain rectangles.
                 rectDetectRequest.maximumObservations = 8 // Vision currently supports up to 16.
                 rectDetectRequest.minimumConfidence = 0.6 // Be confident.
                 rectDetectRequest.minimumAspectRatio = 0.3 // height / width
@@ -151,4 +149,5 @@ class AppDelegate: FlutterAppDelegate {
         
         return converted_rect
     }
+     */
 }
