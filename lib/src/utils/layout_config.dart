@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:desktop_window/desktop_window.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:menubar/menubar.dart';
@@ -84,16 +85,25 @@ class LayoutConfig {
       Submenu(label: translate(Keys.Layout_Configs_Layout), children: [
         MenuItem(
             label: translate(Keys.Layout_Configs_Fullscreen),
-            onClicked: () => toggleFullScreen()),
+            onClicked: () => toggleFullScreen(),
+            shortcut: LogicalKeySet(LogicalKeyboardKey.f11),
+        ),
         MenuItem(
             label: translate(Keys.Layout_Configs_Large),
-            onClicked: () => setWindowSize(size: DESKTOP_LAYOUT_TYPES.LARGE)),
-        MenuItem(
-            label: translate(Keys.Layout_Configs_Regular),
-            onClicked: () => setWindowSize(size: DESKTOP_LAYOUT_TYPES.REGULAR)),
+            onClicked: () => setWindowSize(size: DESKTOP_LAYOUT_TYPES.LARGE),
+            shortcut: LogicalKeySet(LogicalKeyboardKey.keyL),
+        ),
         MenuItem(
             label: translate(Keys.Layout_Configs_Small),
-            onClicked: () => setWindowSize(size: DESKTOP_LAYOUT_TYPES.SMALL))
+            onClicked: () => setWindowSize(size: DESKTOP_LAYOUT_TYPES.SMALL),
+            shortcut: LogicalKeySet(LogicalKeyboardKey.keyS),
+        ),
+        MenuDivider(),
+        MenuItem(
+            label: translate(Keys.Layout_Configs_Regular),
+            onClicked: () => setWindowSize(size: DESKTOP_LAYOUT_TYPES.REGULAR),
+            shortcut: LogicalKeySet(LogicalKeyboardKey.keyZ),
+        ),
       ])
     ]);
   }
