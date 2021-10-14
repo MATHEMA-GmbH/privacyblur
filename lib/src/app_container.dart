@@ -24,7 +24,6 @@ class AppContainer {
   }
 
   AppContainer._internal() {
-    if(AppTheme.isDesktop) _setupDesktopConfigs();
     _di = DependencyInjection();
     _navigator = ScreenNavigator();
     _router = AppRouter.fromMainScreen(_navigator, _di);
@@ -39,9 +38,10 @@ class AppContainer {
   Future _createLocalizedAppConfig() async {
     if (_localizationDelegate != null) return;
     _localizationDelegate = await LocalizationDelegate.create(
-        basePath: LOCALIZATION_RESOURCES_PATH,
+        basePath: LOCALIZATION_RESOURCES_PATH + "/",
         fallbackLocale: DEFAULT_LOCALE,
         supportedLocales: ['en_US', 'de']);
+    if(AppTheme.isDesktop) _setupDesktopConfigs();
     return;
   }
 
