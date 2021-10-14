@@ -92,9 +92,7 @@ class AppRouter {
 
   TransformationController _getControllerFromArgs(dynamic args) {
     TransformationController controller = TransformationController();
-    if (args != null &&
-        (args is Map) &&
-        args.containsKey(controllerArg)) {
+    if (args != null && (args is Map) && args.containsKey(controllerArg)) {
       controller = args[controllerArg];
     }
     return controller;
@@ -138,7 +136,8 @@ class AppRouter {
     _navigator.pushNamed(context, _imageRoute, arguments: {imagePathArg: path});
   }
 
-  void openImagePreview(context, TransformationController controller, ImageFilterResult image) {
+  void openImagePreview(
+      context, TransformationController controller, ImageFilterResult image) {
     _navigator.pushNamed(context, _imagePreviewRoute,
         arguments: {controllerArg: controller, imageArg: image});
   }

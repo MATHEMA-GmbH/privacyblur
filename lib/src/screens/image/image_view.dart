@@ -12,6 +12,7 @@ import 'package:privacyblur/src/screens/image/helpers/image_events.dart';
 import 'package:privacyblur/src/screens/image/helpers/image_states.dart';
 import 'package:privacyblur/src/screens/image/utils/internal_layout.dart';
 import 'package:privacyblur/src/screens/image/widgets/image_viewer.dart';
+import 'package:privacyblur/src/utils/flavors.dart';
 import 'package:privacyblur/src/utils/image_filter/helpers/filter_result.dart';
 import 'package:privacyblur/src/widgets/adaptive_widgets_builder.dart';
 import 'package:privacyblur/src/widgets/message_bar.dart';
@@ -98,7 +99,8 @@ class ImageScreen extends StatelessWidget with AppMessages {
                     body: SafeArea(
                       child: _buildHomeBody(context, state),
                     ),
-                    floatingActionButton: !AppTheme.isDesktop && noSelectedPosition
+                    floatingActionButton: (noSelectedPosition &&
+                            !BuildFlavor.isFoss && !AppTheme.isDesktop)
                         ? Padding(
                             padding:
                                 EdgeInsets.fromLTRB(0, 0, fabRight, fabBottom),

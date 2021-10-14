@@ -8,6 +8,8 @@ import 'package:privacyblur/src/widgets/scaled_wrapper.dart';
 
 import 'theme/theme_provider.dart';
 
+var _isIOS = AppTheme.isCupertino;
+
 class IconButtonBuilder {
   static Widget build(
       {Color? color,
@@ -216,6 +218,7 @@ class _AppBarBuilder {
         leadingWidth: 80,
         brightness: Brightness.dark,
         centerTitle: true,
+        backgroundColor: _isIOS ? AppTheme.barColor(context) : Theme.of(context).primaryColor,
       );
     }
   }

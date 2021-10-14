@@ -50,6 +50,7 @@ pubspec.lock
 ios/Podfile.lock
 
 # Android specific
+.tmp/
 android/key.properties
 android/key.jks
 android/json-secret.json

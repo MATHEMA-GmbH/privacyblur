@@ -6,6 +6,6 @@ import 'src/utils/flavors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  BuildFlavor.flavor = Flavor.FULL;
+  BuildFlavor.flavor = Flavor.FOSS;
   runApp(await AppContainer().app);
 }

@@ -24,5 +24,7 @@ class DependencyInjection {
 
   BlocProvider<ImageBloc> getImageBloc() => BlocProvider<ImageBloc>(
       create: (context) => ImageBloc(
-          RepositoryProvider.of<ImageRepository>(context), ImgTools(), FaceDetection()));
+          RepositoryProvider.of<ImageRepository>(context),
+          ImgTools(),
+          FaceDetection()));
 }

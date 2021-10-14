@@ -123,7 +123,8 @@ class MatrixAppBlur extends ImageAppMatrix {
     int columnHelper = 0;
     int rowHelper = -1;
     int overJumpDiff = 0;
-    int lastRowHelper=channels.size-channels.imageWidth;
+    int lastRowHelper = channels.size - channels.imageWidth;
+
     /// variables for speed optimization
 
     prevRowIndexR.fillRange(0, prevRowIndexR.length, -10);
@@ -156,18 +157,36 @@ class MatrixAppBlur extends ImageAppMatrix {
 
         writeValue = 0xff000000;
         writeValue = writeValue |
-            ((_calculateArea(pointIndex, channels.sourceRed,
-                        channels.imageWidth, 0, columnHelper, rowHelper,lastRowHelper) <<
+            ((_calculateArea(
+                        pointIndex,
+                        channels.sourceRed,
+                        channels.imageWidth,
+                        0,
+                        columnHelper,
+                        rowHelper,
+                        lastRowHelper) <<
                     16) &
                 0xff0000);
         writeValue = writeValue |
-            ((_calculateArea(pointIndex, channels.sourceGreen,
-                        channels.imageWidth, 1, columnHelper, rowHelper,lastRowHelper) <<
+            ((_calculateArea(
+                        pointIndex,
+                        channels.sourceGreen,
+                        channels.imageWidth,
+                        1,
+                        columnHelper,
+                        rowHelper,
+                        lastRowHelper) <<
                     8) &
                 0xff00);
         writeValue = writeValue |
-            (_calculateArea(pointIndex, channels.sourceBlue,
-                    channels.imageWidth, 2, columnHelper, rowHelper,lastRowHelper) &
+            (_calculateArea(
+                    pointIndex,
+                    channels.sourceBlue,
+                    channels.imageWidth,
+                    2,
+                    columnHelper,
+                    rowHelper,
+                    lastRowHelper) &
                 0xff);
 
         channels.tempImgArr[pointWriteIndex] = writeValue;

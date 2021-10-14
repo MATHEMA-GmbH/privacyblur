@@ -31,6 +31,16 @@ Submit a new Beta Build to Crashlytics Beta
 fastlane android deploy
 ```
 Deploy a new version to the Google Play
+### android build_foss_appbundle
+```
+fastlane android build_foss_appbundle
+```
+Build AppBundle with flavor foss
+### android build_foss_apk
+```
+fastlane android build_foss_apk
+```
+Build APK with flavor foss
 
 ----
 

@@ -8,8 +8,8 @@ class FilterPosition {
   static bool _sIsPixelate = true;
 
   final int maxRadius;
-  FilterPosition(this.maxRadius);
 
+  FilterPosition(this.maxRadius);
 
   double _granularity = _sGranularityRatio;
   double _radius = _sRadiusRatio;
@@ -50,11 +50,13 @@ class FilterPosition {
   bool canceled = true;
   bool forceRedraw = true;
 
-  int getVisibleRadius() => (maxRadius*radiusRatio).toInt();
+  int getVisibleRadius() => (maxRadius * radiusRatio).toInt();
 
   bool isInnerPoint(int x, int y) {
     var radius = (maxRadius * radiusRatio).toInt();
-    return (x <= posX + radius && x >= posX - radius && y <= posY + radius &&
+    return (x <= posX + radius &&
+        x >= posX - radius &&
+        y <= posY + radius &&
         y >= posY - radius);
   }
 }

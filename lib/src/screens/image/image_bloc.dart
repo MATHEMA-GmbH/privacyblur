@@ -5,7 +5,9 @@ import 'dart:ui' as img_tools;
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:privacyblur/resources/localization/keys.dart';
-import 'package:privacyblur/src/data/services/face_detection.dart';
+import 'package:privacyblur/src/data/services/face_detection.dart'
+  if(BuildFlavor.isFoss) 'package:privacyblur/src/data/services/face_detection_foss.dart';
+
 import 'package:privacyblur/src/screens/image/helpers/constants.dart';
 import 'package:privacyblur/src/utils/image_filter/helpers/matrix_blur.dart';
 import 'package:privacyblur/src/utils/image_filter/helpers/matrix_pixelate.dart';

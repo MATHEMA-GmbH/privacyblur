@@ -54,7 +54,7 @@ class ImageRGB {
 
   /// particular image will be reseted.
   /// it necessary only after canceling filter result
-  void resetSmallCacheAfterCancel(){
+  void resetSmallCacheAfterCancel() {
     _copyAgain = true;
   }
 

@@ -19,10 +19,12 @@ class PositionsUtils {
       } else {
         /// we can add some rules about cross areas if filters are different
         if (first.isPixelate) {
-          return ((second.granularityRatio - first.granularityRatio * 1.5) * 100)
+          return ((second.granularityRatio - first.granularityRatio * 1.5) *
+                  100)
               .toInt();
         } else {
-          return ((second.granularityRatio * 1.5 - first.granularityRatio) * 100)
+          return ((second.granularityRatio * 1.5 - first.granularityRatio) *
+                  100)
               .toInt();
         }
       }
@@ -32,14 +34,14 @@ class PositionsUtils {
   }
 
   static bool checkNewFace(List<FilterPosition> arr, Face face) {
-    for(int i=0;i<arr.length;i++){
-      var pos=arr[i];
-      var radiusRatio=face.radius/pos.getVisibleRadius();
-      if(radiusRatio>0.85&&radiusRatio<1.15) {
-        if(pos.isInnerPoint(face.x,face.y)){
-          var diffX=(face.x-pos.posX).abs();
-          var diffY=(face.y-pos.posY).abs();
-          if((diffX+diffY)<(face.radius*0.5)){
+    for (int i = 0; i < arr.length; i++) {
+      var pos = arr[i];
+      var radiusRatio = face.radius / pos.getVisibleRadius();
+      if (radiusRatio > 0.85 && radiusRatio < 1.15) {
+        if (pos.isInnerPoint(face.x, face.y)) {
+          var diffX = (face.x - pos.posX).abs();
+          var diffY = (face.y - pos.posY).abs();
+          if ((diffX + diffY) < (face.radius * 0.5)) {
             return false;
           }
         }
@@ -47,7 +49,6 @@ class PositionsUtils {
     }
     return true;
   }
-
 
   static bool _checkCross(
       FilterPosition oneFilter, FilterPosition anotherFilter) {

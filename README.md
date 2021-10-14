@@ -1,4 +1,4 @@
-# Privacy Blur
+# PrivacyBlur
 
 ![Logo](./android/app/src/main/res/mipmap-hdpi/ic_launcher.png)
 
@@ -32,7 +32,8 @@ The App is available on Google Playstore  and the the Appstore now!
   - [Setup](#flutter-sdk-setup)
     - [windows](#windows)
     - [macOS](#macos)
-  - [Building](#building)
+  - [Building](#Building)
+    - [Flavors](#flavors)
     - [iOS](#ios-building)
     - [Android](#android-building)
   - [Structure](#structure)
@@ -87,7 +88,45 @@ click here:
 click here:
 [Installation Guide on MacOS](https://flutter.dev/docs/get-started/install/macos)
 
-## Building
+## Building 
+:warning: :bangbang:
+### Flavors
+
+In order to upload to different Platforms/Stores we implemented build flavors.
+
+- foss (for FDroid)
+- production (for all other Platforms)
+
+#### Building with Flavors
+
+**This section is very important if you´re trying to run the project on you own!**
+The application is available in different flavors:
+
+- foss (version without MLKit - FaceDetection)
+- full (self-explanatory)
+
+Running with default commands: ```flutter run``` and ```flutter build``` wont work anymore here.
+Make sure to read this section and configure your build-types according to the flavors.
+
+More on how to configure build-types in you IDE:
+
+- Click in the top bar of your IDE on the corresponding Build-Configuration tile
+- Click "Edit Configurations" (IntelliJ)
+- Click "+"-Button to add a configuration
+- Enter the entry point - e.g.: ``[PROJECT_PATH]/lib/main-[flavor_name].dart``
+- Enter the build flavor
+
+![Instructions](docs/assets/blur1633609294856.jpg)
+
+
+For Debugging:
+````bash
+flutter run --flavor [flavor_name] -t lib/[entry_flavor_file].dart
+````
+For Deployment:
+````bash
+flutter build [platform] --flavor [flavor_name] -t lib/[entry_flavor_file].dart
+````
 
 The app is targeted for iOS and Android on Phones and Tablets.
 Desktop and Web Platform may cause issues and are currently not planned.
@@ -121,12 +160,14 @@ For deployment information visit: [Deployment Guide Android](https://flutter.dev
 
 ```
 lib/--+--main.dart (entry point)
+      +--main_foss.dart (entry point for foss flavor)
       |
       +--resources/--- images, fonts, strings, etc...
       |
-      +--------src/--+----- app.dart (some inital code)
-                     +---router.dart (navigation handling)
-                     +-------di.dart (dependency injection) 
+      +--------src/--+------app.dart (some inital code)
+                     +------app_container.dart (app dependency initialization)
+                     +------router.dart (navigation handling)
+                     +------di.dart (dependency injection) 
                      |
                      |
                      +--screens/--screen_name/
