@@ -80,15 +80,14 @@ class LayoutConfig {
   static void updateMenuBar() {
     setApplicationMenu([
       Submenu(label: "Window", children: [
-        MenuItem(label: "FullScreen", onClicked: () => DesktopWindow.toggleFullScreen()),
-        MenuItem(label: "Large Window", onClicked: () => DesktopWindow.setWindowSize(desktopSizes[DESKTOP_LAYOUT_TYPES.LARGE]!)),
-        MenuItem(label: "Regular Window", onClicked: () => DesktopWindow.setWindowSize(desktopSizes[DESKTOP_LAYOUT_TYPES.REGULAR]!)),
-        MenuItem(label: "Small Window", onClicked: () => DesktopWindow.setWindowSize(desktopSizes[DESKTOP_LAYOUT_TYPES.SMALL]!))
+        MenuItem(label: "FullScreen", onClicked: () => toggleFullScreen()),
+        MenuItem(label: "Large Window", onClicked: () => setWindowSize(size: DESKTOP_LAYOUT_TYPES.LARGE)),
+        MenuItem(label: "Regular Window", onClicked: () => setWindowSize(size: DESKTOP_LAYOUT_TYPES.REGULAR)),
+        MenuItem(label: "Small Window", onClicked: () => setWindowSize(size: DESKTOP_LAYOUT_TYPES.SMALL))
       ])
     ]);
   }
 
-  /// for Screenshot purposes
   static Future setWindowSize(
       {DESKTOP_LAYOUT_TYPES size = DESKTOP_LAYOUT_TYPES.REGULAR, Size? customSize}) async {
     Size sizeToSet = desktopSizes[size]!;
@@ -96,7 +95,6 @@ class LayoutConfig {
     return DesktopWindow.setWindowSize(sizeToSet);
   }
 
-  // TODO: later implementation of desktop navigation tabs
   static Future toggleFullScreen() async {
     return await DesktopWindow.toggleFullScreen();
   }
