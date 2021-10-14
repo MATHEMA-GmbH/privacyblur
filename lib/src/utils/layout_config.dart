@@ -80,7 +80,7 @@ class LayoutConfig {
     ]);
   }
 
-  static void updateMenuBar() {
+  static void setLayoutMenu() {
     setApplicationMenu([
       Submenu(label: translate(Keys.Layout_Configs_Layout), children: [
         MenuItem(
