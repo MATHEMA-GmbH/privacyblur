@@ -60,7 +60,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
     primaryColor = AppTheme.primaryColor;
     return ScaffoldWithAppBar.build(
         context: context,
-        title: translate(Keys.App_Name),
+        title: translate(Keys.Main_Screen_Title),
         body: buildPageBody(context),
         actions: []);
   }

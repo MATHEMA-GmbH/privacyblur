@@ -9,14 +9,6 @@ part of 'keys.dart';
 class Keys {
   static const String App_Name = 'app_name';
 
-  static const String Help_Lines_Help0 = 'help_lines.help0';
-
-  static const String Help_Lines_Help1 = 'help_lines.help1';
-
-  static const String Help_Lines_Help2 = 'help_lines.help2';
-
-  static const String Help_Lines_Help3 = 'help_lines.help3';
-
   static const String Buttons_Save = 'buttons.save';
 
   static const String Buttons_Apply = 'buttons.apply';
@@ -98,10 +90,26 @@ class Keys {
   static const String Messages_Infos_Override_Image =
       'messages.infos.override_image';
 
+  static const String Main_Screen_Title = 'main_screen.title';
+
   static const String Main_Screen_Content = 'main_screen.content';
 
   static const String Main_Screen_Select_Image = 'main_screen.select_image';
 
   static const String Main_Screen_Photo_Permissions =
       'main_screen.photo_permissions';
+
+  static const String Image_Screen_Title = 'image_screen.title';
+
+  static const String Image_Screen_Help_Lines_Help0 =
+      'image_screen.help_lines.help0';
+
+  static const String Image_Screen_Help_Lines_Help1 =
+      'image_screen.help_lines.help1';
+
+  static const String Image_Screen_Help_Lines_Help2 =
+      'image_screen.help_lines.help2';
+
+  static const String Image_Screen_Help_Lines_Help3 =
+      'image_screen.help_lines.help3';
 }

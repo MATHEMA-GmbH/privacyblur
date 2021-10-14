@@ -1,11 +1,5 @@
 {
   "app_name": "PrivacyBlur",
-  "help_lines": {
-    "help0": "1. Tippe auf den zu ändernden Bereich",
-    "help1": "2. Du kannst den Bereich mit Tippen und Halten verschieben",
-    "help2": "3. Stelle den Effekt wie gewünscht ein",
-    "help3": "4. Tippe auf Speichern, um den Effekt zu speichern und das Bild zu exportieren"
-  },
   "buttons": {
     "save": "Speichern",
     "apply": "Anwenden",
@@ -49,8 +43,18 @@
     }
   },
   "main_screen": {
+    "title": "Bild wählen",
     "content": "Mach sensible Bereiche auf\ndeinen Bildern unkenntlich",
     "select_image": "Aus Bibliothek auswählen",
     "photo_permissions": "PrivacyBlur muss auf deine Fotos zugreifen, um zu funktionieren. Tippe auf \"Aus Bibliothek wählen\", um loszulegen."
+  },
+  "image_screen": {
+    "title": "Verpixeln",
+    "help_lines": {
+      "help0": "1. Tippe auf den zu ändernden Bereich",
+      "help1": "2. Du kannst den Bereich mit Tippen und Halten verschieben",
+      "help2": "3. Stelle den Effekt wie gewünscht ein",
+      "help3": "4. Tippe auf Speichern, um den Effekt zu speichern und das Bild zu exportieren"
+    }
   }
 }

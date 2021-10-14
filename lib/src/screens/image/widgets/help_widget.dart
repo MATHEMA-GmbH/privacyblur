@@ -22,10 +22,10 @@ class HelpWidget extends StatelessWidget {
   final double width;
 
   final List<HelpLine> helpLines = [
-    HelpLine(AppIcons.click, Keys.Help_Lines_Help0),
-    HelpLine(AppIcons.drag, Keys.Help_Lines_Help1),
-    HelpLine(AppIcons.granularity, Keys.Help_Lines_Help2),
-    HelpLine(AppIcons.save, Keys.Help_Lines_Help3)
+    HelpLine(AppIcons.click, Keys.Image_Screen_Help_Lines_Help0),
+    HelpLine(AppIcons.drag, Keys.Image_Screen_Help_Lines_Help1),
+    HelpLine(AppIcons.granularity, Keys.Image_Screen_Help_Lines_Help2),
+    HelpLine(AppIcons.save, Keys.Image_Screen_Help_Lines_Help3)
   ];
 
   HelpWidget(this.height, this.width);

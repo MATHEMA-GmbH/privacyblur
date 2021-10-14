@@ -1,11 +1,5 @@
 {
   "app_name": "PrivacyBlur",
-  "help_lines": {
-    "help0": "1. Tap over the area to modify",
-    "help1": "2. You can move the area using tap and hold",
-    "help2": "3. Setup the effect as desired",
-    "help3": "4. Tap Save to save the effect and export the image"
-  },
   "buttons": {
     "save": "Save",
     "apply": "Apply",
@@ -49,8 +43,18 @@
     }
   },
   "main_screen": {
+    "title": "Select image",
     "content": "Hide sensitive data\nfrom your pictures!",
     "select_image": "Select from library",
     "photo_permissions": "PrivacyBlur needs full access to your photos to function. Tap \"Select from Library\" to get started."
+  },
+  "image_screen": {
+    "title": "Pixelate",
+    "help_lines": {
+      "help0": "1. Tap over the area to modify",
+      "help1": "2. You can move the area using tap and hold",
+      "help2": "3. Setup the effect as desired",
+      "help3": "4. Tap Save to save the effect and export the image"
+    }
   }
 }
