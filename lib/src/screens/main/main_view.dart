@@ -12,6 +12,7 @@ import 'package:privacyblur/src/di.dart';
 import 'package:privacyblur/src/router.dart';
 import 'package:privacyblur/src/screens/main/utils/image_picking.dart';
 import 'package:privacyblur/src/screens/main/widgets/version_number.dart';
+import 'package:privacyblur/src/utils/layout_config.dart';
 import 'package:privacyblur/src/widgets/adaptive_widgets_builder.dart';
 import 'package:privacyblur/src/widgets/message_bar.dart';
 import 'package:privacyblur/src/widgets/section.dart';

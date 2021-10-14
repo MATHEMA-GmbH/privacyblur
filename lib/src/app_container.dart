@@ -54,6 +54,6 @@ class AppContainer {
 
     LayoutConfig.setupDesktopScreenBoundaries();
     if(Platform.isWindows) return;
-    LayoutConfig.setLayoutMenu();
+    LayoutConfig.updateMenu();
   }
 }
