@@ -112,4 +112,14 @@ class Keys {
 
   static const String Image_Screen_Help_Lines_Help3 =
       'image_screen.help_lines.help3';
+
+  static const String Layout_Configs_Layout = 'layout_configs.layout';
+
+  static const String Layout_Configs_Fullscreen = 'layout_configs.fullscreen';
+
+  static const String Layout_Configs_Large = 'layout_configs.large';
+
+  static const String Layout_Configs_Regular = 'layout_configs.regular';
+
+  static const String Layout_Configs_Small = 'layout_configs.small';
 }
