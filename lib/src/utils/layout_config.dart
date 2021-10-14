@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/widgets.dart';
+import 'package:menubar/menubar.dart';
 
 enum DESKTOP_LAYOUT_TYPES { SMALL, LARGE, REGULAR }
 
@@ -73,6 +74,17 @@ class LayoutConfig {
     return await Future.wait([
       DesktopWindow.setMinWindowSize(desktopSizes[DESKTOP_LAYOUT_TYPES.SMALL]!),
       DesktopWindow.setMaxWindowSize(desktopSizes[DESKTOP_LAYOUT_TYPES.LARGE]!),
+    ]);
+  }
+
+  static void updateMenuBar() {
+    setApplicationMenu([
+      Submenu(label: "Window", children: [
+        MenuItem(label: "FullScreen", onClicked: () => DesktopWindow.toggleFullScreen()),
+        MenuItem(label: "Large Window", onClicked: () => DesktopWindow.setWindowSize(desktopSizes[DESKTOP_LAYOUT_TYPES.LARGE]!)),
+        MenuItem(label: "Regular Window", onClicked: () => DesktopWindow.setWindowSize(desktopSizes[DESKTOP_LAYOUT_TYPES.REGULAR]!)),
+        MenuItem(label: "Small Window", onClicked: () => DesktopWindow.setWindowSize(desktopSizes[DESKTOP_LAYOUT_TYPES.SMALL]!))
+      ])
     ]);
   }
 

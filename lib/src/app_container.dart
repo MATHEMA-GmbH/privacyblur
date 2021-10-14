@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_translate/flutter_translate.dart';
 
 import 'app.dart';
@@ -22,7 +24,7 @@ class AppContainer {
   }
 
   AppContainer._internal() {
-    if(AppTheme.isDesktop) LayoutConfig.setupDesktopScreenBoundaries();
+    if(AppTheme.isDesktop) _setupDesktopConfigs();
     _di = DependencyInjection();
     _navigator = ScreenNavigator();
     _router = AppRouter.fromMainScreen(_navigator, _di);
@@ -43,8 +45,14 @@ class AppContainer {
     return;
   }
 
-  _createLocalizedApp() {
+  void _createLocalizedApp() {
     if (_app != null) return;
     _app = LocalizedApp(_localizationDelegate!, PixelMonsterApp(_router));
+  }
+
+  void _setupDesktopConfigs() {
+    LayoutConfig.setupDesktopScreenBoundaries();
+    if(Platform.isWindows) return;
+    LayoutConfig.updateMenuBar();
   }
 }
