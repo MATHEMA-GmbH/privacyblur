@@ -2,7 +2,9 @@ import 'dart:math';
 
 import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:menubar/menubar.dart';
+import 'package:privacyblur/resources/localization/keys.dart';
 
 enum DESKTOP_LAYOUT_TYPES { SMALL, LARGE, REGULAR }
 
@@ -70,7 +72,7 @@ class LayoutConfig {
     return size * viewScaleRatio;
   }
 
-  static setupDesktopScreenBoundaries() async{
+  static setupDesktopScreenBoundaries() async {
     return await Future.wait([
       DesktopWindow.setMinWindowSize(desktopSizes[DESKTOP_LAYOUT_TYPES.SMALL]!),
       DesktopWindow.setMaxWindowSize(desktopSizes[DESKTOP_LAYOUT_TYPES.LARGE]!),
@@ -79,19 +81,28 @@ class LayoutConfig {
 
   static void updateMenuBar() {
     setApplicationMenu([
-      Submenu(label: "Window", children: [
-        MenuItem(label: "FullScreen", onClicked: () => toggleFullScreen()),
-        MenuItem(label: "Large Window", onClicked: () => setWindowSize(size: DESKTOP_LAYOUT_TYPES.LARGE)),
-        MenuItem(label: "Regular Window", onClicked: () => setWindowSize(size: DESKTOP_LAYOUT_TYPES.REGULAR)),
-        MenuItem(label: "Small Window", onClicked: () => setWindowSize(size: DESKTOP_LAYOUT_TYPES.SMALL))
+      Submenu(label: translate(Keys.Layout_Configs_Layout), children: [
+        MenuItem(
+            label: translate(Keys.Layout_Configs_Fullscreen),
+            onClicked: () => toggleFullScreen()),
+        MenuItem(
+            label: translate(Keys.Layout_Configs_Large),
+            onClicked: () => setWindowSize(size: DESKTOP_LAYOUT_TYPES.LARGE)),
+        MenuItem(
+            label: translate(Keys.Layout_Configs_Regular),
+            onClicked: () => setWindowSize(size: DESKTOP_LAYOUT_TYPES.REGULAR)),
+        MenuItem(
+            label: translate(Keys.Layout_Configs_Small),
+            onClicked: () => setWindowSize(size: DESKTOP_LAYOUT_TYPES.SMALL))
       ])
     ]);
   }
 
   static Future setWindowSize(
-      {DESKTOP_LAYOUT_TYPES size = DESKTOP_LAYOUT_TYPES.REGULAR, Size? customSize}) async {
+      {DESKTOP_LAYOUT_TYPES size = DESKTOP_LAYOUT_TYPES.REGULAR,
+      Size? customSize}) async {
     Size sizeToSet = desktopSizes[size]!;
-    if(customSize != null) sizeToSet = customSize;
+    if (customSize != null) sizeToSet = customSize;
     return DesktopWindow.setWindowSize(sizeToSet);
   }
 

@@ -56,5 +56,12 @@
       "help2": "3. Setup the effect as desired",
       "help3": "4. Tap Save to save the effect and export the image"
     }
+  },
+  "layout_configs": {
+    "layout": "Layout",
+    "fullscreen": "Toggle fullscreen",
+    "large": "Enlarge window",
+    "regular": "Reset window",
+    "small": "Shrink window"
   }
 }

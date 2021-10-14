@@ -31,7 +31,7 @@
       "problem_img_read": "Problem beim Lesen eines Bildes.\nDatei nicht vorhanden?",
       "img_format": "Problem mit dem Dateiformat.\nIst dies ein Bild?",
       "img_size": "Probleme mit der Bildgröße.\nVersuche es erneut.",
-      "img_not_readable": "Bild konnte nich ausgelesen werden.",
+      "img_not_readable": "Bild konnte nicht ausgelesen werden.",
       "processing_image": "Bei der Verarbeitung des Bildes ist ein Fehler aufgetreten.\nBitte versuche es erneut.",
       "image_scale_down": "Warnung: Das Bild wurde herunterskaliert. Was du siehst, ist die endgültige Qualität. Original-Auflösung: {origRes}, neue Auflösung: {newRes}"
     },
@@ -56,5 +56,12 @@
       "help2": "3. Stelle den Effekt wie gewünscht ein",
       "help3": "4. Tippe auf Speichern, um den Effekt zu speichern und das Bild zu exportieren"
     }
+  },
+  "layout_configs": {
+    "layout": "Layout",
+    "fullscreen": "Volle Größe umschalten",
+    "large": "Fenster vergößern",
+    "regular": "Fenster zurücksetzen",
+    "small": "Fenster verkleinern"
   }
 }
