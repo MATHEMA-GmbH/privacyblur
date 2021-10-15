@@ -13,6 +13,7 @@ import 'package:privacyblur/src/screens/image/utils/internal_layout.dart';
 import 'package:privacyblur/src/screens/image/widgets/image_viewer.dart';
 import 'package:privacyblur/src/utils/flavors.dart';
 import 'package:privacyblur/src/utils/image_filter/helpers/filter_result.dart';
+import 'package:privacyblur/src/utils/layout_config.dart';
 import 'package:privacyblur/src/widgets/adaptive_widgets_builder.dart';
 import 'package:privacyblur/src/widgets/message_bar.dart';
 import 'package:privacyblur/src/widgets/theme/icons_provider.dart';
@@ -77,6 +78,7 @@ class ImageScreen extends StatelessWidget with AppMessages {
                 _bloc = BlocProvider.of<ImageBloc>(context);
 
                 if (state == null) {
+                  if(AppTheme.isDesktop) LayoutConfig.desktop.updateMenu();
                   _bloc.add(ImageEventSelected(filename));
                 }
                 final imgNotSaved =
