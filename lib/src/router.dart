@@ -25,6 +25,14 @@ class ScreenNavigator {
     return Navigator.pushNamed<T?>(context, route, arguments: arguments);
   }
 
+  Future<T?> pushNamedAndRemoveUntil<T extends Object>(
+      BuildContext context, String route, String predicateRoute,
+      {Map<String, dynamic>? arguments}) {
+    return Navigator.pushNamedAndRemoveUntil<T?>(
+        context, route, ModalRoute.withName(predicateRoute),
+        arguments: arguments);
+  }
+
   void pop(BuildContext context, [Object? result]) {
     Navigator.pop(context, result);
   }

@@ -78,7 +78,6 @@ class ImageScreen extends StatelessWidget with AppMessages {
                 _bloc = BlocProvider.of<ImageBloc>(context);
 
                 if (state == null) {
-                  if(AppTheme.isDesktop) LayoutConfig.desktop.updateMenu();
                   _bloc.add(ImageEventSelected(filename));
                 }
                 final imgNotSaved =
