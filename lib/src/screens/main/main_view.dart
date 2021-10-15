@@ -36,20 +36,12 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   final _picker = ImagePicking();
   late Color primaryColor;
   final String websiteURL = 'https://mathema-apps.de/';
+  final menuKey = UniqueKey();
 
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addObserver(this);
     _showLastImageDialog(context);
-    if(AppTheme.isDesktop) LayoutConfig.desktop.updateMenu(menus: [
-      Submenu(label: translate(Keys.Main_Screen_Menu_Title), children: [
-        MenuItem(
-            label: translate(Keys.Main_Screen_Select_Image),
-            onClicked: () => openImageAction(context, ImageSource.gallery),
-            shortcut: LogicalKeySet(LogicalKeyboardKey.keyO)
-        )
-      ])
-    ]);
   }
 
   @override
@@ -69,6 +61,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    if(AppTheme.isDesktop && LayoutConfig.desktop.currentMenu != menuKey.hashCode) _loadDesktopMenu();
     primaryColor = AppTheme.primaryColor;
     return ScaffoldWithAppBar.build(
         context: context,
@@ -143,6 +136,20 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
         }),
       ),
     );
+  }
+
+  void _loadDesktopMenu() {
+    LayoutConfig.desktop.updateMenu(
+      key: menuKey,
+      menus: [
+        Submenu(label: translate(Keys.Main_Screen_Menu_Title), children: [
+          MenuItem(
+              label: translate(Keys.Main_Screen_Select_Image),
+              onClicked: () => openImageAction(context, ImageSource.gallery),
+              shortcut: LogicalKeySet(LogicalKeyboardKey.keyO)
+          )
+        ])
+    ]);
   }
 
   Widget _showPermissionWarning() {

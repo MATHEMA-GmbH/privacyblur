@@ -25,6 +25,7 @@ class ScreenNavigator {
     return Navigator.pushNamed<T?>(context, route, arguments: arguments);
   }
 
+  // TODO: implement this method for opening image on image screen
   Future<T?> pushNamedAndRemoveUntil<T extends Object>(
       BuildContext context, String route, String predicateRoute,
       {Map<String, dynamic>? arguments}) {

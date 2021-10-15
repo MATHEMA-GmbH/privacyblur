@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
 import 'app.dart';
@@ -52,6 +53,6 @@ class AppContainer {
 
   void _setupDesktopConfigs() {
     LayoutConfig.desktop.setupDesktopScreenBoundaries();
-    LayoutConfig.desktop.updateMenu();
+    LayoutConfig.desktop.updateMenu(key: UniqueKey());
   }
 }

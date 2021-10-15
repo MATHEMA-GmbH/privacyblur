@@ -79,6 +79,7 @@ class ImageScreen extends StatelessWidget with AppMessages {
 
                 if (state == null) {
                   _bloc.add(ImageEventSelected(filename));
+                  LayoutConfig.desktop.updateMenu(key: UniqueKey());
                 }
                 final imgNotSaved =
                     (state is ImageStateScreen && (!state.isImageSaved));
