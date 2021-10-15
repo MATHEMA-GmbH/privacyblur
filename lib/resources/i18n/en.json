@@ -55,6 +55,10 @@
       "help1": "2. You can move the area using tap and hold",
       "help2": "3. Setup the effect as desired",
       "help3": "4. Tap Save to save the effect and export the image"
+    },
+    "menu": {
+      "title": "File",
+      "select_image": "Select image"
     }
   },
   "layout_configs": {

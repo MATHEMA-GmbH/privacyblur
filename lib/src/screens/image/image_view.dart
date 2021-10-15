@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'dart:ui' as img_tools;
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -95,7 +94,6 @@ class ImageScreen extends StatelessWidget with AppMessages {
                     onBackPressed: () => _onBack(context, state),
                     context: context,
                     title: '',
-/*                    title: translate(Keys.App_Name),*/
                     actions: _actionsIcon(context, imgNotSaved, imgSavedOnce),
                     body: SafeArea(
                       child: _buildHomeBody(context, state),

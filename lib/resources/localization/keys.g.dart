@@ -99,6 +99,11 @@ class Keys {
   static const String Main_Screen_Photo_Permissions =
       'main_screen.photo_permissions';
 
+  static const String Main_Screen_Menu_Title = 'main_screen.menu.title';
+
+  static const String Main_Screen_Menu_Select_Image =
+      'main_screen.menu.select_image';
+
   static const String Image_Screen_Title = 'image_screen.title';
 
   static const String Image_Screen_Help_Lines_Help0 =
@@ -122,4 +127,9 @@ class Keys {
   static const String Layout_Configs_Regular = 'layout_configs.regular';
 
   static const String Layout_Configs_Small = 'layout_configs.small';
+
+  static const String Image_Screen_Menu_Title = 'image_screen.menu.title';
+
+  static const String Image_Screen_Menu_Select_Image =
+      'image_screen.menu.select_image';
 }

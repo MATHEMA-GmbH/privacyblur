@@ -46,7 +46,11 @@
     "title": "Bild wählen",
     "content": "Mach sensible Bereiche auf\ndeinen Bildern unkenntlich",
     "select_image": "Aus Bibliothek auswählen",
-    "photo_permissions": "PrivacyBlur muss auf deine Fotos zugreifen, um zu funktionieren. Tippe auf \"Aus Bibliothek wählen\", um loszulegen."
+    "photo_permissions": "PrivacyBlur muss auf deine Fotos zugreifen, um zu funktionieren. Tippe auf \"Aus Bibliothek wählen\", um loszulegen.",
+    "menu": {
+      "title": "Datei",
+      "select_image": "Bild auswählen"
+    }
   },
   "image_screen": {
     "title": "Verpixeln",

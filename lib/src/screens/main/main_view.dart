@@ -3,8 +3,10 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:menubar/menubar.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:privacyblur/resources/localization/keys.dart';
 import 'package:privacyblur/src/data/services/local_storage.dart';
@@ -39,6 +41,15 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance?.addObserver(this);
     _showLastImageDialog(context);
+    if(AppTheme.isDesktop) LayoutConfig.desktop.updateMenu(menus: [
+      Submenu(label: translate(Keys.Main_Screen_Menu_Title), children: [
+        MenuItem(
+            label: translate(Keys.Main_Screen_Select_Image),
+            onClicked: () => openImageAction(context, ImageSource.gallery),
+            shortcut: LogicalKeySet(LogicalKeyboardKey.keyO)
+        )
+      ])
+    ]);
   }
 
   @override
@@ -85,11 +96,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                     translate(Keys.Main_Screen_Content),
                     style: TextStyle(
                         fontSize:
-                        Theme
-                            .of(context)
-                            .textTheme
-                            .headline6!
-                            .fontSize,
+                            Theme.of(context).textTheme.headline6!.fontSize,
                         fontWeight: FontWeight.bold,
                         color: textColor),
                     textAlign: TextAlign.center,
