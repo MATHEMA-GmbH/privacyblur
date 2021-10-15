@@ -190,7 +190,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
       try {
         File? pickedFile = await _picker.pickFile(type);
         if (pickedFile != null && await pickedFile.exists()) {
-          widget.router.openImageRoute(context, pickedFile.path);
+          widget.router.openImageRoute(context, pickedFile.path).then((value) => setState(() {}));
         } else {
           widget.showMessage(
               context: context,
