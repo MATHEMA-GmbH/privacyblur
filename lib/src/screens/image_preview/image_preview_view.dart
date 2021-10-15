@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:flutter/Material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:privacyblur/resources/localization/keys.dart';
 import 'package:privacyblur/src/di.dart';
