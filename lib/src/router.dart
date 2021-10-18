@@ -141,8 +141,8 @@ class AppRouter {
     }
   }
 
-  void openImageRoute(context, String path) {
-    _navigator.pushNamed(context, _imageRoute, arguments: {imagePathArg: path});
+  Future openImageRoute(context, String path) {
+    return _navigator.pushNamed(context, _imageRoute, arguments: {imagePathArg: path});
   }
 
   void openImagePreview(
