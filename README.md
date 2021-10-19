@@ -8,6 +8,11 @@ The App is available on Google Playstore  and the the Appstore now!
 
 <table style="border: none;">
   <tr>
+    <td style="border: none; padding: 0px; text-align: right">
+          <a href='https://f-droid.org/packages/de.mathema.privacyblur'>
+          <img style='height: auto; width: 140px; object-fit: cover' alt='Get it on F-Droid' src='https://fdroid.gitlab.io/artwork/badge/get-it-on.png'/>
+          </a>
+    </td>
     <td style="border: none;">
       <a href='https://play.google.com/store/apps/details?id=de.mathema.privacyblur'><img width="140px" height="auto" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
     </td>
