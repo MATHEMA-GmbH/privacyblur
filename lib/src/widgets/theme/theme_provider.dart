@@ -103,7 +103,7 @@ class AppTheme {
             TextStyle(color: Colors.black, fontWeight: FontWeight.normal),
         bodyText1:
             TextStyle(color: Colors.black54, fontWeight: FontWeight.w400),
-      ), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Color(0xFF53565A)));
+      ));
 
   static final ThemeData dark = ThemeData(
     brightness: Brightness.dark,
@@ -131,6 +131,6 @@ class AppTheme {
             TextStyle(color: Colors.white70, fontWeight: FontWeight.w400),
         bodyText2:
             TextStyle(color: Colors.white, fontWeight: FontWeight.normal),
-        headline5: TextStyle()), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Color(0xFF53565A)),
+        headline5: TextStyle()),
   );
 }
