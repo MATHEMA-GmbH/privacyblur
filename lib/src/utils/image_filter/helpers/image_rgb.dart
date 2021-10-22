@@ -36,16 +36,16 @@ class ImageRGB {
     return Future.value();
   }
 
-  var maxx = 0;
-  var maxy = 0;
-  var minx = 5000;
-  var miny = 5000;
+  var maxX = 0;
+  var maxY = 0;
+  var minX = 5000;
+  var minY = 5000;
 
   void resetRange() {
-    maxx = 0;
-    maxy = 0;
-    minx = imageWidth - 1;
-    miny = imageHeight - 1;
+    maxX = 0;
+    maxY = 0;
+    minX = imageWidth - 1;
+    minY = imageHeight - 1;
     resetSmallCacheAfterCancel();
   }
 
@@ -59,41 +59,41 @@ class ImageRGB {
   }
 
   void collectRange(RangeHelper range) {
-    if (range.x1 > maxx) maxx = range.x1;
-    if (range.x1 < minx) minx = range.x1;
-    if (range.y1 > maxy) maxy = range.y1;
-    if (range.y1 < miny) miny = range.y1;
-    if (range.x2 > maxx) maxx = range.x2;
-    if (range.x2 < minx) minx = range.x2;
-    if (range.y2 > maxy) maxy = range.y2;
-    if (range.y2 < miny) miny = range.y2;
-    _range_cache = null;
+    if (range.x1 > maxX) maxX = range.x1;
+    if (range.x1 < minX) minX = range.x1;
+    if (range.y1 > maxY) maxY = range.y1;
+    if (range.y1 < minY) minY = range.y1;
+    if (range.x2 > maxX) maxX = range.x2;
+    if (range.x2 < minX) minX = range.x2;
+    if (range.y2 > maxY) maxY = range.y2;
+    if (range.y2 < minY) minY = range.y2;
+    _rangeCache = null;
     resetSmallCacheAfterCancel();
   }
 
-  RangeHelper? _range_cache;
+  RangeHelper? _rangeCache;
 
   RangeHelper getChangedRange() {
-    _range_cache ??= RangeHelper.square(
-          minx, miny, maxx, maxy, imageWidth, imageHeight, 0);
-    return _range_cache!;
+    _rangeCache ??=
+        RangeHelper.square(minX, minY, maxX, maxY, imageWidth, imageHeight, 0);
+    return _rangeCache!;
   }
 
   Uint8List getChangedData() {
     if (!_copyAgain) return _changedArea.buffer.asUint8List();
     _copyAgain = false;
-    _range_cache = getChangedRange();
-    var size = _range_cache!.rangeWidth * _range_cache!.rangeHeight;
+    _rangeCache = getChangedRange();
+    var size = _rangeCache!.rangeWidth * _rangeCache!.rangeHeight;
     if (size != _changedArea.length) {
       _changedArea = Uint32List(size);
     }
-    int startoffset = 0;
-    int endoffset;
+    int startOffset = 0;
+    int endOffset;
     int counter = -1;
-    for (int y = _range_cache!.y1; y < _range_cache!.y2; y++) {
-      startoffset = y * imageWidth + _range_cache!.x1;
-      endoffset = startoffset + _range_cache!.rangeWidth;
-      for (int index = startoffset; index < endoffset; index++) {
+    for (int y = _rangeCache!.y1; y < _rangeCache!.y2; y++) {
+      startOffset = y * imageWidth + _rangeCache!.x1;
+      endOffset = startOffset + _rangeCache!.rangeWidth;
+      for (int index = startOffset; index < endOffset; index++) {
         counter++;
         _changedArea[counter] = tempImgArr[index];
       }

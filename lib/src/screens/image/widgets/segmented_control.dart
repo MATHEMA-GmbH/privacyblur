@@ -8,7 +8,11 @@ class SegmentedControl extends StatefulWidget {
   final Function onChanged;
 
   const SegmentedControl(
-      {required this.tabs, required this.groupValue, required this.onChanged});
+      {Key? key,
+      required this.tabs,
+      required this.groupValue,
+      required this.onChanged})
+      : super(key: key);
 
   @override
   _SegmentedControlState createState() => _SegmentedControlState();
@@ -60,10 +64,10 @@ class _SegmentedControlState extends State<SegmentedControl> {
     }
   }
 
-  void onChanged(int) {
+  void onChanged(value) {
     setState(() {
-      groupValue = int;
+      groupValue = value;
     });
-    widget.onChanged(int);
+    widget.onChanged(value);
   }
 }

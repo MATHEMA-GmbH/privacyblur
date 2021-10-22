@@ -22,9 +22,9 @@ class ImageAppFilter {
   // important for Blur filter speed optimization.
   // can be exception if area width/height is bigger than this value
   // look setMaxProcessedWidth(...) to change this value in runtime
-  static int _max_width_area = 1000;
+  static int _maxWidthArea = 1000;
 
-  static int get maxWidth => _max_width_area;
+  static int get maxWidth => _maxWidthArea;
   static final ImageAppFilter _instance = ImageAppFilter._internal();
 
   factory ImageAppFilter() => _instance;
@@ -43,13 +43,13 @@ class ImageAppFilter {
 
     /// here ALFA channel will be removed from PNG or GIF images
     /// For JPEG its not relevant
-    _response_cache = await getImage();
+    _responseCache = await getImage();
     transactionStart();
-    return Future.value(_response_cache);
+    return Future.value(_responseCache);
   }
 
   static void setMaxProcessedWidth(int maxWidth) {
-    _max_width_area = maxWidth;
+    _maxWidthArea = maxWidth;
   }
 
   void _cancelArea(RangeHelper range) {
@@ -112,7 +112,7 @@ class ImageAppFilter {
     _imgChannels.transactionActive = false;
     _allCanceled = true;
     _imgChannels.resetRange();
-    _response_cache.changedPart = null;
+    _responseCache.changedPart = null;
     needRebuild = false; //we dont need to rebuild image. use background
   }
 
@@ -135,7 +135,7 @@ class ImageAppFilter {
   }
 
   bool needRebuild = true; //to force rebuild in calling getCurrentImageState()
-  ImageFilterResult _response_cache = ImageFilterResult.empty();
+  ImageFilterResult _responseCache = ImageFilterResult.empty();
 
   Uint8List yuv = Uint8List(0);
 
@@ -196,7 +196,7 @@ class ImageAppFilter {
   }
 
   Future<ImageFilterResult> getImage() {
-    if (!needRebuild) return Future.value(_response_cache);
+    if (!needRebuild) return Future.value(_responseCache);
     Completer<ImageFilterResult> _completer = Completer();
     if (_imgChannels.transactionActive) {
       var range = _imgChannels.getChangedRange();
@@ -205,11 +205,11 @@ class ImageAppFilter {
           range.rangeWidth,
           range.rangeHeight,
           img_tools.PixelFormat.rgba8888, (result) {
-        _response_cache.posX = range.x1;
-        _response_cache.posY = range.y1;
-        _response_cache.changedPart = result;
+        _responseCache.posX = range.x1;
+        _responseCache.posY = range.y1;
+        _responseCache.changedPart = result;
         needRebuild = false;
-        _completer.complete(_response_cache);
+        _completer.complete(_responseCache);
       });
     } else {
       img_tools.decodeImageFromPixels(
@@ -217,10 +217,10 @@ class ImageAppFilter {
           _imgChannels.imageWidth,
           _imgChannels.imageHeight,
           img_tools.PixelFormat.rgba8888, (result) {
-        _response_cache.mainImage = result;
-        _response_cache.changedPart = null;
+        _responseCache.mainImage = result;
+        _responseCache.changedPart = null;
         needRebuild = false;
-        _completer.complete(_response_cache);
+        _completer.complete(_responseCache);
       });
     }
     return _completer.future;

@@ -18,7 +18,7 @@ class ImageViewer extends StatelessWidget {
   final void Function(double, double) moveFilterPosition;
   final void Function(double, double) addFilterPosition;
   final void Function(int) selectFilter;
-  late final TransformationController _transformationController;
+  late TransformationController _transformationController;
   final double maxScale = 10;
 
   ImageViewer(
@@ -29,7 +29,9 @@ class ImageViewer extends StatelessWidget {
       this._transformationController,
       this.moveFilterPosition,
       this.addFilterPosition,
-      this.selectFilter);
+      this.selectFilter,
+      {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

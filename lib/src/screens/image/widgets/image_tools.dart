@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:privacyblur/resources/localization/keys.dart';
 import 'package:privacyblur/src/screens/image/helpers/image_states.dart';
@@ -31,22 +29,25 @@ class ImageToolsWidget extends StatelessWidget {
   final Function() onFilterDelete;
   final Function() onDetectFace;
 
-  ImageToolsWidget({required this.onRadiusChanged,
-    required this.onPowerChanged,
-    required this.onPreview,
-    required this.isLandscape,
-    required this.curRadius,
-    required this.curPower,
-    required this.onBlurSelected,
-    required this.onPixelateSelected,
-    required this.onCircleSelected,
-    required this.onSquareSelected,
-    required this.isPixelate,
-    required this.isRounded,
-    required this.onEditToolSelected,
-    required this.activeTool,
-    required this.onFilterDelete,
-    required this.onDetectFace});
+  ImageToolsWidget(
+      {Key? key,
+      required this.onRadiusChanged,
+      required this.onPowerChanged,
+      required this.onPreview,
+      required this.isLandscape,
+      required this.curRadius,
+      required this.curPower,
+      required this.onBlurSelected,
+      required this.onPixelateSelected,
+      required this.onCircleSelected,
+      required this.onSquareSelected,
+      required this.isPixelate,
+      required this.isRounded,
+      required this.onEditToolSelected,
+      required this.activeTool,
+      required this.onFilterDelete,
+      required this.onDetectFace})
+      : super(key: key);
 
   late Map<int, Widget> shapes;
   late Map<int, Widget> types;

@@ -76,7 +76,6 @@ class PositionsUtils {
   static void _markRedraw(List<FilterPosition> arr, int currentIndex) {
     if (currentIndex >= arr.length || currentIndex < 0) return;
     var currentFilter = arr[currentIndex];
-    var x = 0, y = 0;
     for (int i = 0; i < arr.length; i++) {
       if (i == currentIndex) continue;
       var anotherFilter = arr[i];

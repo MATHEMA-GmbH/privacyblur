@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -26,7 +27,7 @@ class MainScreen extends StatefulWidget with AppMessages {
   final AppRouter router;
   final localStorage = LocalStorage();
 
-  MainScreen(this.di, this.router);
+  MainScreen(this.di, this.router, {Key? key}) : super(key: key);
 
   @override
   _MainScreenState createState() => _MainScreenState();
@@ -62,7 +63,10 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    if(AppTheme.isDesktop && LayoutConfig.desktop.currentMenu != menuKey.hashCode) _loadDesktopMenu();
+    if (AppTheme.isDesktop &&
+        LayoutConfig.desktop.currentMenu != menuKey.hashCode) {
+      _loadDesktopMenu();
+    }
     primaryColor = AppTheme.primaryColor;
     return ScaffoldWithAppBar.build(
         context: context,
@@ -140,16 +144,13 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   }
 
   void _loadDesktopMenu() {
-    LayoutConfig.desktop.updateMenu(
-      key: menuKey,
-      menus: [
-        Submenu(label: translate(Keys.Main_Screen_Menu_Title), children: [
-          MenuItem(
-              label: translate(Keys.Main_Screen_Select_Image),
-              onClicked: () => openImageAction(context, ImageSource.gallery),
-              shortcut: LogicalKeySet(LogicalKeyboardKey.keyO)
-          )
-        ])
+    LayoutConfig.desktop.updateMenu(key: menuKey, menus: [
+      Submenu(label: translate(Keys.Main_Screen_Menu_Title), children: [
+        MenuItem(
+            label: translate(Keys.Main_Screen_Select_Image),
+            onClicked: () => openImageAction(context, ImageSource.gallery),
+            shortcut: LogicalKeySet(LogicalKeyboardKey.keyO))
+      ])
     ]);
   }
 
@@ -191,7 +192,9 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
       try {
         File? pickedFile = await _picker.pickFile(type);
         if (pickedFile != null && await pickedFile.exists()) {
-          widget.router.openImageRoute(context, pickedFile.path).then((value) => setState(() {}));
+          widget.router
+              .openImageRoute(context, pickedFile.path)
+              .then((value) => setState(() {}));
         } else {
           widget.showMessage(
               context: context,
@@ -201,7 +204,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
         widget.showMessage(
             context: context,
             message: translate(Keys.Messages_Errors_Image_Library),
-            type: MessageBarType.Failure);
+            type: MessageBarType.failure);
         return;
       }
     } else {
@@ -223,6 +226,10 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   void launchLink(String url) async {
     try {
       launch(Uri.encodeFull(url));
-    } catch (e) {}
+    } catch (e) {
+      if (kDebugMode) {
+        print("Url cant be opened");
+      }
+    }
   }
 }

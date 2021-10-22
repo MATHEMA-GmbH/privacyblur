@@ -6,7 +6,7 @@ import 'range_checker.dart';
 
 class MatrixAppPixelate extends ImageAppMatrix {
   final int _size;
-  final int matrix_empty_border = 0;
+  final int matrixEmptyBorder = 0;
 
   MatrixAppPixelate(size) : _size = (size <= 0 ? 1 : size);
 
@@ -26,7 +26,7 @@ class MatrixAppPixelate extends ImageAppMatrix {
   void calculateInRange(RangeHelper range, ImageRGB channels) {
     if (range.rangeWidth <= _size || range.rangeHeight <= _size) return;
     int startIndex = (range.y1 * channels.imageWidth) + range.x1;
-    int linestep = range.x2 - range.x1;
+    int lineStep = range.x2 - range.x1;
     int endIndex = (((range.y2) * channels.imageWidth) + (range.x2));
     int limitIndex = (channels.imageHeight - 1 - _size) * channels.imageWidth -
         (channels.imageWidth - _size);
@@ -72,7 +72,7 @@ class MatrixAppPixelate extends ImageAppMatrix {
         }
       }
       pointIndex = pointIndex + _size;
-      if (pointIndex >= (lineStartRange + linestep)) {
+      if (pointIndex >= (lineStartRange + lineStep)) {
         lineStartRange = lineStartRange + (channels.imageWidth * _size);
         pointIndex = lineStartRange;
       }
@@ -81,6 +81,6 @@ class MatrixAppPixelate extends ImageAppMatrix {
 
   @override
   int emptyBorder() {
-    return matrix_empty_border;
+    return matrixEmptyBorder;
   }
 }

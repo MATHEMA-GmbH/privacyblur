@@ -6,20 +6,20 @@ class RangeHelper {
   final int radius;
   final int imgWidth;
   final int imgHeight;
-  final int img_border;
+  final int imgBorder;
   int rangeWidth = 0;
   int rangeHeight = 0;
   int x1 = 0;
   int y1 = 0;
   int x2 = 0;
   int y2 = 0;
-  final isCircle;
+  final bool isCircle;
   late bool fail;
 
   RangeHelper(this.centerX, this.centerY, this.radius, this.isCircle,
-      this.imgWidth, this.imgHeight, this.img_border) {
-    fail = ((img_border + 1) > imgWidth ~/ 2) ||
-        ((img_border + 1) > imgHeight ~/ 2);
+      this.imgWidth, this.imgHeight, this.imgBorder) {
+    fail =
+        ((imgBorder + 1) > imgWidth ~/ 2) || ((imgBorder + 1) > imgHeight ~/ 2);
 
     if (isCircle) {
       _calculateRadiusArea();
@@ -43,13 +43,13 @@ class RangeHelper {
   }
 
   RangeHelper.square(this.x1, this.y1, this.x2, this.y2, this.imgWidth,
-      this.imgHeight, this.img_border)
+      this.imgHeight, this.imgBorder)
       : centerX = 0,
         centerY = 0,
         isCircle = false,
         radius = 0 {
-    fail = ((img_border + 1) > imgWidth ~/ 2) ||
-        ((img_border + 1) > imgHeight ~/ 2);
+    fail =
+        ((imgBorder + 1) > imgWidth ~/ 2) || ((imgBorder + 1) > imgHeight ~/ 2);
 
     _calculateArea();
 
@@ -78,7 +78,7 @@ class RangeHelper {
     y1 = centerY - radius;
     x2 = centerX + radius;
     y2 = centerY + radius;
-    int border = img_border;
+    int border = imgBorder;
     int borderPlus = border + 1;
     if (x1 < border) x1 = border;
     if (x2 < border) x2 = border;
@@ -101,7 +101,7 @@ class RangeHelper {
   }
 
   void _calculateArea() {
-    int border = img_border;
+    int border = imgBorder;
     int borderPlus = border + 1;
     if (x1 < border) x1 = border;
     if (x2 < border) x2 = border;

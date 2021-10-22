@@ -6,6 +6,8 @@ part 'keys.g.dart';
 // Generate static translation keys: flutter pub run build_runner build --delete-conflicting-outputs
 
 @TranslateKeysOptions(
-    path: LOCALIZATION_RESOURCES_PATH, caseStyle: CaseStyle.titleCase, separator: "_")
+    path: localizationResourcesPath,
+    caseStyle: CaseStyle.titleCase,
+    separator: "_")
 class _$Keys // ignore: unused_element
 {}

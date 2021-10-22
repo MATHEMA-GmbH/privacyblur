@@ -12,12 +12,12 @@ import 'matrix__interface.dart';
 /// -------------- ACHTUNG! ------------------------
 class MatrixAppBlur extends ImageAppMatrix {
   final int _size;
-  late int _matrix_empty_border;
+  late int _matrixEmptyBorder;
   late int _stepBack;
   late int divider;
 
   MatrixAppBlur(size) : _size = (size <= 0 ? 1 : size) {
-    _matrix_empty_border = 0; //(_size ~/ 2);
+    _matrixEmptyBorder = 0; //(_size ~/ 2);
     _stepBack = _size ~/ 2;
     divider = _size * _size;
     if (ImageAppFilter.maxWidth > prevRowR.length) {
@@ -57,9 +57,6 @@ class MatrixAppBlur extends ImageAppMatrix {
     var prevRowIndex =
         (ch == 0) ? prevRowIndexB : (ch == 1 ? prevRowIndexG : prevRowIndexR);
     var prevRow = (ch == 0) ? prevRowB : (ch == 1 ? prevRowG : prevRowR);
-    //check prev value form line
-    var overJumpDiff = 0;
-    var arrSize = arr.length;
 
     /// get prev value in line
     if (rowIndexHelper - prevRowIndex[columnIndexHelper] == 1) {
@@ -197,6 +194,6 @@ class MatrixAppBlur extends ImageAppMatrix {
 
   @override
   int emptyBorder() {
-    return _matrix_empty_border;
+    return _matrixEmptyBorder;
   }
 }

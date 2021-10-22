@@ -28,7 +28,7 @@ class HelpWidget extends StatelessWidget {
     HelpLine(AppIcons.save, Keys.Image_Screen_Help_Lines_Help3)
   ];
 
-  HelpWidget(this.height, this.width);
+  HelpWidget(this.height, this.width, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

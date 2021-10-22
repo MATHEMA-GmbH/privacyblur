@@ -1,11 +1,6 @@
 import 'dart:math';
 
-import 'package:desktop_window/desktop_window.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_translate/flutter_translate.dart';
-import 'package:menubar/menubar.dart';
-import 'package:privacyblur/resources/localization/keys.dart';
 
 import 'desktop_config.dart';
 

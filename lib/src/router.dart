@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:privacyblur/src/di.dart';
 import 'package:privacyblur/src/screens/image/image_view.dart';
@@ -108,7 +107,7 @@ class AppRouter {
   }
 
   ImageFilterResult _getImageFromArgs(dynamic args) {
-    var result;
+    dynamic result;
     if (args != null && (args is Map) && args.containsKey(imageArg)) {
       result = args[imageArg];
     }
@@ -142,7 +141,8 @@ class AppRouter {
   }
 
   Future openImageRoute(context, String path) {
-    return _navigator.pushNamed(context, _imageRoute, arguments: {imagePathArg: path});
+    return _navigator
+        .pushNamed(context, _imageRoute, arguments: {imagePathArg: path});
   }
 
   void openImagePreview(

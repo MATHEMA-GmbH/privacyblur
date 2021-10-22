@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:privacyblur/src/widgets/scaled_wrapper.dart';
 
 import 'theme/theme_provider.dart';
@@ -87,7 +86,7 @@ class TextButtonBuilder {
     EdgeInsets? padding,
   }) {
     double? borderRadius = rounded ? 6 : 0;
-    EdgeInsets? _padding = padding ?? EdgeInsets.all(0);
+    EdgeInsets? _padding = padding ?? const EdgeInsets.all(0);
     if (AppTheme.isCupertino) {
       return CupertinoButton(
         padding: _padding,
@@ -217,7 +216,10 @@ class _AppBarBuilder {
         automaticallyImplyLeading: true,
         leadingWidth: 80,
         centerTitle: true,
-        backgroundColor: _isIOS ? AppTheme.barColor(context) : Theme.of(context).primaryColor, systemOverlayStyle: SystemUiOverlayStyle.light,
+        backgroundColor: _isIOS
+            ? AppTheme.barColor(context)
+            : Theme.of(context).primaryColor,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
       );
     }
   }

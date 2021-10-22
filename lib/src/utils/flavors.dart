@@ -1,7 +1,7 @@
-enum Flavor { FOSS, FULL }
+enum Flavor { foss, full }
 
 class BuildFlavor {
-  static Flavor flavor = Flavor.FULL;
+  static Flavor flavor = Flavor.full;
 
-  static bool get isFoss => flavor == Flavor.FOSS;
+  static bool get isFoss => flavor == Flavor.foss;
 }

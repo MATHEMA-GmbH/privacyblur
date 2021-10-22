@@ -32,7 +32,7 @@ platform :android do
 
   desc "Deploy a new version to the Google Play"
   lane :deploy do
-    gradle(task: "clean assembleRelease", project_dir: 'android/', flavor: "full", flags: "-t lib/main-full.dart")
+    gradle(task: "clean assembleRelease", project_dir: 'android/', flavor: "full", flags: "-t lib/main_full.dart")
     upload_to_play_store(
       skip_upload_changelogs: true
     )
@@ -40,11 +40,11 @@ platform :android do
 
   desc "Build AppBundle with flavor foss"
   lane :build_foss_appbundle do
-    sh("flutter", "build", "appbundle", "--flavor", "foss", "-t", "lib/main-foss.dart")
+    sh("flutter", "build", "appbundle", "--flavor", "foss", "-t", "lib/main_foss.dart")
   end
 
   desc "Build APK with flavor foss"
   lane :build_foss_apk do
-    sh("flutter", "build", "apk", "--flavor", "foss", "-t", "lib/main-foss.dart")
+    sh("flutter", "build", "apk", "--flavor", "foss", "-t", "lib/main_foss.dart")
   end
 end

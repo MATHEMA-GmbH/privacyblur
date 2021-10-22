@@ -24,8 +24,6 @@ import 'widgets/help_widget.dart';
 import 'widgets/image_tools.dart';
 import 'widgets/screen_rotation.dart';
 
-enum MenuActions { Settings, Camera, Image }
-
 // ignore: must_be_immutable
 class ImageScreen extends StatelessWidget with AppMessages {
   final DependencyInjection _di;
@@ -40,7 +38,8 @@ class ImageScreen extends StatelessWidget with AppMessages {
 
   TransformationController? _transformationController;
 
-  ImageScreen(this._di, this._router, this.filename);
+  ImageScreen(this._di, this._router, this.filename, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +78,8 @@ class ImageScreen extends StatelessWidget with AppMessages {
 
                 if (state == null) {
                   _bloc.add(ImageEventSelected(filename));
-                  LayoutConfig.desktop.updateMenu(key: UniqueKey());
+                  if (AppTheme.isDesktop)
+                    LayoutConfig.desktop.updateMenu(key: UniqueKey());
                 }
                 final imgNotSaved =
                     (state is ImageStateScreen && (!state.isImageSaved));
@@ -101,7 +101,8 @@ class ImageScreen extends StatelessWidget with AppMessages {
                       child: _buildHomeBody(context, state),
                     ),
                     floatingActionButton: (noSelectedPosition &&
-                            !BuildFlavor.isFoss && !AppTheme.isDesktop)
+                            !BuildFlavor.isFoss &&
+                            !AppTheme.isDesktop)
                         ? Padding(
                             padding:
                                 EdgeInsets.fromLTRB(0, 0, fabRight, fabBottom),

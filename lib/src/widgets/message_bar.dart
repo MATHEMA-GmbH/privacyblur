@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:privacyblur/src/widgets/theme/theme_provider.dart';
 
-enum MessageBarType { Information, Failure }
+enum MessageBarType { information, failure }
 
 mixin AppMessages {
-  final messageBarStyles = {MessageBarType.Failure: const Color(0xFFC5003E)};
+  final messageBarStyles = {MessageBarType.failure: const Color(0xFFC5003E)};
 
   void showMessage(
       {required BuildContext context,
@@ -23,14 +23,14 @@ mixin AppMessages {
       context: context,
       animDuration: const Duration(milliseconds: 0),
       duration: duration,
-      backgroundColor: type == MessageBarType.Failure
+      backgroundColor: type == MessageBarType.failure
           ? messageBarStyles[type]
           : defaultBackgroundColor,
       position: StyledToastPosition(
           align: Alignment.bottomCenter, offset: offsetBottom),
       textStyle: TextStyle(
           color:
-              type == MessageBarType.Failure ? Colors.white : defaultFontColor),
+              type == MessageBarType.failure ? Colors.white : defaultFontColor),
     );
   }
 }

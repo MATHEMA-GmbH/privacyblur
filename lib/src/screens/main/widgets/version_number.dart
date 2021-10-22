@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:yaml/yaml.dart';
 
 class VersionNumber extends StatelessWidget {
-  const VersionNumber();
+  const VersionNumber({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

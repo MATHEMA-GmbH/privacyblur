@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:privacyblur/resources/fonts/privacy_blur_icons.dart';
 import 'package:privacyblur/src/widgets/theme/theme_provider.dart';
 
-
 class AppIcons {
   static IconData get save {
     if (AppTheme.isCupertino) return CupertinoIcons.square_arrow_down;

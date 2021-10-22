@@ -11,12 +11,14 @@ class InteractiveViewerScrollBars extends StatefulWidget {
   final Size viewPortSize;
 
   const InteractiveViewerScrollBars(
-      {required this.controller,
+      {Key? key,
+      required this.controller,
       required this.minScale,
       required this.maxScale,
       required this.initialScale,
       required this.imageSize,
-      required this.viewPortSize});
+      required this.viewPortSize})
+      : super(key: key);
 
   @override
   _InteractiveViewerScrollBarsState createState() =>
@@ -27,7 +29,8 @@ class _InteractiveViewerScrollBarsState
     extends State<InteractiveViewerScrollBars> {
   late Size _scrollBarSize;
   late Offset _scrollBarOffset;
-  late final void Function() _listener = () => _calculateTransformationUpdates();
+  late final void Function() _listener =
+      () => _calculateTransformationUpdates();
 
   @override
   void initState() {

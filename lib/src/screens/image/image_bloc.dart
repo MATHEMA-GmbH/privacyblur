@@ -6,7 +6,7 @@ import 'dart:ui' as img_tools;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:privacyblur/resources/localization/keys.dart';
 import 'package:privacyblur/src/data/services/face_detection.dart'
-  if(BuildFlavor.isFoss) 'package:privacyblur/src/data/services/face_detection_foss.dart';
+if(BuildFlavor.isFoss) 'package:privacyblur/src/data/services/face_detection_foss.dart';
 
 import 'package:privacyblur/src/screens/image/helpers/constants.dart';
 import 'package:privacyblur/src/utils/image_filter/helpers/matrix_blur.dart';
@@ -21,7 +21,7 @@ import 'image_repo.dart';
 import 'utils/image_tools.dart';
 
 // may be move to image_events, but it became visible in project, not only inside BLoC
-class _yield_state_internally extends ImageEventBase {}
+class _yieldStateInternally extends ImageEventBase {}
 
 class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
   final ImageStateScreen _blocState = ImageStateScreen();
@@ -29,8 +29,9 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
   final ImgTools imgTools; //for mocking saving operations in future tests
   final FaceDetection faceDetection;
 
-  Timer? _deferedFuture;
-  final Duration _defered = const Duration(milliseconds: ImgConst.applyDelayDuration);
+  Timer? _deferredFuture;
+  final Duration _deferred =
+  const Duration(milliseconds: ImgConst.applyDelayDuration);
 
   ImageBloc(this._repo, this.imgTools, this.faceDetection) : super(null);
 
@@ -60,7 +61,7 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
       yield* filterShapeChanged(event);
     } else if (event is ImageEventDetectFaces) {
       yield* detectFaces();
-    } else if (event is _yield_state_internally) {
+    } else if (event is _yieldStateInternally) {
       yield _blocState.clone();
     }
   }
@@ -86,11 +87,11 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
   }
 
   void _applyCurrentFilter() {
-    _deferedFuture?.cancel();
-    _deferedFuture = Timer(_defered, () async {
+    _deferredFuture?.cancel();
+    _deferredFuture = Timer(_deferred, () async {
       _filterInArea();
       _blocState.image = await imageFilter.getImage();
-      add(_yield_state_internally());
+      add(_yieldStateInternally());
     });
   }
 
@@ -114,7 +115,7 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
 
   ImageStateFeedback _showFilterState() {
     String message = editToolMessage[_blocState.activeTool]!;
-    return ImageStateFeedback(message, messageType: MessageBarType.Information);
+    return ImageStateFeedback(message, messageType: MessageBarType.information);
   }
 
   Stream<ImageStateBase> filterShapeChanged(
@@ -153,10 +154,10 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
     if (_blocState.isImageSaved) {
       _blocState.savedOnce = true;
       yield ImageStateFeedback(Keys.Messages_Infos_Success_Saved,
-          messageType: MessageBarType.Information);
+          messageType: MessageBarType.information);
     } else {
       yield ImageStateFeedback(Keys.Messages_Errors_File_System,
-          messageType: MessageBarType.Failure);
+          messageType: MessageBarType.failure);
     }
     yield _blocState.clone();
   }
@@ -293,7 +294,7 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
     await _repo.removeLastPath();
     yield ImageStateFeedback(
       title,
-      messageType: MessageBarType.Failure,
+      messageType: MessageBarType.failure,
       feedback: {FeedbackAction.Navigate, FeedbackAction.ShowMessage},
     );
   }

@@ -17,7 +17,7 @@ class ImageStateFeedback extends ImageStateBase {
   final Map<String, dynamic>? positionalArgs;
 
   ImageStateFeedback(this.messageData,
-      {this.messageType = MessageBarType.Information,
+      {this.messageType = MessageBarType.information,
       this.feedback = const {FeedbackAction.ShowMessage},
       this.positionalArgs});
 }
@@ -137,5 +137,4 @@ class ImageStateBase {
     }
     return false;
   }
-
 }

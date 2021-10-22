@@ -21,7 +21,9 @@ class ImagePreviewScreen extends StatelessWidget {
   late InternalLayout internalLayout;
 
   ImagePreviewScreen(
-      this.di, this.router, this.transformationController, this.image);
+      this.di, this.router, this.transformationController, this.image,
+      {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
