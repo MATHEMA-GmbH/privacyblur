@@ -59,7 +59,8 @@
       "help1": "2. Du kannst den Bereich mit Tippen und Halten verschieben",
       "help2": "3. Stelle den Effekt wie gewünscht ein",
       "help3": "4. Tippe auf Speichern, um den Effekt zu speichern und das Bild zu exportieren"
-    }
+    },
+    "preview": "Vorschau"
   },
   "layout_configs": {
     "layout": "Layout",

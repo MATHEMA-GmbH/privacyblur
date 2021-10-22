@@ -50,7 +50,8 @@
     "menu": {
       "title": "File",
       "select_image": "Select image"
-    }
+    },
+    "preview": "Preview"
   },
   "image_screen": {
     "title": "Pixelate",

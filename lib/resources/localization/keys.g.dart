@@ -118,6 +118,8 @@ class Keys {
   static const String Image_Screen_Help_Lines_Help3 =
       'image_screen.help_lines.help3';
 
+  static const String Image_Screen_Preview = 'image_screen.preview';
+
   static const String Layout_Configs_Layout = 'layout_configs.layout';
 
   static const String Layout_Configs_Fullscreen = 'layout_configs.fullscreen';
@@ -128,8 +130,5 @@ class Keys {
 
   static const String Layout_Configs_Small = 'layout_configs.small';
 
-  static const String Image_Screen_Menu_Title = 'image_screen.menu.title';
-
-  static const String Image_Screen_Menu_Select_Image =
-      'image_screen.menu.select_image';
+  static const String Main_Screen_Preview = 'main_screen.preview';
 }

@@ -61,7 +61,9 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    if(AppTheme.isDesktop && LayoutConfig.desktop.currentMenu != menuKey.hashCode) _loadDesktopMenu();
+    if (AppTheme.isDesktop &&
+        LayoutConfig.desktop.currentMenu != menuKey.hashCode)
+      _loadDesktopMenu();
     primaryColor = AppTheme.primaryColor;
     return ScaffoldWithAppBar.build(
         context: context,
@@ -99,7 +101,9 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                   child: Column(
                     children: [
                       TextButtonBuilder.build(
-                          text: translate(Keys.Main_Screen_Select_Image),
+                          text: translate(AppTheme.isDesktop
+                              ? Keys.Main_Screen_Menu_Select_Image
+                              : Keys.Main_Screen_Select_Image),
                           onPressed: () =>
                               openImageAction(context, ImageSource.gallery),
                           backgroundColor: AppTheme.buttonColor,
@@ -139,16 +143,13 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   }
 
   void _loadDesktopMenu() {
-    LayoutConfig.desktop.updateMenu(
-      key: menuKey,
-      menus: [
-        Submenu(label: translate(Keys.Main_Screen_Menu_Title), children: [
-          MenuItem(
-              label: translate(Keys.Main_Screen_Select_Image),
-              onClicked: () => openImageAction(context, ImageSource.gallery),
-              shortcut: LogicalKeySet(LogicalKeyboardKey.keyO)
-          )
-        ])
+    LayoutConfig.desktop.updateMenu(key: menuKey, menus: [
+      Submenu(label: translate(Keys.Main_Screen_Menu_Title), children: [
+        MenuItem(
+            label: translate(Keys.Main_Screen_Select_Image),
+            onClicked: () => openImageAction(context, ImageSource.gallery),
+            shortcut: LogicalKeySet(LogicalKeyboardKey.keyO))
+      ])
     ]);
   }
 
@@ -190,7 +191,9 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
       try {
         File? pickedFile = await _picker.pickFile(type);
         if (pickedFile != null && await pickedFile.exists()) {
-          widget.router.openImageRoute(context, pickedFile.path).then((value) => setState(() {}));
+          widget.router
+              .openImageRoute(context, pickedFile.path)
+              .then((value) => setState(() {}));
         } else {
           widget.showMessage(
               context: context,

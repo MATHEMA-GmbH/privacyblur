@@ -29,7 +29,7 @@ class ImagePreviewScreen extends StatelessWidget {
     return ScaffoldWithAppBar.build(
       context: context,
       actions: [],
-      title: translate(Keys.App_Name),
+      title: translate(Keys.Image_Screen_Preview),
       body: SafeArea(
         child: _buildPreview(context),
       ),

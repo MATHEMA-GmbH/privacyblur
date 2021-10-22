@@ -95,7 +95,7 @@ class ImageScreen extends StatelessWidget with AppMessages {
                 return ScaffoldWithAppBar.build(
                     onBackPressed: () => _onBack(context, state),
                     context: context,
-                    title: '',
+                    title: AppTheme.isDesktop ? translate( Keys.App_Name) : "",
                     actions: _actionsIcon(context, imgNotSaved, imgSavedOnce),
                     body: SafeArea(
                       child: _buildHomeBody(context, state),
