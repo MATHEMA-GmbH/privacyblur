@@ -13,7 +13,7 @@ class ScreenRotation extends StatelessWidget {
   final double baseHeight;
   final double baseWidth;
 
-  ScreenRotation(
+  const ScreenRotation(
       {required this.view1,
       required this.view2,
       required this.view2Portrait,

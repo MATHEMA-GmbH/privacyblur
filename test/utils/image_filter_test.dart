@@ -23,7 +23,7 @@ void main() {
         listData[y * _width + x] = ((x == 1 ? x : x * 2) * (y + 1)) * 5;
       }
     }
-    Completer<Image> _completer = new Completer();
+    Completer<Image> _completer = Completer();
     decodeImageFromPixels(
         listData.buffer.asUint8List(), _width, _height, PixelFormat.rgba8888,
         (result) {

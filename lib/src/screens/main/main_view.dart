@@ -38,6 +38,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   final String websiteURL = 'https://mathema-apps.de/';
   final menuKey = UniqueKey();
 
+  @override
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addObserver(this);
@@ -75,7 +76,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
 
     return SafeArea(
       child: Container(
-        constraints: BoxConstraints.expand(),
+        constraints: const BoxConstraints.expand(),
         child: LayoutBuilder(builder: (context, BoxConstraints constraints) {
           double screenInnerHeight = constraints.minHeight;
           return Column(
@@ -104,7 +105,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                               openImageAction(context, ImageSource.gallery),
                           backgroundColor: AppTheme.buttonColor,
                           rounded: true,
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               vertical: 10, horizontal: 20),
                           color: Colors.white),
                       if (!_picker.permissionsGranted) _showPermissionWarning(),
@@ -128,7 +129,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                 sectionHeight: screenInnerHeight * 0.1,
               ),
               Section(
-                child: VersionNumber(),
+                child: const VersionNumber(),
                 sectionHeight: screenInnerHeight * 0.1,
               ),
             ],
@@ -155,7 +156,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   Widget _showPermissionWarning() {
     return Column(
       children: [
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         SizedBox(
@@ -163,7 +164,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
           child: Text(
             translate(Keys.Main_Screen_Photo_Permissions),
             textAlign: TextAlign.center,
-            style: TextStyle(fontStyle: FontStyle.italic),
+            style: const TextStyle(fontStyle: FontStyle.italic),
           ),
         ),
       ],
@@ -172,7 +173,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
 
   void _showLastImageDialog(BuildContext context) async {
     var path = await widget.localStorage.getLastPath();
-    if (path.length > 0) {
+    if (path.isNotEmpty) {
       var canDownscale = await AppConfirmationBuilder.build(context,
           message: translate(Keys.Messages_Errors_Image_Crash),
           acceptTitle: translate(Keys.Buttons_Ok),

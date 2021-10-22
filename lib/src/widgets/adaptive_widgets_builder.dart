@@ -33,7 +33,7 @@ class IconButtonBuilder {
                         size: iconSize,
                       ),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Text(text, style: TextStyle(color: color)),
                   ],
                 )
@@ -54,7 +54,7 @@ class IconButtonBuilder {
                       size: iconSize,
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Text(text, style: TextStyle(color: color)),
                 ],
               )
@@ -87,7 +87,7 @@ class TextButtonBuilder {
     EdgeInsets? padding,
   }) {
     double? borderRadius = rounded ? 6 : 0;
-    EdgeInsets? _padding = padding != null ? padding : EdgeInsets.all(0);
+    EdgeInsets? _padding = padding ?? EdgeInsets.all(0);
     if (AppTheme.isCupertino) {
       return CupertinoButton(
         padding: _padding,
@@ -216,9 +216,8 @@ class _AppBarBuilder {
         actions: actions,
         automaticallyImplyLeading: true,
         leadingWidth: 80,
-        brightness: Brightness.dark,
         centerTitle: true,
-        backgroundColor: _isIOS ? AppTheme.barColor(context) : Theme.of(context).primaryColor,
+        backgroundColor: _isIOS ? AppTheme.barColor(context) : Theme.of(context).primaryColor, systemOverlayStyle: SystemUiOverlayStyle.light,
       );
     }
   }

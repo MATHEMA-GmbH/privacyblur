@@ -11,7 +11,7 @@ class ImgPainter extends CustomPainter {
 
   @override
   bool operator ==(other) {
-    return (other is ImgPainter) ? this._hash == other._hash : false;
+    return (other is ImgPainter) ? _hash == other._hash : false;
   }
 
   @override

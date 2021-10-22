@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ScaledWrapper extends StatelessWidget {
   final Widget child;
 
-  ScaledWrapper({required this.child});
+  const ScaledWrapper({required this.child});
 
   @override
   Widget build(BuildContext context) {

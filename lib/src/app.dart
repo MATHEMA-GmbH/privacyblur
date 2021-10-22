@@ -10,7 +10,7 @@ import 'widgets/adaptive_widgets_builder.dart';
 class PixelMonsterApp extends StatelessWidget {
   final AppRouter _router;
 
-  PixelMonsterApp(this._router);
+  const PixelMonsterApp(this._router);
 
   @override
   Widget build(BuildContext context) {

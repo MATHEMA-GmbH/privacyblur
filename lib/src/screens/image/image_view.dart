@@ -56,7 +56,7 @@ class ImageScreen extends StatelessWidget with AppMessages {
           providers: [_di.getImageBloc()],
           child: BlocConsumer<ImageBloc, ImageStateBase?>(
               listenWhen: (_, curState) => (curState is ImageStateFeedback),
-              buildWhen: (_, curState) => !(curState is ImageStateFeedback),
+              buildWhen: (_, curState) => curState is! ImageStateFeedback,
               listener: (_, state) {
                 if (state is ImageStateFeedback) {
                   double offsetBottom = internalLayout.offsetBottom;
@@ -164,7 +164,7 @@ class ImageScreen extends StatelessWidget with AppMessages {
         );
       });
     } else {
-      return Center(child: CircularProgressIndicator.adaptive());
+      return const Center(child: CircularProgressIndicator.adaptive());
     }
   }
 
@@ -188,7 +188,7 @@ class ImageScreen extends StatelessWidget with AppMessages {
             })
       ];
     }
-    return <Widget>[SizedBox()];
+    return <Widget>[const SizedBox()];
   }
 
   Widget drawImageToolbar(BuildContext context, ImageStateScreen state,
@@ -232,7 +232,7 @@ class ImageScreen extends StatelessWidget with AppMessages {
   void _onPreview(BuildContext context, ImageFilterResult image) {
     /// Passing complex objects may prove inefficient or problematic
     /// This may change in the future
-    this._router.openImagePreview(context, _transformationController!, image);
+    _router.openImagePreview(context, _transformationController!, image);
   }
 
   Matrix4 _calculateInitialScaleAndOffset(

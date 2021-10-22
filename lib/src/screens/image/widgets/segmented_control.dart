@@ -7,7 +7,7 @@ class SegmentedControl extends StatefulWidget {
   final Map<int, Widget> tabs;
   final Function onChanged;
 
-  SegmentedControl(
+  const SegmentedControl(
       {required this.tabs, required this.groupValue, required this.onChanged});
 
   @override
@@ -25,7 +25,7 @@ class _SegmentedControlState extends State<SegmentedControl> {
 
   @override
   void initState() {
-    this.groupValue = widget.groupValue;
+    groupValue = widget.groupValue;
     super.initState();
   }
 
@@ -33,8 +33,8 @@ class _SegmentedControlState extends State<SegmentedControl> {
   Widget build(BuildContext context) {
     if (AppTheme.isCupertino) {
       return CupertinoSlidingSegmentedControl(
-        groupValue: this.groupValue,
-        children: this.widget.tabs,
+        groupValue: groupValue,
+        children: widget.tabs,
         onValueChanged: onChanged,
       );
     } else {
@@ -42,9 +42,9 @@ class _SegmentedControlState extends State<SegmentedControl> {
       widget.tabs.forEach((index, tab) {
         tabChildren.add(Radio(
           value: index,
-          groupValue: this.groupValue,
+          groupValue: groupValue,
           onChanged: onChanged,
-          activeColor: this.groupValue == index
+          activeColor: groupValue == index
               ? AppTheme.primaryColor
               : AppTheme.fontColor(context),
         ));
@@ -64,6 +64,6 @@ class _SegmentedControlState extends State<SegmentedControl> {
     setState(() {
       groupValue = int;
     });
-    this.widget.onChanged(int);
+    widget.onChanged(int);
   }
 }

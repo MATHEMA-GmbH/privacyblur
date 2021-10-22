@@ -41,7 +41,7 @@ class ImgTools {
     srcWidth = size.width;
     srcHeight = size.height;
     if (srcWidth < 0 || srcHeight < 0) {
-      throw FormatException('Wrong image format');
+      throw const FormatException('Wrong image format');
     }
 
     var scaleRatio = max(srcWidth, srcHeight) / maxSize;
@@ -65,8 +65,9 @@ class ImgTools {
 
     try {
       String? selectedDirectory; // desktop only
-      if (AppTheme.isDesktop)
+      if (AppTheme.isDesktop) {
         selectedDirectory = await FilePicker.platform.getDirectoryPath();
+      }
       String? temporaryDirectoryPath = (await getTemporaryDirectory()).path;
       fileName = _createFileName(needOverride);
       Uint8List imageBytes = Uint8List.fromList(img_external.encodeJpg(
@@ -150,16 +151,16 @@ class ImgTools {
     bool error = false;
     try {
       file = await FlutterExifRotation.rotateImage(path: filename)
-          .timeout(Duration(seconds: 2));
+          .timeout(const Duration(seconds: 2));
     } catch (err) {
       error = true;
     }
     if (error) {
       file = await FlutterExifRotation.rotateImage(path: filename)
-          .timeout(Duration(seconds: 10));
+          .timeout(const Duration(seconds: 10));
     }
     if (file == null) {
-      throw FormatException('Image rotation fix plugin problems');
+      throw const FormatException('Image rotation fix plugin problems');
     } else {
       return Future.value(file);
     }

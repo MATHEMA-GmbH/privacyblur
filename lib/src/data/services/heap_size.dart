@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 
 class HeapSize {
-  static const _platform = const MethodChannel('de.mathema.privacyblur/memory');
+  static const _platform = MethodChannel('de.mathema.privacyblur/memory');
 
   HeapSize._privateConstructor();
 

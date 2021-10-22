@@ -6,7 +6,7 @@ import 'range_checker.dart';
 class ImageRGB {
   ImageRGB._internal();
 
-  static var _instance = ImageRGB._internal();
+  static final _instance = ImageRGB._internal();
   int size = 0;
 
   Future<void> splitImage(img_tools.Image _image) async {
@@ -74,10 +74,8 @@ class ImageRGB {
   RangeHelper? _range_cache;
 
   RangeHelper getChangedRange() {
-    if (_range_cache == null) {
-      _range_cache = RangeHelper.square(
+    _range_cache ??= RangeHelper.square(
           minx, miny, maxx, maxy, imageWidth, imageHeight, 0);
-    }
     return _range_cache!;
   }
 

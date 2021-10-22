@@ -11,18 +11,18 @@ class ShapePainter extends CustomPainter {
   ShapePainter(this.positions, this.selectedPosition) {
     // with prime numbers to reduce collisions... may be. Not very important
     // from https://primes.utm.edu/lists/small/10000.txt
-    positions.forEach((p) {
+    for (var p in positions) {
       _hash += (p.isRounded ? 7879 : 9341) +
           selectedPosition * 8467 +
           (p.getVisibleRadius() * 14557).toInt() +
           p.posX +
           p.posY * 12347;
-    });
+    }
   }
 
   @override
   bool operator ==(other) {
-    return (other is ShapePainter) ? this._hash == other._hash : false;
+    return (other is ShapePainter) ? _hash == other._hash : false;
   }
 
   @override
@@ -34,7 +34,7 @@ class ShapePainter extends CustomPainter {
       ..strokeWidth = 4
       ..style = PaintingStyle.stroke;
     canvas.drawRect(
-        Offset(0, 0) & Size(size.width - 2, size.height - 2), paint1);
+        const Offset(0, 0) & Size(size.width - 2, size.height - 2), paint1);
   }
 
   void _drawCircle(Canvas canvas, int x, int y, int r, Color color) {
@@ -78,8 +78,9 @@ class ShapePainter extends CustomPainter {
             canvas, position.posX, position.posY, radius - 2, colorBorderInner);
       }
     });
-    if (selectedPosition < 0 || selectedPosition >= positions.length)
+    if (selectedPosition < 0 || selectedPosition >= positions.length) {
       _drawImageSelection(canvas, size);
+    }
   }
 
   @override

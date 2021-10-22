@@ -37,7 +37,7 @@ class ImageFilterResult {
 
   @override
   bool operator ==(other) {
-    return (other is ImageFilterResult) ? this._hash == other._hash : false;
+    return (other is ImageFilterResult) ? _hash == other._hash : false;
   }
 
   @override

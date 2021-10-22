@@ -32,7 +32,7 @@ class ImageStateScreen extends ImageStateBase {
 
   // maybe remove from bloc in next version. ...Why?
   bool get hasSelection {
-    return positions.length > 0;
+    return positions.isNotEmpty;
   }
 
   bool get isImageSelected => getSelectedPosition() == null;
@@ -96,26 +96,26 @@ class ImageStateScreen extends ImageStateBase {
 
   bool addFaces(Faces arr) {
     bool added = false;
-    arr.forEach((face) {
+    for (var face in arr) {
       if (_addFace(face)) {
         added = true;
       }
-    });
+    }
     if (added) positionsUpdateOrder();
     return added;
   }
 
   ImageStateScreen clone() {
     var newImageStateScreen = ImageStateScreen()
-      ..image = this.image
-      ..filename = this.filename
-      ..isImageSaved = this.isImageSaved
-      ..activeTool = this.activeTool
-      ..maxPower = this.maxPower
-      ..selectedFilterIndex = this.selectedFilterIndex
-      ..positions = [...this.positions]
-      ..savedOnce = this.savedOnce
-      ..maxRadius = this.maxRadius;
+      ..image = image
+      ..filename = filename
+      ..isImageSaved = isImageSaved
+      ..activeTool = activeTool
+      ..maxPower = maxPower
+      ..selectedFilterIndex = selectedFilterIndex
+      ..positions = [...positions]
+      ..savedOnce = savedOnce
+      ..maxRadius = maxRadius;
     return newImageStateScreen;
   }
 }
@@ -133,11 +133,9 @@ class ImageStateBase {
   @override
   bool operator ==(other) {
     if (other is ImageStateBase) {
-      return this._blocSerial == other._blocSerial;
+      return _blocSerial == other._blocSerial;
     }
     return false;
   }
 
-  @override
-  int get hashCode => super.hashCode;
 }

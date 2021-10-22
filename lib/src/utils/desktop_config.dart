@@ -17,10 +17,10 @@ class DesktopWindowConfig extends DesktopWindow {
 
   /// ## WINDOW CONFIG ##
 
-  static Map<DESKTOP_LAYOUT_TYPE, Size> _desktopSizes = {
-    DESKTOP_LAYOUT_TYPE.SMALL: Size(375, 667),
-    DESKTOP_LAYOUT_TYPE.LARGE: Size(1920, 1080),
-    DESKTOP_LAYOUT_TYPE.REGULAR: Size(1366, 768)
+  static final Map<DESKTOP_LAYOUT_TYPE, Size> _desktopSizes = {
+    DESKTOP_LAYOUT_TYPE.SMALL: const Size(375, 667),
+    DESKTOP_LAYOUT_TYPE.LARGE: const Size(1920, 1080),
+    DESKTOP_LAYOUT_TYPE.REGULAR: const Size(1366, 768)
   };
 
   setupDesktopScreenBoundaries() async {
@@ -53,7 +53,7 @@ class DesktopWindowConfig extends DesktopWindow {
     ]);
   }
 
-  Submenu _layoutMenu = Submenu(label: translate(Keys.Layout_Configs_Layout), children: [
+  final Submenu _layoutMenu = Submenu(label: translate(Keys.Layout_Configs_Layout), children: [
     MenuItem(
       label: translate(Keys.Layout_Configs_Fullscreen),
       onClicked: () => toggleFullScreen(),
@@ -69,7 +69,7 @@ class DesktopWindowConfig extends DesktopWindow {
       onClicked: () => setWindowSize(size: DESKTOP_LAYOUT_TYPE.SMALL),
       shortcut: LogicalKeySet(LogicalKeyboardKey.keyS),
     ),
-    MenuDivider(),
+    const MenuDivider(),
     MenuItem(
       label: translate(Keys.Layout_Configs_Regular),
       onClicked: () => setWindowSize(size: DESKTOP_LAYOUT_TYPE.REGULAR),

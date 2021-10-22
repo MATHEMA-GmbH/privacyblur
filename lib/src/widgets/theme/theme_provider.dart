@@ -22,8 +22,9 @@ class AppTheme {
     if (isCupertino) {
       if (Theme.of(context).brightness == Brightness.dark) {
         return CupertinoColors.darkBackgroundGray;
-      } else
+      } else {
         return CupertinoColors.systemBackground;
+      }
     }
     return Theme.of(context).scaffoldBackgroundColor;
   }
@@ -67,9 +68,9 @@ class AppTheme {
       color: CupertinoColors.systemBackground,
       darkColor: CupertinoColors.black,
     ),
-    textTheme: CupertinoTextThemeData(
+    textTheme: const CupertinoTextThemeData(
         textStyle: TextStyle(
-      color: const CupertinoDynamicColor.withBrightness(
+      color: CupertinoDynamicColor.withBrightness(
         color: CupertinoColors.black,
         darkColor: CupertinoColors.white,
       ),
@@ -78,60 +79,58 @@ class AppTheme {
 
   static final ThemeData light = ThemeData(
       brightness: Brightness.light,
-      primaryColor: Color(0xFFC5003E),
-      primaryColorDark: Color(0xFF8D0019),
-      primaryColorLight: Color(0xFFFE4F68),
-      secondaryHeaderColor: Color(0xFFFFFFFF),
-      accentColor: Color(0xFF53565A),
-      dividerColor: Color(0xFFBDBDBD),
-      primaryTextTheme: TextTheme(),
+      primaryColor: const Color(0xFFC5003E),
+      primaryColorDark: const Color(0xFF8D0019),
+      primaryColorLight: const Color(0xFFFE4F68),
+      secondaryHeaderColor: const Color(0xFFFFFFFF),
+      dividerColor: const Color(0xFFBDBDBD),
+      primaryTextTheme: const TextTheme(),
       sliderTheme: SliderThemeData.fromPrimaryColors(
-        primaryColor: Color(0xFFC5003E),
-        primaryColorDark: Color(0xFF8D0019),
-        primaryColorLight: Color(0xFFFE4F68),
-        valueIndicatorTextStyle: TextStyle(color: Colors.black),
+        primaryColor: const Color(0xFFC5003E),
+        primaryColorDark: const Color(0xFF8D0019),
+        primaryColorLight: const Color(0xFFFE4F68),
+        valueIndicatorTextStyle: const TextStyle(color: Colors.black),
       ),
-      buttonTheme: ButtonThemeData(
+      buttonTheme: const ButtonThemeData(
         buttonColor: Color(0xFFC5003E),
         disabledColor: Color(0xFFCCCCCC),
         focusColor: Color(0xFFFE4F68),
         textTheme: ButtonTextTheme.accent,
       ),
-      textTheme: TextTheme(
+      textTheme: const TextTheme(
         headline1: TextStyle(color: Colors.black),
         bodyText2:
             TextStyle(color: Colors.black, fontWeight: FontWeight.normal),
         bodyText1:
             TextStyle(color: Colors.black54, fontWeight: FontWeight.w400),
-      ));
+      ), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Color(0xFF53565A)));
 
   static final ThemeData dark = ThemeData(
     brightness: Brightness.dark,
-    primaryColor: Color(0xFFC5003E),
-    primaryColorDark: Color(0xFF8D0019),
-    primaryColorLight: Color(0xFFFE4F68),
-    secondaryHeaderColor: Color(0xFFFFFFFF),
-    accentColor: Color(0xFF53565A),
-    dividerColor: Color(0xFFBDBDBD),
-    primaryTextTheme: TextTheme(),
+    primaryColor: const Color(0xFFC5003E),
+    primaryColorDark: const Color(0xFF8D0019),
+    primaryColorLight: const Color(0xFFFE4F68),
+    secondaryHeaderColor: const Color(0xFFFFFFFF),
+    dividerColor: const Color(0xFFBDBDBD),
+    primaryTextTheme: const TextTheme(),
     sliderTheme: SliderThemeData.fromPrimaryColors(
-      primaryColor: Color(0xFFC5003E),
-      primaryColorDark: Color(0xFF8D0019),
-      primaryColorLight: Color(0xFFFE4F68),
-      valueIndicatorTextStyle: TextStyle(color: Colors.white),
+      primaryColor: const Color(0xFFC5003E),
+      primaryColorDark: const Color(0xFF8D0019),
+      primaryColorLight: const Color(0xFFFE4F68),
+      valueIndicatorTextStyle: const TextStyle(color: Colors.white),
     ),
-    buttonTheme: ButtonThemeData(
+    buttonTheme: const ButtonThemeData(
       buttonColor: Color(0xFFC5003E),
       disabledColor: Color(0xFFCCCCCC),
       focusColor: Color(0xFFFE4F68),
       textTheme: ButtonTextTheme.accent,
     ),
-    textTheme: TextTheme(
+    textTheme: const TextTheme(
         headline1: TextStyle(color: Colors.white),
         bodyText1:
             TextStyle(color: Colors.white70, fontWeight: FontWeight.w400),
         bodyText2:
             TextStyle(color: Colors.white, fontWeight: FontWeight.normal),
-        headline5: TextStyle()),
+        headline5: TextStyle()), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Color(0xFF53565A)),
   );
 }

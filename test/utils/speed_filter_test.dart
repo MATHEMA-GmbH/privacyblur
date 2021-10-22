@@ -15,7 +15,7 @@ void main() {
     var _width = 10000;
     var _height = 10000;
     Uint32List listData = Uint32List(_width * _height); //7x7
-    Completer<Image> _completer = new Completer();
+    Completer<Image> _completer = Completer();
     decodeImageFromPixels(
         listData.buffer.asUint8List(), _width, _height, PixelFormat.rgba8888,
         (result) {
@@ -67,7 +67,7 @@ void main() {
     for (int i = 0; i < listData.length; i++) {
       listData[i] = 0xff707070;
     }
-    Completer<Image> _completer = new Completer();
+    Completer<Image> _completer = Completer();
     decodeImageFromPixels(
         listData.buffer.asUint8List(), _width, _height, PixelFormat.rgba8888,
         (result) {
@@ -77,15 +77,15 @@ void main() {
     await filter.setImage(image);
     ImageAppFilter.setMaxProcessedWidth(_width + 1);
     var time1 = DateTime.now().millisecondsSinceEpoch;
-    double multiply_counter = 0.001; //float point variable
+    double multiplyCounter = 0.001; //float point variable
     for (int i = 0; i < 63000000; i++) {
-      multiply_counter *= i.toDouble();
-      multiply_counter -= (multiply_counter - 1.0);
+      multiplyCounter *= i.toDouble();
+      multiplyCounter -= (multiplyCounter - 1.0);
     }
     var diff = DateTime.now().millisecondsSinceEpoch - time1;
     var templateTime = diff;
     print('----------------' +
-        multiply_counter.toString() +
+        multiplyCounter.toString() +
         '-------------------');
     print('------------Control Time--------------');
     print(((diff ~/ 100) / 10).toString() + " sec");
@@ -110,7 +110,7 @@ void main() {
     var _width = 1000;
     var _height = 1000;
     Uint32List listData = Uint32List(_width * _height); //7x7
-    Completer<Image> _completer = new Completer();
+    Completer<Image> _completer = Completer();
     decodeImageFromPixels(
         listData.buffer.asUint8List(), _width, _height, PixelFormat.rgba8888,
         (result) {
@@ -134,14 +134,14 @@ void main() {
     print('-------------------------------------');
     print('-------------------------------------');
     var appFilterTime = diff;
-    img_external.Image ext_image_lib = img_external.Image.rgb(_width, _height);
+    img_external.Image extImageLib = img_external.Image.rgb(_width, _height);
     time1 = DateTime.now().millisecondsSinceEpoch;
 
     ///this library use a trick as fact they calculate only 2/3 of radius.
     ///bluring is not so powerfull as with linear bluring.
     ///to get same result radius must be in 3-4 times bigger
     ///but even with same block size it works in 7 times slower.
-    img_external.gaussianBlur(ext_image_lib, 250);
+    img_external.gaussianBlur(extImageLib, 250);
     diff = DateTime.now().millisecondsSinceEpoch - time1;
     print('-------------------------------------');
     print('---------External Lib Time-----------');
@@ -157,7 +157,7 @@ void main() {
     var _width = 15000;
     var _height = 15000;
     Uint32List listData = Uint32List(_width * _height); //7x7
-    Completer<Image> _completer = new Completer();
+    Completer<Image> _completer = Completer();
     decodeImageFromPixels(
         listData.buffer.asUint8List(), _width, _height, PixelFormat.rgba8888,
         (result) {
@@ -181,9 +181,9 @@ void main() {
     print('-------------------------------------');
     print('-------------------------------------');
     var appFilterTime = diff;
-    img_external.Image ext_image_lib = img_external.Image.rgb(_width, _height);
+    img_external.Image extImageLib = img_external.Image.rgb(_width, _height);
     time1 = DateTime.now().millisecondsSinceEpoch;
-    img_external.pixelate(ext_image_lib, 500);
+    img_external.pixelate(extImageLib, 500);
     diff = DateTime.now().millisecondsSinceEpoch - time1;
     print('-------------------------------------');
     print('---------External Lib Time-----------');

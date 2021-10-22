@@ -30,7 +30,7 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
   final FaceDetection faceDetection;
 
   Timer? _deferedFuture;
-  Duration _defered = Duration(milliseconds: ImgConst.applyDelayDuration);
+  final Duration _defered = const Duration(milliseconds: ImgConst.applyDelayDuration);
 
   ImageBloc(this._repo, this.imgTools, this.faceDetection) : super(null);
 
@@ -68,7 +68,7 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
   var imageFilter = ImageAppFilter();
 
   void _filterInArea() {
-    _blocState.positions.forEach((position) {
+    for (var position in _blocState.positions) {
       if (position.canceled || position.forceRedraw) {
         if (position.isPixelate) {
           imageFilter.setFilter(MatrixAppPixelate(
@@ -82,7 +82,7 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
         position.canceled = false;
         position.forceRedraw = false;
       }
-    });
+    }
   }
 
   void _applyCurrentFilter() {
@@ -90,7 +90,7 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
     _deferedFuture = Timer(_defered, () async {
       _filterInArea();
       _blocState.image = await imageFilter.getImage();
-      add(new _yield_state_internally());
+      add(_yield_state_internally());
     });
   }
 
@@ -105,11 +105,11 @@ class ImageBloc extends Bloc<ImageEventBase, ImageStateBase?> {
     if (position.canceled) return;
     _cancelPosition(position);
     _blocState.positionsMark2Redraw();
-    _blocState.positions.forEach((pos) {
+    for (var pos in _blocState.positions) {
       if (pos.forceRedraw) {
         _cancelPosition(pos);
       }
-    });
+    }
   }
 
   ImageStateFeedback _showFilterState() {

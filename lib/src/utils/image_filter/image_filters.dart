@@ -25,7 +25,7 @@ class ImageAppFilter {
   static int _max_width_area = 1000;
 
   static int get maxWidth => _max_width_area;
-  static ImageAppFilter _instance = ImageAppFilter._internal();
+  static final ImageAppFilter _instance = ImageAppFilter._internal();
 
   factory ImageAppFilter() => _instance;
 
@@ -147,7 +147,7 @@ class ImageAppFilter {
     int uvIndex = frameSize;
     final int newSize = ((width * height * 7) ~/ 4);
     if (yuv.length != newSize) {
-      yuv = new Uint8List(newSize);
+      yuv = Uint8List(newSize);
     }
     var argb = getImageARGB32();
     int a, R, G, B, Y, U, V;
@@ -197,7 +197,7 @@ class ImageAppFilter {
 
   Future<ImageFilterResult> getImage() {
     if (!needRebuild) return Future.value(_response_cache);
-    Completer<ImageFilterResult> _completer = new Completer();
+    Completer<ImageFilterResult> _completer = Completer();
     if (_imgChannels.transactionActive) {
       var range = _imgChannels.getChangedRange();
       img_tools.decodeImageFromPixels(

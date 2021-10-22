@@ -16,7 +16,7 @@ class NoTransitionRoute extends MaterialPageRoute {
 class ScreenNavigator {
   Future<Object?> pushReplacementNamed(BuildContext context, String route,
       {Map<String, dynamic>? arguments}) {
-    return Navigator.pushReplacementNamed<Object?, Null>(context, route,
+    return Navigator.pushReplacementNamed<Object?, void>(context, route,
         arguments: arguments);
   }
 
@@ -41,15 +41,15 @@ class ScreenNavigator {
 
 class AppRouter {
   String _initialRoute = _mainRoute;
-  DependencyInjection _di;
+  final DependencyInjection _di;
 
-  static final String _mainRoute = '/main_route';
-  static final String _imageRoute = '/image_route';
-  static final String _imagePreviewRoute = '/image_preview_route';
+  static const String _mainRoute = '/main_route';
+  static const String _imageRoute = '/image_route';
+  static const String _imagePreviewRoute = '/image_preview_route';
 
-  static final String imagePathArg = 'image_path';
-  static final String controllerArg = 'transformationController';
-  static final String imageArg = 'image';
+  static const String imagePathArg = 'image_path';
+  static const String controllerArg = 'transformationController';
+  static const String imageArg = 'image';
 
   final ScreenNavigator _navigator;
 

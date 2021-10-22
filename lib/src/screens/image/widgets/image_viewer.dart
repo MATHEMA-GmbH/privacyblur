@@ -18,7 +18,7 @@ class ImageViewer extends StatelessWidget {
   final void Function(double, double) moveFilterPosition;
   final void Function(double, double) addFilterPosition;
   final void Function(int) selectFilter;
-  late TransformationController _transformationController;
+  late final TransformationController _transformationController;
   final double maxScale = 10;
 
   ImageViewer(
