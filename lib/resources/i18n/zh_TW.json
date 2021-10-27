@@ -1,0 +1,71 @@
+{
+  "app_name": "PrivacyBlur",
+  "buttons": {
+    "save": "儲存",
+    "apply": "套用",
+    "accept": "接受",
+    "preview": "預覽",
+    "settings": "設定",
+    "ok": "OK",
+    "cancel": "取消",
+    "circle": "圓形",
+    "square": "方形",
+    "pixelate": "像素化",
+    "blur": "模糊",
+    "tool_size": "大小",
+    "tool_grain": "顆粒",
+    "tool_shape": "形狀",
+    "tool_type": "種類",
+    "override_yes": "替換",
+    "override_no": "新增"
+  },
+  "messages": {
+    "errors": {
+      "image_crash": "無法載入上一張圖片。我該以較低解析度開啟此圖片嗎？",
+      "undefined": "未知錯誤",
+      "image_library": "圖片函式庫載入錯誤",
+      "target_directory": "目標路徑並不存在",
+      "photo_permissions": "PrivacyBlur 需要您的檔案權限才能使用\n請至設定允許本應用程式的檔案權限。",
+      "file_system": "檔案系統例外",
+      "no_image": "尚未選取圖片",
+      "problem_img_read": "無法載入圖片。\n這個檔案還存在嗎？",
+      "img_format": "圖片格式有誤。\n這是張圖片嗎？",
+      "img_size": "圖片大小有誤。\n請再試一次。",
+      "img_not_readable": "無法從檔案中載入圖片。",
+      "processing_image": "處理圖片時遇到了錯誤。\n請再試一次。",
+      "image_scale_down": "警告：本圖片在儲存時有經過縮小，您現在看到的是匯出時的品質設定。原始解析度：{origRes}、新的解析度： {newRes}"
+    },
+    "infos": {
+      "exit_request": "退出而不保存？",
+      "success_saved": "成功！圖片已保存",
+      "imageNotSelected": "未選擇任何圖片",
+      "override_image": "您已經保存了這張圖片。您想要覆蓋它還是建立一個新的檔案？"
+    }
+  },
+  "main_screen": {
+    "title": "選擇圖片",
+    "content": "把較敏感的資訊從您的圖片中移除！",
+    "select_image": "自圖庫中選取",
+    "photo_permissions": "PrivacyBlur 需要您的檔案權限才能使用。點選「自圖庫中選取」以開始使用。",
+    "menu": {
+      "title": "檔案",
+      "select_image": "選擇圖片"
+    }
+  },
+  "image_screen": {
+    "title": "像素化",
+    "help_lines": {
+      "help0": "1. 點選您想要更改的區域",
+      "help1": "2. 您可透過拖拉選擇您所想要的區域",
+      "help2": "3. 選擇您想要的特效",
+      "help3": "4. 點選儲存以儲存您的圖片"
+    }
+  },
+  "layout_configs": {
+    "layout": "布局",
+    "fullscreen": "切換全螢幕",
+    "large": "放大視窗",
+    "regular": "重設視窗",
+    "small": "縮小視窗"
+  }
+}
