@@ -21,21 +21,21 @@ platform :android do
     gradle(task: "test")
   end
 
-  desc "Submit a new Beta Build to Crashlytics Beta"
-  lane :beta do
-    gradle(task: "clean assembleRelease")
-    crashlytics
-
-     sh "your_script.sh"
-     You can also use other beta testing services here
-  end
-
-  desc "Deploy a new version to the Google Play"
-  lane :deploy do
-    gradle(task: "clean assembleRelease", project_dir: 'android/', flavor: "full", flags: "-t lib/main_full.dart")
-    upload_to_play_store(
-      skip_upload_changelogs: true
-    )
+  desc "Deploy to closed beta track"
+  lane :closed_beta do
+    begin
+      gradle(task: "clean")
+      sh("flutter", "build", "appbundle", "--flavor", "full", "-t", "lib/main_full.dart")
+      upload_to_play_store(
+        track: 'beta',
+        aab: './build/app/outputs/bundle/release/app-full-release.aab',
+        skip_upload_metadata: true,
+        skip_upload_images: true,
+        skip_upload_screenshots: true,
+        release_status: "draft",
+        version_code: flutter_version()["version_code"],
+      )
+    end
   end
 
   desc "Build AppBundle with flavor foss"

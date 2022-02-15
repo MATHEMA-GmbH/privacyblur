@@ -1,0 +1,67 @@
+name: Playstore deployment
+on:
+  push:
+    branches:
+      - master
+jobs:
+  #CI
+  build_android:
+    name: Building Android
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 12.x
+      - name: Decrypt Android keys
+        run: sh ./.github/scripts/decrypt_android_secrets.sh
+        env:
+          ANDROID_KEYS_SECRET_PASSPHRASE: ${{ secrets.ANDROID_KEYS_SECRET_PASSPHRASE }}
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: 2.8.0
+      - name: Install Flutter dependencies
+        run: flutter pub get
+        # Add build runner commands here
+      - name: Build the AAB
+        run: flutter build appbundle --release --flavor full -t lib/main_full.dart
+      - name: Upload artifact to Github
+        uses: actions/upload-artifact@v1
+        with:
+          name: release-aab
+          path: build/app/outputs/bundle/fullRelease/app-full-release.aab
+  #CD
+  deploy_android:
+    name: Deploying to playstore
+    runs-on: ubuntu-latest
+    needs: [build_android]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 12.x
+      - name: Decrypt Android keys
+        run: sh ./.github/scripts/decrypt_android_secrets.sh
+        env:
+          ANDROID_KEYS_SECRET_PASSPHRASE: ${{ secrets.ANDROID_KEYS_SECRET_PASSPHRASE }}
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: 2.8.0
+      - run: flutter pub get
+      - run: flutter build appbundle --release --flavor full -t lib/main_full.dart
+      - name: Upload artifact to Github
+        uses: actions/upload-artifact@v1
+        with:
+          name: release-aab
+          path: build/app/outputs/bundle/fullRelease/app-full-release.aab
+      - name: Run Fastlane
+        uses: maierj/fastlane-action@v1.4.0
+        with:
+          lane: closed_beta
+          subdirectory: android
