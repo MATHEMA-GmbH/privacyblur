@@ -1,0 +1,71 @@
+{
+  "app_name": "PrivacyBlur",
+  "buttons": {
+    "save": "Salvar",
+    "apply": "Aplicar",
+    "accept": "Aceito",
+    "preview": "Pré-visualização",
+    "settings": "Configurações",
+    "ok": "OK",
+    "cancel": "Cancelar",
+    "circle": "Círculo",
+    "square": "Quadrado",
+    "pixelate": "Pixelar",
+    "blur": "Desfocar",
+    "tool_size": "Tamanho",
+    "tool_grain": "Granularidade",
+    "tool_shape": "Forma",
+    "tool_type": "Tipo",
+    "override_yes": "Substituir",
+    "override_no": "Novo"
+  },
+  "messages": {
+    "errors": {
+      "image_crash": "Ocorreu um erro ao carregar a última imagem. Deseja recarregar a imagem numa resolução menor?",
+      "undefined": "Erro desconhecido",
+      "image_library": "Erro de leitura da Galeria de imagens",
+      "target_directory": "Diretório destino não existe",
+      "photo_permissions": "O PrivacyBlur precisa de acesso completo às suas imagens para cumprir sua função.\nVá para as configurações e conceda a permissão para o app.",
+      "file_system": "Exceção do sistema de arquivos",
+      "no_image": "Nenhuma imagem selecionada",
+      "problem_img_read": "Problema de leitura da imagem.\nO arquivo não existe?",
+      "img_format": "Problema com o formato do arquivo.\nÉ uma imagem?",
+      "img_size": "Problemas com o tamanho da imagem.\nTente novamente.",
+      "img_not_readable": "Não foi possível ler a imagem do arquivo.",
+      "processing_image": "Ocorreu uma exceção durante o processamento da imagem.\nPor favor, tente novamente.",
+      "image_scale_down": "Aviso: a imagem foi reduzida. O que você está vendo é a qualidade final. Resolução original: {origRes}, nova resolução: {newRes}"
+    },
+    "infos": {
+      "exit_request": "Sair sem salvar?",
+      "success_saved": "Sucesso! A imagem foi salva",
+      "imageNotSelected": "Nenhuma imagem foi selecionada",
+      "override_image": "Você já salvou esta imagem. Deseja substituí-la ou criar uma nova?"
+    }
+  },
+  "main_screen": {
+    "title": "Selecione uma imagem",
+    "content": "Ocultar dados sensíveis\nde suas imagens!",
+    "select_image": "Selecione da Galeria",
+    "photo_permissions": "O PrivacyBlur precisa de acesso completo às suas imagens para cumprir sua função. Toque no \"Selecione da Galeria\" para começar.",
+    "menu": {
+      "title": "Arquivo",
+      "select_image": "Selecione imagem"
+    }
+  },
+  "image_screen": {
+    "title": "Pixelar",
+    "help_lines": {
+      "help0": "1. Toque na área que deseja modificar",
+      "help1": "2. Você pode mover a imagem via toque longo",
+      "help2": "3. Defina um efeito desejado",
+      "help3": "4. Toque no Salvar para salvar o efeito e exportar a imagem"
+    }
+  },
+  "layout_configs": {
+    "layout": "Layout",
+    "fullscreen": "Alterar tela cheia",
+    "large": "Aumentar a janela",
+    "regular": "Resetar a janela",
+    "small": "Diminuir a janela"
+  }
+}
