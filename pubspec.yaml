@@ -46,7 +46,7 @@ dependencies:
   file_picker: ^4.1.2
   menubar:
     git:
-      url: git://github.com/google/flutter-desktop-embedding
+      url: https://github.com/google/flutter-desktop-embedding
       path: plugins/menubar
 
 dev_dependencies:
