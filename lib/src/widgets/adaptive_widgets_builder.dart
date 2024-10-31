@@ -198,7 +198,7 @@ class _AppBarBuilder {
       List<Widget>? actions}) {
     if (AppTheme.isCupertino) {
       return CupertinoNavigationBar(
-          //backgroundColor: Theme.of(context).bottomAppBarColor,
+          backgroundColor: Theme.of(context).bottomAppBarTheme.color,
           leading: leading,
           middle: Text(title),
           automaticallyImplyLeading: true,

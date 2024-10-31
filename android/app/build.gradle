@@ -32,7 +32,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 34
 
     flavorDimensions "flavor-type"
     productFlavors {
@@ -61,8 +61,8 @@ android {
 
     defaultConfig {
         applicationId "de.mathema.privacyblur"
-        minSdkVersion 16
-        targetSdkVersion 30
+        minSdkVersion flutter.minSdkVersion
+        targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }

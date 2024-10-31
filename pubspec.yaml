@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 2.1.6+42
 
 environment:
-  sdk: '>=2.13.0 <3.0.0'
+  sdk: '>=2.13.0 <4.0.0'
 
 dependencies:
   flutter:
@@ -55,8 +55,11 @@ dev_dependencies:
   bloc_test: ^9.0.1
   mockito: ^5.0.7
   build_runner: ^2.0.3
-  flutter_translate_gen: ^2.0.0
+  #flutter_translate_gen: ^2.2.0 #note: causes dependency problems
   flutter_lints: ^1.0.4
+
+dependency_overrides:
+  test_api: ^0.7.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

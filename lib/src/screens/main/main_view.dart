@@ -94,7 +94,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                     translate(Keys.Main_Screen_Content),
                     style: TextStyle(
                         fontSize:
-                            Theme.of(context).textTheme.headline6!.fontSize,
+                            Theme.of(context).textTheme.headlineSmall?.fontSize,
                         fontWeight: FontWeight.bold,
                         color: textColor),
                     textAlign: TextAlign.center,
@@ -145,10 +145,10 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
 
   void _loadDesktopMenu() {
     LayoutConfig.desktop.updateMenu(key: menuKey, menus: [
-      Submenu(label: translate(Keys.Main_Screen_Menu_Title), children: [
-        MenuItem(
+      NativeSubmenu(label: translate(Keys.Main_Screen_Menu_Title), children: [
+        NativeMenuItem(
             label: translate(Keys.Main_Screen_Select_Image),
-            onClicked: () => openImageAction(context, ImageSource.gallery),
+            onSelected: () => openImageAction(context, ImageSource.gallery),
             shortcut: LogicalKeySet(LogicalKeyboardKey.keyO))
       ])
     ]);

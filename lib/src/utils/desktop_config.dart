@@ -43,33 +43,33 @@ class DesktopWindowConfig extends DesktopWindow {
 
   /// ## MENU CONFIG ##
 
-  void updateMenu({required UniqueKey key, List<Submenu>? menus}) {
+  void updateMenu({required UniqueKey key, List<NativeSubmenu>? menus}) {
     if (Platform.isWindows) return;
     currentMenu = key.hashCode;
     setApplicationMenu([_layoutMenu, if (menus != null) ...menus]);
   }
 
-  final Submenu _layoutMenu =
-      Submenu(label: translate(Keys.Layout_Configs_Layout), children: [
-    MenuItem(
+  final NativeSubmenu _layoutMenu =
+      NativeSubmenu(label: translate(Keys.Layout_Configs_Layout), children: [
+    NativeMenuItem(
       label: translate(Keys.Layout_Configs_Fullscreen),
-      onClicked: () => toggleFullScreen(),
+      onSelected: () => toggleFullScreen(),
       shortcut: LogicalKeySet(LogicalKeyboardKey.f11),
     ),
-    MenuItem(
+    NativeMenuItem(
       label: translate(Keys.Layout_Configs_Large),
-      onClicked: () => setWindowSize(size: DESKTOP_LAYOUT_TYPE.large),
+      onSelected: () => setWindowSize(size: DESKTOP_LAYOUT_TYPE.large),
       shortcut: LogicalKeySet(LogicalKeyboardKey.keyL),
     ),
-    MenuItem(
+    NativeMenuItem(
       label: translate(Keys.Layout_Configs_Small),
-      onClicked: () => setWindowSize(size: DESKTOP_LAYOUT_TYPE.small),
+      onSelected: () => setWindowSize(size: DESKTOP_LAYOUT_TYPE.small),
       shortcut: LogicalKeySet(LogicalKeyboardKey.keyS),
     ),
-    const MenuDivider(),
-    MenuItem(
+    const NativeMenuDivider(),
+    NativeMenuItem(
       label: translate(Keys.Layout_Configs_Regular),
-      onClicked: () => setWindowSize(size: DESKTOP_LAYOUT_TYPE.regular),
+      onSelected: () => setWindowSize(size: DESKTOP_LAYOUT_TYPE.regular),
       shortcut: LogicalKeySet(LogicalKeyboardKey.keyZ),
     )
   ]);

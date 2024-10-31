@@ -40,7 +40,7 @@ class AppTheme {
   static Color fontColor(BuildContext context) {
     return (isCupertino
         ? CupertinoTheme.of(context).textTheme.textStyle.color
-        : Theme.of(context).textTheme.headline1!.color)!;
+        : Theme.of(context).textTheme.headlineLarge!.color)!;
   }
 
   static Color fontColorAccent(BuildContext context) {
@@ -49,7 +49,7 @@ class AppTheme {
             color: CupertinoColors.systemGrey,
             darkColor: CupertinoColors.systemGrey3,
           )
-        : Theme.of(context).textTheme.bodyText1!.color)!;
+        : Theme.of(context).textTheme.bodyLarge!.color)!;
   }
 
   static Color barColor(BuildContext context) {
@@ -99,10 +99,10 @@ class AppTheme {
         textTheme: ButtonTextTheme.accent,
       ),
       textTheme: const TextTheme(
-        headline1: TextStyle(color: Colors.black),
-        bodyText2:
+        headlineLarge: TextStyle(color: Colors.black),
+        bodyMedium:
             TextStyle(color: Colors.black, fontWeight: FontWeight.normal),
-        bodyText1:
+        bodyLarge:
             TextStyle(color: Colors.black54, fontWeight: FontWeight.w400),
       ));
 
@@ -127,11 +127,11 @@ class AppTheme {
       textTheme: ButtonTextTheme.accent,
     ),
     textTheme: const TextTheme(
-        headline1: TextStyle(color: Colors.white),
-        bodyText1:
+        headlineLarge: TextStyle(color: Colors.white),
+        bodyLarge:
             TextStyle(color: Colors.white70, fontWeight: FontWeight.w400),
-        bodyText2:
+        bodyMedium:
             TextStyle(color: Colors.white, fontWeight: FontWeight.normal),
-        headline5: TextStyle()),
+        bodySmall: TextStyle()),
   );
 }

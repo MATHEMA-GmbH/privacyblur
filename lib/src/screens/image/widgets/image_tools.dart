@@ -149,7 +149,7 @@ class ImageToolsWidget extends StatelessWidget {
     return SizedBox(
       height: _internalLayout.iconSize * 2,
       child: Scrollbar(
-        isAlwaysShown: false,
+        //isAlwaysShown: false,
         child: ListView(
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
