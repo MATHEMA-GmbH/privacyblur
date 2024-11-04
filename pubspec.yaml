@@ -48,6 +48,7 @@ dependencies:
     git:
       url: https://github.com/google/flutter-desktop-embedding
       path: plugins/menubar
+  flutter_translate_annotations: ^2.1.0
 
 dev_dependencies:
   flutter_test:
