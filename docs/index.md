@@ -33,11 +33,9 @@ Hide kids, faces, documents, numbers, names, etc., from your pictures in mere se
 <li>No ads</li>
 <li>No watermark</li>
 <li>No need to unlock anything</li>
-<li><a href="https://github.com/MATHEMA-GmbH/privacyblur">Completely open source</a></li>
 </ul>
 </p>
 
-<strong>Free forever</strong> because privacy shouldn't cost anything. Free because we care!
 <p style="text-align:center;"><img src="assets/ic_launcher_round.png" alt="PrivacyBlur Logo"></p>
 Download now!
 </p>
